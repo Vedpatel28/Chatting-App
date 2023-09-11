@@ -22,5 +22,6 @@ class AuthenticationHelper {
 
   logoutUser() async {
     await FirebaseAuth.instance.signOut();
+    return true;
   }
 }

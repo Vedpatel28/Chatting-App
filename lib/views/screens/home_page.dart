@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
                 Get.offNamed("/");
               }
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.logout,
             ),
           ),
