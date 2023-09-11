@@ -1,3 +1,4 @@
+import 'package:chat_app_firebase/views/screens/home_page.dart';
 import 'package:chat_app_firebase/views/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,6 +27,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/",
           page: () => LoginPage(),
+        ),
+        GetPage(
+          name: "/HomePage",
+          page: () => HomePage(),
         ),
       ],
     );
