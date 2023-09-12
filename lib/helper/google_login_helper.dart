@@ -7,7 +7,7 @@ class GoogleLoginHelper {
 
   static final GoogleLoginHelper googleLoginHelper = GoogleLoginHelper._();
 
-  loginUser({required String emailAddress, required String password}) async {
+  loginUser() async {
     GoogleSignIn googleSignIn = GoogleSignIn();
     try {
       await googleSignIn.signIn();

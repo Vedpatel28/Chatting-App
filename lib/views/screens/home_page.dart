@@ -13,9 +13,7 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () async {
-              bool logout =
-                  await AuthenticationHelper.authenticationHelper.logoutUser();
-
+              bool logout = await AuthenticationHelper.authenticationHelper.logoutUser();
               if (logout) {
                 Get.offNamed("/");
               }
