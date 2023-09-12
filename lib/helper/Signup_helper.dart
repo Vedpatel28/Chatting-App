@@ -23,6 +23,7 @@ class SignupHelper {
       }
     } catch (e) {
       log("$e");
+      return false;
     }
   }
 }

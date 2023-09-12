@@ -1,16 +1,67 @@
+import 'package:chat_app_firebase/helper/Signup_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login/flutter_login.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+
+  String? email;
+  String? password;
 
   @override
   Widget build(BuildContext context) {
-    return FlutterLogin(
+    Size s = MediaQuery.of(context).size;
 
-
-      onLogin: (p0) {},
-      onRecoverPassword: (p0) {},
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Log in"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // E-Mail
+            TextField(
+              onSubmitted: (value) {
+                email = value;
+              },
+              decoration: const InputDecoration(
+                hintText: "Enter E-mail",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: s.height * 0.02),
+            // Password
+            TextField(
+              onSubmitted: (value) {
+                password = value;
+              },
+              decoration: const InputDecoration(
+                hintText: "Enter Password",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: s.height * 0.02),
+            ElevatedButton(
+              onPressed: () async {
+                await SignupHelper.signupHelper.registeredSignUp(
+                  emailAddress: email!,
+                  password: password!,
+                );
+              },
+              child: const Text("Login"),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
