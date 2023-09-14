@@ -3,7 +3,6 @@
 import 'dart:developer';
 
 import 'package:chat_app_firebase/helper/Signup_helper.dart';
-import 'package:chat_app_firebase/modal/user_modal.dart';
 import 'package:chat_app_firebase/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,17 +20,11 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size s = MediaQuery.of(context).size;
 
-    GoogleSignInAccount? account = Get.arguments;
-
     return Scaffold(
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: Stack(
+        child: Column(
           children: [
-            Transform.translate(
-              offset: const Offset(0, 700),
-              child: Image.asset("$imagePath/travel.png"),
-            ),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -54,27 +47,8 @@ class LoginPage extends StatelessWidget {
                     },
                     decoration: InputDecoration(
                       filled: true,
-                      label: const Text("E-mail"),
                       fillColor: Colors.blueGrey.shade50,
                       hintText: "Enter E-mail",
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(15),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: s.height * 0.04),
-                  // name
-                  TextField(
-                    onSubmitted: (value) {
-                      name = value;
-                    },
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.blueGrey.shade50,
-                      hintText: "Enter Name",
-                      label: const Text("Name"),
                       border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(15),
@@ -90,7 +64,6 @@ class LoginPage extends StatelessWidget {
                     },
                     decoration: InputDecoration(
                       filled: true,
-                      label: const Text("Password"),
                       fillColor: Colors.blueGrey.shade50,
                       hintText: "Enter Password",
                       border: const OutlineInputBorder(
@@ -109,6 +82,7 @@ class LoginPage extends StatelessWidget {
                         password: password,
                         name: name,
                       );
+
                       login
                           ? Get.offNamed("/HomePage")
                           : Get.snackbar(
@@ -148,19 +122,17 @@ class LoginPage extends StatelessWidget {
                               .signupHelper
                               .loginWitheGoogle();
                           log("Completed Google Login");
-
-                          if (account != null) {
-                            UserModal userModal = UserModal();
-
-                            userModal.userName = account.displayName!;
-                            userModal.userEmail = account.email;
-                            userModal.userImage = account.photoUrl!;
-
-                            Get.offNamed(
-                              "/HomePage",
-                              arguments: userModal,
-                            );
-                          }
+                          (account != null)
+                              ? Get.offNamed(
+                                  "/HomePage",
+                                  arguments: account,
+                                )
+                              : Get.snackbar(
+                                  "Re-Try",
+                                  "Something Wrong ⚠️",
+                                  overlayColor: Colors.red,
+                                  borderColor: Colors.redAccent.shade100,
+                                );
                         },
                         child: Column(
                           children: [
@@ -217,6 +189,10 @@ class LoginPage extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            Transform.translate(
+              offset: const Offset(0, 100),
+              child: Image.asset("$imagePath/travel.png"),
             ),
           ],
         ),
