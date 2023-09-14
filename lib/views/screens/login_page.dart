@@ -19,12 +19,10 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size s = MediaQuery.of(context).size;
 
-    GoogleSignInAccount? account = Get.arguments;
-
     return Scaffold(
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: Stack(
+        child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(16),
@@ -118,18 +116,21 @@ class LoginPage extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          await SignupHelper.signupHelper.loginWitheGoogle();
-
+                          GoogleSignInAccount? account = await SignupHelper
+                              .signupHelper
+                              .loginWitheGoogle();
                           log("Completed Google Login");
-
-                          // (account != null)
-                          //     ? Get.offNamed("/HomePage", arguments: account)
-                          //     : Get.snackbar(
-                          //         "Re-Try",
-                          //         "Something Wrong ⚠️",
-                          //         overlayColor: Colors.red,
-                          //         borderColor: Colors.redAccent.shade100,
-                          //       );
+                          (account != null)
+                              ? Get.offNamed(
+                                  "/HomePage",
+                                  arguments: account,
+                                )
+                              : Get.snackbar(
+                                  "Re-Try",
+                                  "Something Wrong ⚠️",
+                                  overlayColor: Colors.red,
+                                  borderColor: Colors.redAccent.shade100,
+                                );
                         },
                         child: Column(
                           children: [
@@ -188,8 +189,9 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             Transform.translate(
-                offset: const Offset(0, 500),
-                child: Image.asset("$imagePath/travel.png")),
+              offset: const Offset(0, 100),
+              child: Image.asset("$imagePath/travel.png"),
+            ),
           ],
         ),
       ),

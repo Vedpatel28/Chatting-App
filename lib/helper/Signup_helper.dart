@@ -48,13 +48,19 @@ class SignupHelper {
     );
 
     FirebaseAuth.instance.signInWithCredential(credential);
-
+    //
+    // (account != null)
+    //     ? Get.offNamed("/")
+    //     : Get.snackbar(
+    //   "Something Wrong",
+    //   "Your Logout Failed",
+    // );
+    //
     return account;
   }
 
   logoutUser() async {
+    await google.signOut();
     await FirebaseAuth.instance.signOut();
-    google.signOut();
-    return true;
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chat_app_firebase/helper/Signup_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,34 +11,45 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GoogleSignInAccount? account = Get.arguments;
+    GoogleSignInAccount account = Get.arguments;
 
-    Drawer(
-      child: Column(
-        children: [
-          ElevatedButton.icon(
-            onPressed: () {
-              bool logout = SignupHelper.signupHelper.logoutUser();
-
-              logout
-                  ? Get.offNamed("/")
-                  : Get.snackbar(
-                      "Something Wrong",
-                      "Your Logout Failed",
-                    );
-            },
-            icon: const Icon(
-              Icons.logout_outlined,
-            ),
-            label: Text(
-              "Log-out",
-              style: GoogleFonts.headlandOne(),
-            ),
-          )
-        ],
-      ),
-    );
     return Scaffold(
+      drawer: Drawer(
+        child: Column(
+          children: [
+            UserAccountsDrawerHeader(
+              currentAccountPicture: Image.network(
+                "${account.photoUrl}",
+              ),
+              accountName: Text("${account.displayName}"),
+              accountEmail: Column(
+                children: [
+                  Text(account.email),
+                ],
+              ),
+            ),
+            ElevatedButton.icon(
+              onPressed: () {
+                bool logout = SignupHelper.signupHelper.logoutUser();
+                log("$logout");
+                (logout == true)
+                    ? Get.offNamed("/")
+                    : Get.snackbar(
+                  "Something Wrong",
+                  "Your Logout Failed",
+                );
+              },
+              icon: const Icon(
+                Icons.logout_outlined,
+              ),
+              label: Text(
+                "Log-out",
+                style: GoogleFonts.headlandOne(),
+              ),
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: const Text("Home"),
       ),
