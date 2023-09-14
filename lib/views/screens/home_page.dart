@@ -1,43 +1,55 @@
-import 'dart:developer';
+// ignore_for_file: unnecessary_null_comparison
 
+import 'dart:developer';
 import 'package:chat_app_firebase/helper/Signup_helper.dart';
+import 'package:chat_app_firebase/modal/user_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    GoogleSignInAccount account = Get.arguments;
+    UserModal? userModal = Get.arguments;
 
     return Scaffold(
       drawer: Drawer(
         child: Column(
           children: [
             UserAccountsDrawerHeader(
-              currentAccountPicture: Image.network(
-                "${account.photoUrl}",
+              currentAccountPicture: Visibility(
+                visible: userModal != null,
+                child: CircleAvatar(
+                  foregroundImage: NetworkImage("${userModal?.userImage}"),
+                ),
               ),
-              accountName: Text("${account.displayName}"),
-              accountEmail: Column(
-                children: [
-                  Text(account.email),
-                ],
+              accountName: Visibility(
+                visible: userModal != null,
+                child: Text(
+                  userModal?.userName ?? "Geste Account",
+                  style: GoogleFonts.headlandOne(),
+                ),
+              ),
+              accountEmail: Visibility(
+                visible: userModal != null,
+                child: Text(
+                  userModal?.userEmail ?? "Geste Account",
+                  style: GoogleFonts.headlandOne(),
+                ),
               ),
             ),
             ElevatedButton.icon(
-              onPressed: () {
-                bool logout = SignupHelper.signupHelper.logoutUser();
+              onPressed: () async {
+                bool logout = await SignupHelper.signupHelper.logoutUser();
                 log("$logout");
                 (logout == true)
                     ? Get.offNamed("/")
                     : Get.snackbar(
-                  "Something Wrong",
-                  "Your Logout Failed",
-                );
+                        "Something Wrong",
+                        "Your Logout Failed",
+                      );
               },
               icon: const Icon(
                 Icons.logout_outlined,
