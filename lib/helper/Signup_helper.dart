@@ -10,6 +10,7 @@ class SignupHelper {
 
   loginWitheEmailPassword({
     required String email,
+    required String name,
     required String password,
   }) {
     try {
@@ -48,19 +49,18 @@ class SignupHelper {
     );
 
     FirebaseAuth.instance.signInWithCredential(credential);
-    //
-    // (account != null)
-    //     ? Get.offNamed("/")
-    //     : Get.snackbar(
-    //   "Something Wrong",
-    //   "Your Logout Failed",
-    // );
-    //
     return account;
   }
 
-  logoutUser() async {
-    await google.signOut();
+  Future<bool> logoutUser() async {
+    await google.signOut().then(
+      (value) {
+        log("$value : Log out Successful");
+      },
+    );
     await FirebaseAuth.instance.signOut();
+
+    return true;
+
   }
 }
