@@ -2,7 +2,7 @@
 
 import 'dart:developer';
 
-import 'package:chat_app_firebase/helper/Signup_helper.dart';
+import 'package:chat_app_firebase/helper/signup_helper.dart';
 import 'package:chat_app_firebase/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -41,6 +41,7 @@ dependencies:
   google_sign_in: any
   flutter_login: any
   google_fonts: any
+  cloud_firestore: ^4.9.1
 
 dev_dependencies:
   flutter_test:

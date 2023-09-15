@@ -1,7 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'dart:developer';
-import 'package:chat_app_firebase/helper/Signup_helper.dart';
+import 'package:chat_app_firebase/helper/signup_helper.dart';
 import 'package:chat_app_firebase/modal/user_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
