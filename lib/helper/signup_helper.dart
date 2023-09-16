@@ -58,10 +58,7 @@ class SignupHelper {
         log("$value : Log out Successful");
       },
     );
-
     await FirebaseAuth.instance.signOut();
-
     return true;
-
   }
 }
