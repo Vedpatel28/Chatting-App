@@ -9,8 +9,8 @@ class SignupHelper {
   static final SignupHelper signupHelper = SignupHelper._();
 
   loginWitheEmailPassword({
-    required String email,
     required String name,
+    required String email,
     required String password,
   }) {
     try {
@@ -49,6 +49,7 @@ class SignupHelper {
     );
 
     FirebaseAuth.instance.signInWithCredential(credential);
+
     return account;
   }
 
@@ -61,6 +62,5 @@ class SignupHelper {
     await FirebaseAuth.instance.signOut();
 
     return true;
-
   }
 }
