@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:chat_app_firebase/helper/signup_helper.dart';
+import 'package:chat_app_firebase/modal/user_modal.dart';
 import 'package:chat_app_firebase/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,11 +15,12 @@ class LoginPage extends StatelessWidget {
 
   late String email;
   late String password;
-  late String name;
+  String name = "Name";
 
   @override
   Widget build(BuildContext context) {
     Size s = MediaQuery.of(context).size;
+    GoogleSignInAccount? account = Get.arguments;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -125,7 +127,7 @@ class LoginPage extends StatelessWidget {
                           (account != null)
                               ? Get.offNamed(
                                   "/HomePage",
-                                  arguments: account,
+                                  arguments: UserModal(),
                                 )
                               : Get.snackbar(
                                   "Re-Try",
