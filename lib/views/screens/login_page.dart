@@ -123,11 +123,21 @@ class LoginPage extends StatelessWidget {
                           GoogleSignInAccount? account = await SignupHelper
                               .signupHelper
                               .loginWitheGoogle();
-                          log("Completed Google Login");
+
+                          UserModal userModal = UserModal(
+                            userImage: account?.photoUrl,
+                            userName: account?.displayName,
+                            userEmail: account?.email,
+                          );
+
+                          // userModal.userName;
+                          // userModal.userEmail;
+                          // userModal.userImage;
+
                           (account != null)
                               ? Get.offNamed(
                                   "/HomePage",
-                                  arguments: UserModal(),
+                                  arguments: userModal,
                                 )
                               : Get.snackbar(
                                   "Re-Try",
