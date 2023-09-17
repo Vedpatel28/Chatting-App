@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:chat_app_firebase/modal/fire_store_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireStoreHelper {
@@ -8,13 +9,12 @@ class FireStoreHelper {
 
   FirebaseFirestore db = FirebaseFirestore.instance;
 
-  addStudent() {
+  addStudent({required FireStoreModal fireStoreModal}) {
     final user = <String, dynamic>{
-      "age": 19,
-      "id": 102,
-      "name": "ved",
+      "age": fireStoreModal.age,
+      "id": fireStoreModal.id,
+      "name": fireStoreModal.name,
     };
-
     db.collection("student").add(user).then(
           (DocumentReference doc) => log(
             'DocumentSnapshot added with ID: ${doc.id}',

@@ -122,12 +122,22 @@ class HomePage extends StatelessWidget {
                   children: [
                     TextField(
                       onSubmitted: (value) {
+                        id = int.parse(value);
+                      },
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        label: Text("Id"),
+                      ),
+                    ),
+                    SizedBox(height: s.height * 0.02),
+                    TextField(
+                      onSubmitted: (value) {
                         name = value;
                         log(name);
                       },
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: "Enter Name",
+                        label: Text("Name"),
                       ),
                     ),
                     SizedBox(height: s.height * 0.02),
@@ -137,7 +147,7 @@ class HomePage extends StatelessWidget {
                       },
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: "Enter Age",
+                        label: Text("Age"),
                       ),
                     ),
                   ],
@@ -145,6 +155,13 @@ class HomePage extends StatelessWidget {
                 actions: [
                   ElevatedButton.icon(
                     onPressed: () async {
+                      FireStoreHelper.fireStoreHelper.addStudent(
+                        fireStoreModal: FireStoreModal(
+                          id,
+                          name,
+                          age,
+                        ),
+                      );
                       Navigator.of(context).pop();
                     },
                     label: const Text("Continue"),
