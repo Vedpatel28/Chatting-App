@@ -73,13 +73,47 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Home"),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(16),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Container(
+          height: s.height * 0.8,
+          width: s.width,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade50,
+          ),
+          child: StreamBuilder(
+            stream: FireStoreHelper.fireStoreHelper.db
+                .collection("student")
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final data = FireStoreHelper.fireStoreHelper.readData();
+
+                return ListView.builder(
+                  itemCount: 1,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: s.height * 0.02,
+                      child: Text(
+                        data[index],
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: IconButton(
           onPressed: () {
+            FireStoreHelper.fireStoreHelper.addData();
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
