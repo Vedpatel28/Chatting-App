@@ -1,7 +1,4 @@
 import 'dart:developer';
-
-import 'package:chat_app_firebase/modal/fire_store_modal.dart';
-import 'package:chat_app_firebase/modal/user_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireStoreHelper {
@@ -9,64 +6,39 @@ class FireStoreHelper {
 
   static final FireStoreHelper fireStoreHelper = FireStoreHelper._pnc();
 
-  String colId = "id";
-  String colName = "name";
-  String colAge = "age";
+  FirebaseFirestore db = FirebaseFirestore.instance;
 
-  FirebaseFirestore firebaseFireStore = FirebaseFirestore.instance;
-
-  CollectionReference user = FirebaseFirestore.instance.collection("student");
-
-  String collection = "student";
-  String count = "count";
-
-  addStudent({required FireStoreModal fireStoreModal}) {
-    Map<String, dynamic> data = {
-      colId: fireStoreModal.id,
-      colName: fireStoreModal.name,
-      colAge: fireStoreModal.age,
+  addStudent() {
+    final user = <String, dynamic>{
+      "age": 19,
+      "id": 102,
+      "name": "ved",
     };
 
-    firebaseFireStore.collection(collection).add(data).then(
-          (value) => log("Student Added : ${value.id}"),
+    db.collection("student").add(user).then(
+          (DocumentReference doc) => log(
+            'DocumentSnapshot added with ID: ${doc.id}',
+          ),
         );
   }
 
-  Future<List<FireStoreModal>> getAllStudent() async {
-    QuerySnapshot data = await firebaseFireStore.collection(collection).get();
-
-    List<QueryDocumentSnapshot> allData = data.docs;
-
-    List<FireStoreModal> allStudent = allData
-        .map((e) => FireStoreModal.fromMap(data: e.data() as Map))
-        .toList();
-
-    return allStudent;
-  }
-
-  Future<int> getCounter() async {
-    QuerySnapshot data = await firebaseFireStore.collection(collection).get();
-
-    List<QueryDocumentSnapshot> doc = data.docs;
-
-    Map<String, dynamic> count = doc[0].data() as Map<String, dynamic>;
-
-    int idCount = count['val'];
-
-    log("Id count: $idCount");
-
-    return idCount;
-  }
-
-  Future<int> increaseId() async {
-    int id = await getCounter();
-
-    Map<String, dynamic> data = {
-      'val': ++id,
+  addData() {
+    final user = <String, dynamic>{
+      "age": 19,
+      "id": 102,
+      "name": "ved",
     };
+    db.collection("student").add(user).then(
+          (DocumentReference doc) =>
+              log('DocumentSnapshot added with ID: ${doc.id}'),
+        );
+  }
 
-    firebaseFireStore.collection(count).doc('count').set(data);
-
-    return id;
+  readData() async {
+    return await db.collection("users").get().then((event) {
+      for (var doc in event.docs) {
+        log("${doc.id} => ${doc.data()}");
+      }
+    });
   }
 }
