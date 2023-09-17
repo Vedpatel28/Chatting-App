@@ -17,29 +17,35 @@ class FireStoreHelper {
 
   CollectionReference user = FirebaseFirestore.instance.collection("student");
 
-  String collect = "student";
+  String collection = "student";
   String count = "count";
 
   addStudent({required FireStoreModal fireStoreModal}) {
-    // Map<String, dynamic> data = {
-    //   colId: fireStoreModal.id,
-    //   colName: fireStoreModal.name,
-    //   colAge: fireStoreModal.age,
-    // };
+    Map<String, dynamic> data = {
+      colId: fireStoreModal.id,
+      colName: fireStoreModal.name,
+      colAge: fireStoreModal.age,
+    };
 
-    return user
-        .add({
-          colId: fireStoreModal.id,
-          colName: fireStoreModal.name,
-          colAge: fireStoreModal.age,
-        })
-        .then((value) => log("User Added in Fire Base"))
-        .catchError((error) => log("User Added in Fire Base : $error"));
+    firebaseFireStore.collection(collection).add(data).then(
+          (value) => log("Student Added : ${value.id}"),
+        );
   }
 
-  getCounter() {
-    QuerySnapshot data =
-        firebaseFireStore.collection("count").get() as QuerySnapshot<Object?>;
+  Future<List<FireStoreModal>> getAllStudent() async {
+    QuerySnapshot data = await firebaseFireStore.collection(collection).get();
+
+    List<QueryDocumentSnapshot> allData = data.docs;
+
+    List<FireStoreModal> allStudent = allData
+        .map((e) => FireStoreModal.fromMap(data: e.data() as Map))
+        .toList();
+
+    return allStudent;
+  }
+
+  Future<int> getCounter() async {
+    QuerySnapshot data = await firebaseFireStore.collection(collection).get();
 
     List<QueryDocumentSnapshot> doc = data.docs;
 
@@ -47,10 +53,12 @@ class FireStoreHelper {
 
     int idCount = count['val'];
 
+    log("Id count: $idCount");
+
     return idCount;
   }
 
-  increaseId() async {
+  Future<int> increaseId() async {
     int id = await getCounter();
 
     Map<String, dynamic> data = {
@@ -58,5 +66,7 @@ class FireStoreHelper {
     };
 
     firebaseFireStore.collection(count).doc('count').set(data);
+
+    return id;
   }
 }

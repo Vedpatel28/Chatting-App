@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:chat_app_firebase/modal/user_modal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -48,10 +47,8 @@ class SignupHelper {
       idToken: authentication.idToken,
       accessToken: authentication.accessToken,
     );
-    UserModal userModal = UserModal();
 
     FirebaseAuth.instance.signInWithCredential(credential);
-
     return account;
   }
 
@@ -64,5 +61,6 @@ class SignupHelper {
     await FirebaseAuth.instance.signOut();
 
     return true;
+
   }
 }

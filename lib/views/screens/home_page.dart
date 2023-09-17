@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison, must_be_immutable
 
 import 'dart:developer';
 
@@ -13,9 +13,9 @@ import 'package:google_fonts/google_fonts.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
-  String? name;
-  int? age;
-  int? id;
+  late String name;
+  late int age;
+  late int id;
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +89,7 @@ class HomePage extends StatelessWidget {
                     TextField(
                       onSubmitted: (value) {
                         name = value;
+                        log(name);
                       },
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -109,14 +110,7 @@ class HomePage extends StatelessWidget {
                 ),
                 actions: [
                   ElevatedButton.icon(
-                    onPressed: () {
-                      FireStoreHelper.fireStoreHelper.addStudent(
-                        fireStoreModal: FireStoreModal(
-                          id!,
-                          name!,
-                          age!,
-                        ),
-                      );
+                    onPressed: () async {
                       Navigator.of(context).pop();
                     },
                     label: const Text("Continue"),
