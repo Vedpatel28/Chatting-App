@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireStoreHelper {
@@ -19,10 +21,15 @@ class FireStoreHelper {
     DocumentSnapshot snapshot =
         await firebaseFireStore.collection(collection).doc(id.toString()).get();
 
-    Map data = snapshot.data() as Map;
+    log("SnapShort = $snapshot");
+
+    Map<dynamic, dynamic> data = snapshot.data() as Map;
+
+    log(" Data = $data");
 
     return data["password"];
   }
+}
 
 // addStudent({required FireStoreModal fireStoreModal}) {
 //   final user = <String, dynamic>{
@@ -56,4 +63,3 @@ class FireStoreHelper {
 //     }
 //   });
 // }
-}

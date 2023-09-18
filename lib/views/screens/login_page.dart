@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:developer';
 
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,6 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -40,6 +40,7 @@ class LoginPage extends StatelessWidget {
                 },
                 onSaved: (newValue) {
                   id = newValue!;
+                  log("Id = $id");
                 },
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -59,6 +60,7 @@ class LoginPage extends StatelessWidget {
                 },
                 onSaved: (newValue) {
                   name = newValue!;
+                  log("Name = $name");
                 },
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -78,6 +80,7 @@ class LoginPage extends StatelessWidget {
                 },
                 onSaved: (newValue) {
                   password = newValue!;
+                  log("Password = $password");
                 },
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -92,7 +95,8 @@ class LoginPage extends StatelessWidget {
                     FireStoreHelper.fireStoreHelper.getCredential(
                       id: int.parse(id),
                     );
-                    Get.toNamed("/HomePage");
+                    log("SussesFull Added");
+                    Get.offNamed("/HomePage");
                   }
                 },
                 child: const Text(
