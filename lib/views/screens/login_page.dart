@@ -1,33 +1,108 @@
 // ignore_for_file: must_be_immutable
 
-import 'dart:developer';
 
-import 'package:chat_app_firebase/helper/signup_helper.dart';
-import 'package:chat_app_firebase/modal/user_modal.dart';
-import 'package:chat_app_firebase/utils/image_utils.dart';
+import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
-  late String email;
-  late String password;
-  String name = "Name";
+  String id = "";
+  String name = "";
+  String password = "";
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    Size s = MediaQuery.of(context).size;
-    GoogleSignInAccount? account = Get.arguments;
 
     return Scaffold(
       body: Padding(
-          padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
+        child: Form(
+          key: formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
-            children: [],
-          )),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Gap(20),
+              TextFormField(
+                initialValue: id,
+                textInputAction: TextInputAction.next,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Enter User ID";
+                  } else {
+                    return null;
+                  }
+                },
+                onSaved: (newValue) {
+                  id = newValue!;
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  label: Text("ID"),
+                ),
+              ),
+              const Gap(20),
+              TextFormField(
+                initialValue: name,
+                textInputAction: TextInputAction.next,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Enter User Name";
+                  } else {
+                    return null;
+                  }
+                },
+                onSaved: (newValue) {
+                  name = newValue!;
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  label: Text("User Name"),
+                ),
+              ),
+              const Gap(20),
+              TextFormField(
+                initialValue: password,
+                textInputAction: TextInputAction.next,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Enter Password";
+                  } else {
+                    return null;
+                  }
+                },
+                onSaved: (newValue) {
+                  password = newValue!;
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  label: Text("Password"),
+                ),
+              ),
+              const Gap(20),
+              ElevatedButton(
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    formKey.currentState!.save();
+                    FireStoreHelper.fireStoreHelper.getCredential(
+                      id: int.parse(id),
+                    );
+                    Get.toNamed("/HomePage");
+                  }
+                },
+                child: const Text(
+                  "SUBMIT",
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       // SingleChildScrollView(
       //   scrollDirection: Axis.vertical,
       //   child: Column(
