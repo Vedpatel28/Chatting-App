@@ -1,15 +1,10 @@
-import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class SignupHelper {
   SignupHelper._();
 
   static final SignupHelper signupHelper = SignupHelper._();
 
-
-  //
   // loginWitheEmailPassword({
   //   required String email,
   //   required String name,
