@@ -1,19 +1,19 @@
 class FireStoreModal {
   int id;
   String name;
-  int age;
+  String password;
 
   FireStoreModal(
     this.id,
     this.name,
-    this.age,
+    this.password,
   );
 
   factory FireStoreModal.fromMap({required Map data}) {
     return FireStoreModal(
       data['id'],
       data['name'],
-      data['age'],
+      data['password'],
     );
   }
 }
