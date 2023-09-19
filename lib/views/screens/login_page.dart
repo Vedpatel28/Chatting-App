@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'dart:developer';
 
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,6 @@ class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
   String id = "";
-  String name = "";
   String password = "";
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -40,31 +38,10 @@ class LoginPage extends StatelessWidget {
                 },
                 onSaved: (newValue) {
                   id = newValue!;
-                  log("Id = $id");
                 },
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   label: Text("ID"),
-                ),
-              ),
-              const Gap(20),
-              TextFormField(
-                initialValue: name,
-                textInputAction: TextInputAction.next,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Enter User Name";
-                  } else {
-                    return null;
-                  }
-                },
-                onSaved: (newValue) {
-                  name = newValue!;
-                  log("Name = $name");
-                },
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  label: Text("User Name"),
                 ),
               ),
               const Gap(20),
@@ -80,7 +57,6 @@ class LoginPage extends StatelessWidget {
                 },
                 onSaved: (newValue) {
                   password = newValue!;
-                  log("Password = $password");
                 },
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -90,12 +66,14 @@ class LoginPage extends StatelessWidget {
               const Gap(20),
               ElevatedButton(
                 onPressed: () {
+                  FireStoreHelper.fireStoreHelper.validateUser(
+                    id: int.parse(id),
+                  );
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
                     FireStoreHelper.fireStoreHelper.getCredential(
                       id: int.parse(id),
                     );
-                    log("Successful");
                     Get.offNamed("/HomePage");
                   }
                 },

@@ -23,15 +23,20 @@ class FireStoreHelper {
     return user['contacts'];
   }
 
+  validateUser({required int id}) async {
+    DocumentSnapshot doc =
+        await firebaseFireStore.collection(collection).doc(id.toString()).get();
+    log("$doc");
 
+    return doc.data();
+  }
 
   getCredential({required int id}) async {
     DocumentSnapshot snapshot =
         await firebaseFireStore.collection(collection).doc(id.toString()).get();
 
-    log("SnapShort = $snapshot");
     Map<dynamic, dynamic> data = snapshot.data() as Map;
-    log(" Data = $data");
+    log("SnapShort = $data");
 
     return data["password"];
   }
