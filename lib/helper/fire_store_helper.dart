@@ -10,56 +10,29 @@ class FireStoreHelper {
   FirebaseFirestore firebaseFireStore = FirebaseFirestore.instance;
   String collection = "Users";
 
-  Stream<DocumentSnapshot> getUser({required int id}) {
-    return firebaseFireStore
-        .collection(collection)
-        .doc(id.toString())
-        .snapshots();
+  Future<Map<String, dynamic>> getUser({required int id}) async {
+    DocumentSnapshot doc =
+        await firebaseFireStore.collection(collection).doc('$id').get();
+
+    return doc.data() as Map<String, dynamic>;
   }
+
+  getContacts({required int id}) async {
+    Map<String, dynamic> user = await getUser(id: id);
+
+    return user['contacts'];
+  }
+
+
 
   getCredential({required int id}) async {
     DocumentSnapshot snapshot =
         await firebaseFireStore.collection(collection).doc(id.toString()).get();
 
     log("SnapShort = $snapshot");
-
     Map<dynamic, dynamic> data = snapshot.data() as Map;
-
     log(" Data = $data");
 
     return data["password"];
   }
 }
-
-// addStudent({required FireStoreModal fireStoreModal}) {
-//   final user = <String, dynamic>{
-//     "age": fireStoreModal.age,
-//     "id": fireStoreModal.id,
-//     "name": fireStoreModal.name,
-//   };
-//   db.collection("student").add(user).then(
-//         (DocumentReference doc) => log(
-//           'DocumentSnapshot added with ID: ${doc.id}',
-//         ),
-//       );
-// }
-//
-// addData() {
-//   final user = <String, dynamic>{
-//     "age": 19,
-//     "id": 102,
-//     "name": "ved",
-//   };
-//   db.collection("student").add(user).then(
-//         (DocumentReference doc) =>
-//             log('DocumentSnapshot added with ID: ${doc.id}'),
-//       );
-// }
-//
-// readData() async {
-//   return await db.collection("users").get().then((event) {
-//     for (var doc in event.docs) {
-//       log("${doc.id} => ${doc.data()}");
-//     }
-//   });
-// }
