@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -25,7 +24,15 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Gap(20),
+              const Text(
+                "Login",
+                style: TextStyle(
+                  fontSize: 36,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.blue,
+                ),
+              ),
+              const Gap(80),
               TextFormField(
                 initialValue: id,
                 textInputAction: TextInputAction.next,
@@ -64,12 +71,24 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               const Gap(20),
+              TextButton(
+                onPressed: () {
+                  Get.offNamed("/SignInPage");
+                },
+                child: const Text(
+                  "crate new user",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
               ElevatedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
                     FireStoreHelper.fireStoreHelper.validateUser(
-                      id: int.parse(id), password: password,
+                      id: int.parse(id),
+                      password: password,
                     );
                     FireStoreHelper.fireStoreHelper.getCredential(
                       id: int.parse(id),
@@ -77,9 +96,7 @@ class LoginPage extends StatelessWidget {
                     Get.offNamed("/HomePage");
                   }
                 },
-                child: const Text(
-                  "SUBMIT",
-                ),
+                child: const Text("SUBMIT"),
               ),
             ],
           ),

@@ -1,9 +1,17 @@
+
+import 'package:chat_app_firebase/helper/fire_store_helper.dart';
+import 'package:chat_app_firebase/modal/fire_store_modal.dart';
 import 'package:chat_app_firebase/utils/image_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignInPage extends StatelessWidget {
   SignInPage({super.key});
+
+  late int id;
+  late String name;
+  late String password;
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +36,32 @@ class SignInPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: s.height * 0.14),
-                  // E-Mail
+                  // Id
                   TextField(
-                    onSubmitted: (value) {},
+                    onSubmitted: (value) {
+                      id = int.parse(value);
+                    },
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.blueGrey.shade50,
-                      hintText: "Enter E-mail",
+                      hintText: "Enter Id",
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: s.height * 0.04),
+                  // E-Mail
+                  TextField(
+                    onSubmitted: (value) {
+                      name = value;
+                    },
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.blueGrey.shade50,
+                      hintText: "Enter Name",
                       border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(15),
@@ -45,7 +72,9 @@ class SignInPage extends StatelessWidget {
                   SizedBox(height: s.height * 0.04),
                   // Password
                   TextField(
-                    onSubmitted: (value) {},
+                    onSubmitted: (value) {
+                      password = value;
+                    },
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.blueGrey.shade50,
@@ -59,7 +88,15 @@ class SignInPage extends StatelessWidget {
                   ),
                   SizedBox(height: s.height * 0.06),
                   GestureDetector(
-                    onTap: () async {},
+                    onTap: () async {
+                      FireStoreModal fireStoreModal = FireStoreModal(
+                        id,
+                        name,
+                        password,
+                      );
+                      FireStoreHelper.fireStoreHelper.addUser(fireStoreModal: fireStoreModal);
+                      Get.offNamed("/HomePage");
+                    },
                     child: Container(
                       height: s.height * 0.065,
                       width: s.width * 0.5,
@@ -71,7 +108,7 @@ class SignInPage extends StatelessWidget {
                       ),
                       alignment: Alignment.center,
                       child: Text(
-                        "Sign-in",
+                        "Crate",
                         style: GoogleFonts.headlandOne(
                           fontSize: 22,
                           color: Colors.white,
@@ -88,17 +125,23 @@ class SignInPage extends StatelessWidget {
                         onTap: () async {},
                         child: Column(
                           children: [
-                            const CircleAvatar(
+                            CircleAvatar(
                               radius: 20,
-                              child: Icon(
+                              backgroundColor:
+                                  const Color(0xFF8A99B5).withOpacity(0.6),
+                              child: const Icon(
                                 Icons.g_mobiledata_outlined,
+                                size: 40,
+                                color: Colors.black,
                               ),
                             ),
                             SizedBox(height: s.height * 0.01),
                             Text(
                               "Google",
                               style: GoogleFonts.headlandOne(
-                                fontSize: 12,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: const Color(0xFF8A99B5),
                               ),
                             ),
                           ],
@@ -109,20 +152,23 @@ class SignInPage extends StatelessWidget {
                         onTap: () {},
                         child: Column(
                           children: [
-                            const CircleAvatar(
+                            CircleAvatar(
                               radius: 20,
-                              backgroundColor: Colors.white,
-                              child: Icon(
+                              backgroundColor:
+                                  const Color(0xFF8A99B5).withOpacity(0.6),
+                              child: const Icon(
                                 Icons.no_accounts,
                                 color: Colors.black,
-                                size: 25,
+                                size: 30,
                               ),
                             ),
                             SizedBox(height: s.height * 0.01),
                             Text(
                               "Geste",
                               style: GoogleFonts.headlandOne(
-                                fontSize: 12,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: const Color(0xFF8A99B5),
                               ),
                             ),
                           ],

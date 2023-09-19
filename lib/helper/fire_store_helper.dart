@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:chat_app_firebase/modal/fire_store_modal.dart';
 import 'package:chat_app_firebase/modal/get_user_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -31,6 +32,19 @@ class FireStoreHelper {
     log("User : [$allUser] $allUser");
 
     return allUser;
+  }
+
+  addUser({required FireStoreModal fireStoreModal}) {
+    Map<String, dynamic> data = {
+      "name": fireStoreModal.name,
+      "id": fireStoreModal.id,
+      "password": fireStoreModal.password,
+    };
+
+    firebaseFireStore
+        .collection(collection)
+        .doc("${fireStoreModal.id}")
+        .set(data);
   }
 
   getContacts({required int id}) async {
