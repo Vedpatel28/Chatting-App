@@ -66,11 +66,11 @@ class LoginPage extends StatelessWidget {
               const Gap(20),
               ElevatedButton(
                 onPressed: () {
-                  FireStoreHelper.fireStoreHelper.validateUser(
-                    id: int.parse(id),
-                  );
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
+                    FireStoreHelper.fireStoreHelper.validateUser(
+                      id: int.parse(id), password: password,
+                    );
                     FireStoreHelper.fireStoreHelper.getCredential(
                       id: int.parse(id),
                     );

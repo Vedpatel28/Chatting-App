@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:chat_app_firebase/helper/signup_helper.dart';
 import 'package:chat_app_firebase/modal/fire_store_modal.dart';
+import 'package:chat_app_firebase/modal/get_user_modal.dart';
 import 'package:chat_app_firebase/modal/user_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,7 @@ class HomePage extends StatelessWidget {
 
   late String name;
   late int age;
-  late int id;
+  late int id = 101;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,36 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: FutureBuilder(
+          future: FireStoreHelper.fireStoreHelper.getAllUser(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data?.length,
+                itemBuilder: (context, index) {
+                  List<GetUserModal>? allUser = snapshot.data;
+                  log("$allUser");
+                  return Card(
+                    child: ListTile(
+                      leading: Text("${allUser![index].id}"),
+                      title: Text(allUser[index].name),
+                    ),
+                  );
+                },
+              );
+            } else if (snapshot.hasError) {
+              log("${snapshot.error}");
+              return Text("${snapshot.error}");
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
       ),
       // drawer: Drawer(
       //   child: Column(
