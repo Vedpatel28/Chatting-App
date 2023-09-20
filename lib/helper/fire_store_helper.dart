@@ -47,6 +47,15 @@ class FireStoreHelper {
         .set(data);
   }
 
+  Stream<DocumentSnapshot<Map<String, dynamic>>> userStream(
+      {required int sentId, required int recievedId}) {
+
+    return firebaseFireStore
+        .collection(collection)
+        .doc("$recievedId")
+        .snapshots();
+  }
+
   getContacts({required int id}) async {
     Map<String, dynamic> user = await getUser(id: id);
 

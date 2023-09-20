@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:chat_app_firebase/modal/get_user_modal.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -34,6 +35,12 @@ class HomePage extends StatelessWidget {
                   log("$allUser");
                   return Card(
                     child: ListTile(
+                      onTap: () {
+                        Get.toNamed(
+                          "/ChatPage",
+                          arguments: allUser,
+                        );
+                      },
                       leading: Text("${allUser![index].id}"),
                       title: Text(allUser[index].name),
                     ),

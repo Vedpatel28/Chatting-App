@@ -1,3 +1,4 @@
+import 'package:chat_app_firebase/views/screens/chat_page.dart';
 import 'package:chat_app_firebase/views/screens/home_page.dart';
 import 'package:chat_app_firebase/views/screens/login_page.dart';
 import 'package:chat_app_firebase/views/screens/sign_in_page.dart';
@@ -39,6 +40,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/SignInPage",
           page: () => SignInPage(),
+        ),
+        GetPage(
+          name: "/ChatPage",
+          page: () => ChatPage(),
         ),
       ],
     );
