@@ -1,4 +1,3 @@
-
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:chat_app_firebase/modal/fire_store_modal.dart';
 import 'package:chat_app_firebase/utils/image_utils.dart';
@@ -93,8 +92,12 @@ class SignInPage extends StatelessWidget {
                         id,
                         name,
                         password,
+                        // received,
+                        // sent,
+                        // contacts,
                       );
-                      FireStoreHelper.fireStoreHelper.addUser(fireStoreModal: fireStoreModal);
+                      FireStoreHelper.fireStoreHelper
+                          .addUser(fireStoreModal: fireStoreModal);
                       Get.offNamed("/HomePage");
                     },
                     child: Container(

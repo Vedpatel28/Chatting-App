@@ -48,8 +48,7 @@ class FireStoreHelper {
   }
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> userStream(
-      {required int sentId, required int recievedId}) {
-
+      {required int recievedId}) {
     return firebaseFireStore
         .collection(collection)
         .doc("$recievedId")

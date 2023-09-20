@@ -2,9 +2,19 @@ class FireStoreModal {
   int id;
   String name;
   String password;
-  // late Map received;
-  // late Map sent;
-  // late List contacts;
+  // late List contacts = [];
+  // late Map received = {
+  //   "${contacts[0]}": {
+  //     "msg" : "",
+  //     "time" : "",
+  //   }
+  // };
+  // late Map sent = {
+  //   "${contacts[0]}": {
+  //     "msg" : "",
+  //     "time" : "",
+  //   }
+  // };
 
   FireStoreModal(
     this.id,
