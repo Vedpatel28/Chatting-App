@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
+  int argId = Get.arguments;
+
   late String name;
   late int age;
   late int id = 101;
@@ -17,22 +19,21 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size s = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: FutureBuilder(
-          future: FireStoreHelper.fireStoreHelper.getAllUser(),
+        child: StreamBuilder(
+          stream: FireStoreHelper.fireStoreHelper.getAllUser(id: id),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
                 itemCount: snapshot.data?.length,
                 itemBuilder: (context, index) {
-                  List<GetUserModal>? allUser = snapshot.data;
-                  log("$allUser");
+                  Map<String,dynamic> allUser = snapshot.data;
+                  log(" Print Time :  ${allUser['contacts']}");
                   return Card(
                     child: ListTile(
                       onTap: () {
@@ -41,8 +42,8 @@ class HomePage extends StatelessWidget {
                           arguments: allUser,
                         );
                       },
-                      leading: Text("${allUser![index].id}"),
-                      title: Text(allUser[index].name),
+                      leading: Text("${allUser['contacts']}"),
+                      // title: Text(allUser[index].name),
                     ),
                   );
                 },
@@ -58,161 +59,6 @@ class HomePage extends StatelessWidget {
           },
         ),
       ),
-      // drawer: Drawer(
-      //   child: Column(
-      //     children: [
-      //       UserAccountsDrawerHeader(
-      //         currentAccountPicture: Visibility(
-      //           visible: userModal != null,
-      //           child: CircleAvatar(
-      //             foregroundImage: NetworkImage("${userModal?.userImage}"),
-      //           ),
-      //         ),
-      //         accountName: Visibility(
-      //           visible: userModal != null,
-      //           child: Text(
-      //             userModal?.userName ?? "Geste Account",
-      //             style: GoogleFonts.headlandOne(),
-      //           ),
-      //         ),
-      //         accountEmail: Visibility(
-      //           visible: userModal != null,
-      //           child: Text(
-      //             userModal?.userEmail ?? "Geste Account",
-      //             style: GoogleFonts.headlandOne(),
-      //           ),
-      //         ),
-      //       ),
-      //       ElevatedButton.icon(
-      //         onPressed: () async {
-      //           bool logout = await SignupHelper.signupHelper.logoutUser();
-      //           log("$logout");
-      //           (logout == true)
-      //               ? Get.offNamed("/")
-      //               : Get.snackbar(
-      //                   "Something Wrong",
-      //                   "Your Logout Failed",
-      //                 );
-      //         },
-      //         icon: const Icon(
-      //           Icons.logout_outlined,
-      //         ),
-      //         label: Text(
-      //           "Log-out",
-      //           style: GoogleFonts.headlandOne(),
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
-      // appBar: AppBar(
-      //   title: const Text("Home"),
-      // ),
-      // body: Padding(
-      //   padding: const EdgeInsets.all(16),
-      //   child: Container(
-      //     height: s.height * 0.8,
-      //     width: s.width,
-      //     decoration: BoxDecoration(
-      //       color: Colors.grey.shade50,
-      //     ),
-      //     child: StreamBuilder(
-      //       stream: FireStoreHelper.fireStoreHelper.db
-      //           .collection("student")
-      //           .snapshots(),
-      //       builder: (context, snapshot) {
-      //         if (snapshot.hasData) {
-      //           final data = FireStoreHelper.fireStoreHelper.readData();
-      //
-      //           return ListView.builder(
-      //             itemCount: 1,
-      //             itemBuilder: (context, index) {
-      //               return Container(
-      //                 height: s.height * 0.02,
-      //                 child: Text(
-      //                   data[index],
-      //                 ),
-      //               );
-      //             },
-      //           );
-      //         } else {
-      //           return const Center(
-      //             child: CircularProgressIndicator(),
-      //           );
-      //         }
-      //       },
-      //     ),
-      //   ),
-      // ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      //   child: IconButton(
-      //     onPressed: () {
-      //       FireStoreHelper.fireStoreHelper.addData();
-      //       showDialog(
-      //         context: context,
-      //         builder: (context) => AlertDialog(
-      //           content: Column(
-      //             mainAxisSize: MainAxisSize.min,
-      //             children: [
-      //               TextField(
-      //                 onSubmitted: (value) {
-      //                   id = int.parse(value);
-      //                 },
-      //                 decoration: const InputDecoration(
-      //                   border: OutlineInputBorder(),
-      //                   label: Text("Id"),
-      //                 ),
-      //               ),
-      //               SizedBox(height: s.height * 0.02),
-      //               TextField(
-      //                 onSubmitted: (value) {
-      //                   name = value;
-      //                   log(name);
-      //                 },
-      //                 decoration: const InputDecoration(
-      //                   border: OutlineInputBorder(),
-      //                   label: Text("Name"),
-      //                 ),
-      //               ),
-      //               SizedBox(height: s.height * 0.02),
-      //               TextField(
-      //                 onSubmitted: (value) {
-      //                   age = int.parse(value);
-      //                 },
-      //                 decoration: const InputDecoration(
-      //                   border: OutlineInputBorder(),
-      //                   label: Text("Age"),
-      //                 ),
-      //               ),
-      //             ],
-      //           ),
-      //           actions: [
-      //             ElevatedButton.icon(
-      //               onPressed: () async {
-      //                 FireStoreHelper.fireStoreHelper.addStudent(
-      //                   fireStoreModal: FireStoreModal(
-      //                     id,
-      //                     name,
-      //                     age,
-      //                   ),
-      //                 );
-      //                 Navigator.of(context).pop();
-      //               },
-      //               label: const Text("Continue"),
-      //               icon: const Icon(
-      //                 Icons.keyboard_double_arrow_right,
-      //               ),
-      //             )
-      //           ],
-      //         ),
-      //       );
-      //     },
-      //     icon: const Icon(
-      //       Icons.add,
-      //     ),
-      //   ),
-      // ),
     );
   }
 }
