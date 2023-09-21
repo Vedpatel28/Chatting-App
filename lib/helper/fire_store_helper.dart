@@ -20,18 +20,20 @@ class FireStoreHelper {
     return doc.data() as Map<String, dynamic>;
   }
 
-  Future<List<GetUserModal>> getAllUser() async {
-    QuerySnapshot data = await firebaseFireStore.collection(collection).get();
+  Stream<dynamic> getAllUser({required int id}) {
+    Stream<DocumentSnapshot<Map<String, dynamic>>> data = firebaseFireStore
+        .collection(collection)
+        .doc("$id")
+        .snapshots();
 
-    List<QueryDocumentSnapshot> allData = data.docs;
+    Stream<dynamic> allData = data.map((event) => event.data());
 
-    List<GetUserModal> allUser = allData
-        .map((e) => GetUserModal.fromMap(data: e.data() as Map))
-        .toList();
+    // List allUser = allData
+    //     .map((e) => GetUserModal.fromMap(data: e.data() as Map)).toList();
 
-    log("User : [$allUser] $allUser");
+    log("User : [$allData]");
 
-    return allUser;
+    return allData;
   }
 
   addUser({required FireStoreModal fireStoreModal}) {
