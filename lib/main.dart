@@ -1,3 +1,4 @@
+import 'package:chat_app_firebase/controller/first_time_login_controller.dart';
 import 'package:chat_app_firebase/views/screens/chat_page.dart';
 import 'package:chat_app_firebase/views/screens/home_page.dart';
 import 'package:chat_app_firebase/views/screens/login_page.dart';
@@ -9,7 +10,6 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -23,6 +23,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirstTimeCheck firstTimeCheck = Get.put(FirstTimeCheck());
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(
           name: "/",
-          page: () => LoginPage(),
+          page: () => firstTimeCheck.isOne ? HomePage() : LoginPage(),
         ),
         GetPage(
           name: "/HomePage",
