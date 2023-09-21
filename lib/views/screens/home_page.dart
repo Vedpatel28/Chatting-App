@@ -3,7 +3,6 @@
 import 'dart:developer';
 
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
-import 'package:chat_app_firebase/modal/get_user_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,20 +29,19 @@ class HomePage extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
-                itemCount: snapshot.data?.length,
+                itemCount: snapshot.data?['contacts'].length,
                 itemBuilder: (context, index) {
                   Map<String,dynamic> allUser = snapshot.data;
-                  log(" Print Time :  ${allUser['contacts']}");
+                  log(" Print Time :  ${allUser['contacts'][index]}");
                   return Card(
                     child: ListTile(
                       onTap: () {
                         Get.toNamed(
                           "/ChatPage",
-                          arguments: allUser,
+                          arguments: allUser['id'],
                         );
                       },
-                      leading: Text("${allUser['contacts']}"),
-                      // title: Text(allUser[index].name),
+                      leading: Text("${allUser['contacts'][index]}"),
                     ),
                   );
                 },

@@ -2,7 +2,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FirstTimeCheck {
-
   final String _isFirst = "isFirst";
 
   SharedPreferences? sharedPreferences;
@@ -10,11 +9,10 @@ class FirstTimeCheck {
   GetStorage storage = GetStorage();
 
   bool get isOne {
-    return sharedPreferences!.getBool(_isFirst) ?? false;
+    return sharedPreferences?.getBool(_isFirst) ?? false;
   }
+
   setOne() {
-
-    sharedPreferences!.setBool(_isFirst, true);
-
+    sharedPreferences?.setBool(_isFirst, true);
   }
 }

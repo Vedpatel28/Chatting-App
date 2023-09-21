@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
-import 'package:chat_app_firebase/modal/get_user_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +8,7 @@ import 'package:get/get.dart';
 class ChatPage extends StatelessWidget {
   ChatPage({super.key});
 
-  List<GetUserModal> userData = Get.arguments;
+  int userId = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +16,13 @@ class ChatPage extends StatelessWidget {
       appBar: AppBar(
         title: StreamBuilder(
           stream: FireStoreHelper.fireStoreHelper.userStream(
-            recievedId: userData[0].id,
+            recievedId: userId,
           ),
           builder: (context, snapshot) {
             DocumentSnapshot<Map<String, dynamic>>? data = snapshot.data;
-            log("Data: $data \n Id: ${userData[0].name}");
+            log("Id: $data \n Id: $userId");
             if (snapshot.hasData) {
-              return Text("${data?['sent']}");
+              return Text("${data?['name']}");
             } else {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -38,13 +37,13 @@ class ChatPage extends StatelessWidget {
           children: [
             StreamBuilder(
               stream: FireStoreHelper.fireStoreHelper.userStream(
-                recievedId: userData[0].id,
+                recievedId: userId,
               ),
               builder: (context, snapshot) {
                 DocumentSnapshot<Map<String, dynamic>>? data = snapshot.data;
 
                 if (snapshot.hasData) {
-                  return Text("${data?['sent']}");
+                  return Text("${data?['sent']['102']}");
                 } else {
                   return const Center(
                     child: CircularProgressIndicator(),

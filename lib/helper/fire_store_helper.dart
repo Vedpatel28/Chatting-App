@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:chat_app_firebase/modal/fire_store_modal.dart';
-import 'package:chat_app_firebase/modal/get_user_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireStoreHelper {
@@ -21,17 +20,10 @@ class FireStoreHelper {
   }
 
   Stream<dynamic> getAllUser({required int id}) {
-    Stream<DocumentSnapshot<Map<String, dynamic>>> data = firebaseFireStore
-        .collection(collection)
-        .doc("$id")
-        .snapshots();
+    Stream<DocumentSnapshot<Map<String, dynamic>>> data =
+        firebaseFireStore.collection(collection).doc("$id").snapshots();
 
     Stream<dynamic> allData = data.map((event) => event.data());
-
-    // List allUser = allData
-    //     .map((e) => GetUserModal.fromMap(data: e.data() as Map)).toList();
-
-    log("User : [$allData]");
 
     return allData;
   }
