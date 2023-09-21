@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:chat_app_firebase/controller/first_time_login_controller.dart';
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -15,6 +16,8 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirstTimeCheck firstTimeCheck = Get.put(FirstTimeCheck());
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -86,14 +89,19 @@ class LoginPage extends StatelessWidget {
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
+
                     FireStoreHelper.fireStoreHelper.validateUser(
                       id: int.parse(id),
                       password: password,
                     );
+                    firstTimeCheck.setOne();
                     FireStoreHelper.fireStoreHelper.getCredential(
                       id: int.parse(id),
                     );
-                    Get.offNamed("/HomePage");
+                    Get.offNamed(
+                      "/HomePage",
+                      arguments: int.parse(id),
+                    );
                   }
                 },
                 child: const Text("SUBMIT"),
