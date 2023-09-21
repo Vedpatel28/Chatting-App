@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
                       onTap: () {
                         Get.toNamed(
                           "/ChatPage",
-                          arguments: allUser['id'],
+                          arguments: allUser,
                         );
                       },
                       leading: Text("${allUser['contacts'][index]}"),

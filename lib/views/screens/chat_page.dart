@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 class ChatPage extends StatelessWidget {
   ChatPage({super.key});
 
-  int userId = Get.arguments;
+  Map userId = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class ChatPage extends StatelessWidget {
       appBar: AppBar(
         title: StreamBuilder(
           stream: FireStoreHelper.fireStoreHelper.userStream(
-            recievedId: userId,
+            recievedId: userId['id'],
           ),
           builder: (context, snapshot) {
             DocumentSnapshot<Map<String, dynamic>>? data = snapshot.data;
@@ -37,13 +37,17 @@ class ChatPage extends StatelessWidget {
           children: [
             StreamBuilder(
               stream: FireStoreHelper.fireStoreHelper.userStream(
-                recievedId: userId,
+                recievedId: userId['id'],
               ),
               builder: (context, snapshot) {
-                DocumentSnapshot<Map<String, dynamic>>? data = snapshot.data;
-
                 if (snapshot.hasData) {
-                  return Text("${data?['sent']['102']}");
+
+                Map<String,dynamic> userData = snapshot.data!.data() as Map<String,dynamic>;
+                DocumentSnapshot<Map<String, dynamic>>? data = snapshot.data;
+                log("Show : ${data?['sent']['${userData['recieved']}']}");
+
+
+                  return Text("${userData['sent']['${userId['recieved']['msg']}']}");
                 } else {
                   return const Center(
                     child: CircularProgressIndicator(),
