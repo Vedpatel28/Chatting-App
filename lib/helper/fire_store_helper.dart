@@ -42,13 +42,18 @@ class FireStoreHelper {
   }
 
   Stream<dynamic> userStream({required int recievedId}) {
-
     Stream<DocumentSnapshot<Map<String, dynamic>>> data =
         firebaseFireStore.collection(collection).doc("$recievedId").snapshots();
 
     Stream<dynamic> allData = data.map((event) => event.data());
 
     return allData;
+  }
+
+  sentNewMassage ({required int sentId , required int receiverId,required String msg}) {
+
+
+
   }
 
   getContacts({required int id}) async {

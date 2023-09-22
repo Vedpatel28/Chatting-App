@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:542880054649:android:a7241e5467e7bdd0e3c3a8",
+        "mobilesdk_app_id": "1:542880054649:android:fe865b02fd62d1bbe3c3a8",
         "android_client_info": {
           "package_name": "com.example.chat_app_firebase"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "542880054649-ck7cqc7nruhorqv36c6j7lfqrj0jotgd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA3jeOe5R4GBIQniTIKBuOMazrtAmCVJ-4"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542880054649-ck7cqc7nruhorqv36c6j7lfqrj0jotgd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "542880054649-573ipsv5jvi0ou3lsp3rqhoi0ub2ueqp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chatAppFirebase.RunnerTests"
+              }
+            }
+          ]
         }
       }
     }

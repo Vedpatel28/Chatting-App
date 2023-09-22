@@ -29,12 +29,12 @@ class DefaultFirebaseOptions {
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       default:
         throw UnsupportedError(
@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyA3jeOe5R4GBIQniTIKBuOMazrtAmCVJ-4',
-    appId: '1:542880054649:android:a7241e5467e7bdd0e3c3a8',
+    appId: '1:542880054649:android:fe865b02fd62d1bbe3c3a8',
     messagingSenderId: '542880054649',
     projectId: 'chat-app-6a808',
     storageBucket: 'chat-app-6a808.appspot.com',
@@ -67,6 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '542880054649',
     projectId: 'chat-app-6a808',
     storageBucket: 'chat-app-6a808.appspot.com',
+    iosClientId: '542880054649-eeitelhpvutamr02pek3qea86lr37tlm.apps.googleusercontent.com',
     iosBundleId: 'com.example.chatAppFirebase',
   );
 
@@ -76,6 +77,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '542880054649',
     projectId: 'chat-app-6a808',
     storageBucket: 'chat-app-6a808.appspot.com',
+    iosClientId: '542880054649-573ipsv5jvi0ou3lsp3rqhoi0ub2ueqp.apps.googleusercontent.com',
     iosBundleId: 'com.example.chatAppFirebase.RunnerTests',
   );
 }
