@@ -20,9 +20,9 @@ class ChatPage extends StatelessWidget {
           ),
           builder: (context, snapshot) {
             Map<String, dynamic>? data = snapshot.data as Map<String, dynamic>?;
+            // List sentChat = data?['sent']['${userId['id']['recieved']}']['msg'];
             if (snapshot.hasData) {
               return Text("${data?['name']}");
-
             } else {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -33,7 +33,7 @@ class ChatPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: SizedBox(
+        child: Container(
           height: s.height * 0.08,
           child: StreamBuilder(
             stream: FireStoreHelper.fireStoreHelper.userStream(
@@ -41,12 +41,11 @@ class ChatPage extends StatelessWidget {
             ),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                Map<String, dynamic>? data =
-                    snapshot.data as Map<String, dynamic>?;
+                Map<String, dynamic>? data = snapshot.data as Map<String, dynamic>?;
 
                 log("senders Id : ${userId['sender']}");
 
-                Map<String, dynamic>? sentChat = data!['sent']['102'];
+                Map<String,dynamic>? sentChat = data!['sent']['102'];
 
                 log("Sent : $sentChat");
                 return ListView.builder(
