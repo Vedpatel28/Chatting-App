@@ -96,9 +96,8 @@ class SignInPage extends StatelessWidget {
                         // sent,
                         // contacts,
                       );
-                      FireStoreHelper.fireStoreHelper
-                          .addUser(fireStoreModal: fireStoreModal);
-                      Get.offNamed("/HomePage");
+                      FireStoreHelper.fireStoreHelper.addUser(fireStoreModal: fireStoreModal);
+                      Get.offNamed("/HomePage",arguments: id);
                     },
                     child: Container(
                       height: s.height * 0.065,

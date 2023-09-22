@@ -32,13 +32,17 @@ class HomePage extends StatelessWidget {
                 itemCount: snapshot.data?['contacts'].length,
                 itemBuilder: (context, index) {
                   Map<String,dynamic> allUser = snapshot.data;
-                  log(" Print Time :  ${allUser['contacts'][index]}");
+                  log("Sender Id : ${allUser['contacts'][index]}");
+                  Map data = {
+                    'sender' : allUser['contacts'][index],
+                    'recieved' : allUser,
+                  };
                   return Card(
                     child: ListTile(
                       onTap: () {
                         Get.toNamed(
                           "/ChatPage",
-                          arguments: allUser,
+                          arguments: data,
                         );
                       },
                       leading: Text("${allUser['contacts'][index]}"),
