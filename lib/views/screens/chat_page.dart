@@ -34,24 +34,41 @@ class ChatPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Container(
-          height: s.height * 0.08,
+          height: s.height * 0.8,
           child: StreamBuilder(
             stream: FireStoreHelper.fireStoreHelper.userStream(
               recievedId: userId['sender'],
             ),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                Map<String, dynamic>? data = snapshot.data as Map<String, dynamic>?;
-
+                Map<String, dynamic>? data =
+                    snapshot.data as Map<String, dynamic>?;
                 log("senders Id : ${userId['sender']}");
-
                 List<dynamic>? sentChat = data!['sent']['101']['msg'];
-
+                List<dynamic>? recievedChat = data['recieved']['101']['msg'];
                 log("Sent : $sentChat");
+
                 return ListView.builder(
                   itemCount: sentChat?.length,
                   itemBuilder: (context, index) {
-                    return Text("${sentChat?[index]}");
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Card(
+                              child: Text("${sentChat?[index]}"),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text("${recievedChat?[index]}"),
+                          ],
+                        ),
+                      ],
+                    );
                   },
                 );
               } else {
