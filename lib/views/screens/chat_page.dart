@@ -23,6 +23,7 @@ class ChatPage extends StatelessWidget {
             // List sentChat = data?['sent']['${userId['id']['recieved']}']['msg'];
             if (snapshot.hasData) {
               return Text("${data?['name']}");
+              
             } else {
               return const Center(
                 child: CircularProgressIndicator(),
