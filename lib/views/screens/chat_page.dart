@@ -45,13 +45,13 @@ class ChatPage extends StatelessWidget {
 
                 log("senders Id : ${userId['sender']}");
 
-                Map<String,dynamic>? sentChat = data!['sent']['102'];
+                List<dynamic>? sentChat = data!['sent']['101']['msg'];
 
                 log("Sent : $sentChat");
                 return ListView.builder(
                   itemCount: sentChat?.length,
                   itemBuilder: (context, index) {
-                    return Text("${sentChat?['msg'][index]}");
+                    return Text("${sentChat?[index]}");
                   },
                 );
               } else {
