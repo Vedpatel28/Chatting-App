@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:chat_app_firebase/modal/fire_store_modal.dart';
-import 'package:chat_app_firebase/modal/get_user_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireStoreHelper {
@@ -16,7 +15,6 @@ class FireStoreHelper {
     DocumentSnapshot doc =
         await firebaseFireStore.collection(collection).doc('$id').get();
 
-    log("Print : ${doc.data()}");
     return doc.data() as Map<String, dynamic>;
   }
 
@@ -25,12 +23,6 @@ class FireStoreHelper {
         await firebaseFireStore.collection(collection).doc("$id").get();
 
     Map<String, dynamic>? allData = data.data();
-    // List<QueryDocumentSnapshot> allData = data.data() as List<QueryDocumentSnapshot<Object?>>;
-
-    // List<GetUserModal> allUser = allData!.map((e) => GetUserModal.fromMap(data: e.data() as Map));
-
-    log("User : [${allData}] \n That After : ");
-
     return allData;
   }
 
@@ -61,7 +53,6 @@ class FireStoreHelper {
         firebaseFireStore.collection(collection).doc("$recievedId").snapshots();
 
     Stream allData = data.map((event) => event.data());
-    log("Contact Name :  $allData");
     return allData;
   }
 
@@ -81,12 +72,8 @@ class FireStoreHelper {
     sender?['sent']['$receiverId']['msg'].add(msg);
     sender?['sent']['$receiverId']['time'].add(time);
 
-      log("after Sent : ${sender?['sent']['$receiverId']['msg']}");
-
     receiver?['recieved']['$sentId']['msg'].add(msg);
     receiver?['recieved']['$sentId']['time'].add(time);
-
-      log("after Sent : ${sender?['sent']['$receiverId']['msg']}");
 
     firebaseFireStore.collection(collection).doc(sentId.toString()).set(sender!);
     firebaseFireStore.collection(collection).doc(receiverId.toString()).set(receiver!);
@@ -101,7 +88,6 @@ class FireStoreHelper {
   validateUser({required int id, required String password}) async {
     DocumentSnapshot doc =
         await firebaseFireStore.collection(collection).doc(id.toString()).get();
-    log("Doc = ${doc['id']}");
 
     if (doc["id"] == id) {
       log("ID Is Fund");
@@ -111,7 +97,6 @@ class FireStoreHelper {
     } else {
       log("ID Not Exist");
     }
-    log("Doc Withe Data = ${doc.data()}");
     return doc.data();
   }
 
@@ -120,7 +105,6 @@ class FireStoreHelper {
         await firebaseFireStore.collection(collection).doc(id.toString()).get();
 
     Map<dynamic, dynamic> data = snapshot.data() as Map;
-    log("SnapShort = $data");
 
     return data["password"];
   }

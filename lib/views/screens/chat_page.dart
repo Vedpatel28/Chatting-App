@@ -1,8 +1,8 @@
-import 'dart:developer';
+
+// ignore_for_file: must_be_immutable
 
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -66,23 +66,11 @@ class ChatPage extends StatelessWidget {
                     Map<String, dynamic>? data =
                         snapshot.data as Map<String, dynamic>?;
 
-                    log("senders Id : ${userId['sender']}");
-                    log("recieved Id : ${userId['recieved']}");
-
                     List<dynamic>? sentChat =
                         data!['sent']['${userId['recieved']['id']}']['msg'];
 
-                    log("Pre Sent : ${data['sent']['${userId['recieved']['id']}']['msg']}");
-
-                    log("Pre Sent : ${data['id']}");
-
                     List<dynamic>? recievedChat =
                         data['recieved']['${userId['recieved']['id']}']['msg'];
-
-                    // List<dynamic>? recievedTime =
-                    //     data['recieved']['101']['time'];
-
-                    log("Sent : $sentChat");
 
                     return ListView.builder(
                       itemCount: (sentChat!.length > recievedChat!.length)
@@ -91,14 +79,12 @@ class ChatPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
-                            Divider(color: Colors.grey.shade200),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Container(
                                   padding: const EdgeInsets.all(10),
                                   decoration: const BoxDecoration(
-                                    // color: Color(0xFF0D1282),
                                     borderRadius: BorderRadius.only(
                                       bottomRight: Radius.elliptical(15, 12),
                                       topLeft: Radius.elliptical(20, 12),
@@ -109,14 +95,12 @@ class ChatPage extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       Container(
-                                        width: s.width*0.8,
+                                        width: s.width * 0.8,
                                         alignment: Alignment.topRight,
                                         child: Text(
                                           "${sentChat[index]}",
                                           style: GoogleFonts.bubblegumSans(
                                             fontSize: 22,
-                                            backgroundColor: Color(0xFF0D1282),
-                                            // color: const Color(0xFFF0DE36),
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -126,14 +110,12 @@ class ChatPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            Divider(color: Colors.grey.shade200),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Container(
                                   padding: const EdgeInsets.all(10),
                                   decoration: const BoxDecoration(
-                                    // color: Color(0xFF0D1282),
                                     borderRadius: BorderRadius.only(
                                       bottomRight: Radius.elliptical(15, 12),
                                       topRight: Radius.elliptical(20, 12),
@@ -144,14 +126,12 @@ class ChatPage extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       Container(
-                                        width: s.width*0.8,
+                                        width: s.width * 0.8,
                                         alignment: Alignment.topLeft,
                                         child: Text(
                                           "${recievedChat[index]}",
                                           style: GoogleFonts.changa(
                                             fontSize: 22,
-                                            backgroundColor: Color(0xFF0D1282),
-                                            // color: const Color(0xFFF0DE36),
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -161,7 +141,6 @@ class ChatPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            Divider(color: Colors.grey.shade200),
                           ],
                         );
                       },
