@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:chat_app_firebase/modal/fire_store_modal.dart';
+import 'package:chat_app_firebase/modal/get_user_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireStoreHelper {
@@ -19,7 +20,21 @@ class FireStoreHelper {
     return doc.data() as Map<String, dynamic>;
   }
 
-  Stream<dynamic> getAllUser({required int id}) {
+  Future<Map<String, dynamic>?> getAllUser({required int id}) async {
+    DocumentSnapshot<Map<String, dynamic>> data =
+        await firebaseFireStore.collection(collection).doc("$id").get();
+
+    Map<String, dynamic>? allData = data.data();
+    // List<QueryDocumentSnapshot> allData = data.data() as List<QueryDocumentSnapshot<Object?>>;
+
+    // List<GetUserModal> allUser = allData!.map((e) => GetUserModal.fromMap(data: e.data() as Map));
+
+    log("User : [${allData}] \n That After : ");
+
+    return allData;
+  }
+
+  Stream<dynamic> getAllUserStream({required int id}) {
     Stream<DocumentSnapshot<Map<String, dynamic>>> data =
         firebaseFireStore.collection(collection).doc("$id").snapshots();
 
@@ -45,15 +60,36 @@ class FireStoreHelper {
     Stream<DocumentSnapshot<Map<String, dynamic>>> data =
         firebaseFireStore.collection(collection).doc("$recievedId").snapshots();
 
-    Stream<dynamic> allData = data.map((event) => event.data());
-
+    Stream allData = data.map((event) => event.data());
+    log("Contact Name :  $allData");
     return allData;
   }
 
-  sentNewMassage ({required int sentId , required int receiverId,required String msg}) {
+  sentNewMassage({
+    required int sentId,
+    required int receiverId,
+    required String msg,
+  }) async {
 
+    Map<String, dynamic>? sender = await getAllUser(id: sentId);
 
+    Map<String, dynamic>? receiver = await getAllUser(id: receiverId);
 
+    DateTime d = DateTime.now();
+    String time = "${d.day}/${d.month}/${d.year}-${d.hour}:${d.minute}";
+
+    sender?['sent']['$receiverId']['msg'].add(msg);
+    sender?['sent']['$receiverId']['time'].add(time);
+
+      log("after Sent : ${sender?['sent']['$receiverId']['msg']}");
+
+    receiver?['recieved']['$sentId']['msg'].add(msg);
+    receiver?['recieved']['$sentId']['time'].add(time);
+
+      log("after Sent : ${sender?['sent']['$receiverId']['msg']}");
+
+    firebaseFireStore.collection(collection).doc(sentId.toString()).set(sender!);
+    firebaseFireStore.collection(collection).doc(receiverId.toString()).set(receiver!);
   }
 
   getContacts({required int id}) async {
@@ -65,7 +101,7 @@ class FireStoreHelper {
   validateUser({required int id, required String password}) async {
     DocumentSnapshot doc =
         await firebaseFireStore.collection(collection).doc(id.toString()).get();
-    log("Doc = $doc");
+    log("Doc = ${doc['id']}");
 
     if (doc["id"] == id) {
       log("ID Is Fund");
