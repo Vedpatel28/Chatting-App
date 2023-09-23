@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 

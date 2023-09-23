@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:chat_app_firebase/modal/fire_store_modal.dart';
+import 'package:chat_app_firebase/modal/get_user_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireStoreHelper {
