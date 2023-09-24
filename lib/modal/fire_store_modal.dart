@@ -2,17 +2,17 @@ class FireStoreModal {
   int id;
   String name;
   String password;
-  // late List contacts = [];
-  // late Map received = {
-  //   "${contacts[0]}": {
-  //     "msg" : "",
-  //     "time" : "",
-  //   }
-  // };
+  // List contacts = [];
   // late Map sent = {
   //   "${contacts[0]}": {
-  //     "msg" : "",
-  //     "time" : "",
+  //     "msg": "",
+  //     "time": "",
+  //   }
+  // };
+  // late Map received = {
+  //   "${contacts[0]}": {
+  //     "msg": "",
+  //     "time": "",
   //   }
   // };
 
@@ -20,9 +20,9 @@ class FireStoreModal {
     this.id,
     this.name,
     this.password,
-    // this.received,
-    // this.sent,
     // this.contacts,
+    // this.sent,
+    // this.received,
   );
 
   factory FireStoreModal.fromMap({required Map data}) {
@@ -30,9 +30,9 @@ class FireStoreModal {
       data['id'],
       data['name'],
       data['password'],
-      // data['received'],
-      // data['sent'],
       // data['contacts'],
+      // data['sent'],
+      // data['received'],
     );
   }
 }
