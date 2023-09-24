@@ -66,14 +66,23 @@ class ChatPage extends StatelessWidget {
                     // All Fire Base Data Facing
                     Map<String, dynamic>? data =
                         snapshot.data as Map<String, dynamic>?;
+
                     // All Sent Chat
                     List<dynamic>? sentChat =
                         data!['sent']['${userId['recieved']['id']}']['msg'];
+
                     // All Received Chat
                     List<dynamic>? recievedChat =
                         data['recieved']['${userId['recieved']['id']}']['msg'];
+
+                    // All Sent Time
+                    List<dynamic>? sentTime =
+                        data['sent']['${userId['recieved']['id']}']['time'];
+
+                    // All Received Time
                     List<dynamic>? recievedTime =
                         data['recieved']['${userId['recieved']['id']}']['time'];
+
                     return ListView.builder(
                       // Check Length
                       itemCount: (sentChat!.length < recievedChat!.length)
@@ -119,6 +128,14 @@ class ChatPage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
+                                      Text(
+                                        "${sentTime?[index]}",
+                                        style: GoogleFonts.changa(
+                                          fontSize: 14,
+                                          // color: const Color(0xFFFFFADD),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -161,6 +178,15 @@ class ChatPage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
+                                      Text(
+                                        "${recievedTime?[index]}",
+                                        style: GoogleFonts.changa(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          // color: const Color(0xFFFFFADD),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -193,6 +219,7 @@ class ChatPage extends StatelessWidget {
                       receiverId: userId['recieved']['id'],
                       msg: sendMassage.text,
                     );
+                    sendMassage.clear();
                   },
                   icon: const Icon(
                     Icons.send,

@@ -2,7 +2,6 @@
 
 import 'dart:developer';
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
-import 'package:chat_app_firebase/modal/get_user_modal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,8 +25,12 @@ class HomePage extends StatelessWidget {
               if (value == 'exit') {
                 Get.offNamed("/");
               }
-              if (value == 'signout') {}
-              if (value == 'delete') {}
+              if (value == 'sign out') {
+                Get.offNamed("/");
+              }
+              if (value == 'delete') {
+                Get.offNamed("/");
+              }
             },
             itemBuilder: (BuildContext bc) {
               return const [
@@ -113,7 +116,7 @@ class HomePage extends StatelessWidget {
                   TextField(
                     onSubmitted: (value) {
                       id = int.parse(value);
-                      log("ID : ${id}");
+                      log("ID : $id");
                     },
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
