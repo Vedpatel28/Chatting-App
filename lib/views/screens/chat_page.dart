@@ -1,4 +1,3 @@
-
 // ignore_for_file: must_be_immutable
 
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
@@ -28,14 +27,14 @@ class ChatPage extends StatelessWidget {
           ),
         ),
         backgroundColor: const Color(0xFF0D1282),
+        // Receiver Name
         title: StreamBuilder(
           stream: FireStoreHelper.fireStoreHelper.userStream(
             recievedId: userId['sender'],
           ),
           builder: (context, snapshot) {
-            // Map<String, dynamic>? data = snapshot.data as Map<String, dynamic>?;
-
             if (snapshot.hasData) {
+              // Receiver Name
               return Text(
                 "${userId['sender']}",
                 style: GoogleFonts.bubblegumSans(
@@ -56,6 +55,7 @@ class ChatPage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            // All Chat Part
             Expanded(
               child: StreamBuilder(
                 stream: FireStoreHelper.fireStoreHelper.userStream(
@@ -63,44 +63,58 @@ class ChatPage extends StatelessWidget {
                 ),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
+                    // All Fire Base Data Facing
                     Map<String, dynamic>? data =
                         snapshot.data as Map<String, dynamic>?;
-
+                    // All Sent Chat
                     List<dynamic>? sentChat =
                         data!['sent']['${userId['recieved']['id']}']['msg'];
-
+                    // All Received Chat
                     List<dynamic>? recievedChat =
                         data['recieved']['${userId['recieved']['id']}']['msg'];
-
+                    List<dynamic>? recievedTime =
+                        data['recieved']['${userId['recieved']['id']}']['time'];
                     return ListView.builder(
-                      itemCount: (sentChat!.length > recievedChat!.length)
-                          ? recievedChat.length
-                          : sentChat.length,
+                      // Check Length
+                      itemCount: (sentChat!.length < recievedChat!.length)
+                          ? sentChat.length
+                          : recievedChat.length,
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
+                            // Sent Chat
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Container(
-                                  padding: const EdgeInsets.all(10),
+                                  padding: const EdgeInsets.only(
+                                    left: 10,
+                                    right: 10,
+                                    bottom: 5,
+                                    top: 5,
+                                  ),
                                   decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                       bottomRight: Radius.elliptical(15, 12),
                                       topLeft: Radius.elliptical(20, 12),
                                       bottomLeft: Radius.elliptical(20, 12),
                                     ),
+                                    color: Color(0xFF22668D),
                                   ),
+                                  margin: const EdgeInsets.all(6),
                                   alignment: Alignment.center,
                                   child: Column(
                                     children: [
+                                      // Decoration Sent Chat Box
                                       Container(
                                         width: s.width * 0.8,
                                         alignment: Alignment.topRight,
+                                        // Sent Chat
                                         child: Text(
                                           "${sentChat[index]}",
-                                          style: GoogleFonts.bubblegumSans(
+                                          style: GoogleFonts.changa(
                                             fontSize: 22,
+                                            color: Color(0xFFFFFADD),
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -110,27 +124,38 @@ class ChatPage extends StatelessWidget {
                                 ),
                               ],
                             ),
+                            // Received Chat
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Container(
-                                  padding: const EdgeInsets.all(10),
+                                  padding: const EdgeInsets.only(
+                                    left: 10,
+                                    right: 10,
+                                    bottom: 5,
+                                    top: 5,
+                                  ),
+                                  margin: const EdgeInsets.all(6),
                                   decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                       bottomRight: Radius.elliptical(15, 12),
                                       topRight: Radius.elliptical(20, 12),
                                       bottomLeft: Radius.elliptical(20, 12),
                                     ),
+                                    color: Color(0xFF141E46),
                                   ),
                                   alignment: Alignment.center,
                                   child: Column(
                                     children: [
+                                      // Decoration Received Chat Box
                                       Container(
                                         width: s.width * 0.8,
                                         alignment: Alignment.topLeft,
+                                        // Received Chat Box
                                         child: Text(
                                           "${recievedChat[index]}",
                                           style: GoogleFonts.changa(
+                                            color: Color(0xFFFFF5E0),
                                             fontSize: 22,
                                             fontWeight: FontWeight.bold,
                                           ),

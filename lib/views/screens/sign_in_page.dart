@@ -11,6 +11,7 @@ class SignInPage extends StatelessWidget {
   late int id;
   late String name;
   late String password;
+  List contacts = [];
 
   @override
   Widget build(BuildContext context) {
@@ -92,12 +93,23 @@ class SignInPage extends StatelessWidget {
                         id,
                         name,
                         password,
-                        // received,
-                        // sent,
                         // contacts,
+                        // {
+                        //   "$contacts": {
+                        //     "msg": [""],
+                        //     "time": [""],
+                        //   }
+                        // },
+                        // {
+                        //   "$contacts": {
+                        //     "msg": [""],
+                        //     "time": [""],
+                        //   }
+                        // },
                       );
-                      FireStoreHelper.fireStoreHelper.addUser(fireStoreModal: fireStoreModal);
-                      Get.offNamed("/HomePage",arguments: id);
+                      FireStoreHelper.fireStoreHelper
+                          .addUser(fireStoreModal: fireStoreModal);
+                      Get.offNamed("/HomePage", arguments: id);
                     },
                     child: Container(
                       height: s.height * 0.065,

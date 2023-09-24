@@ -1,7 +1,10 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:developer';
+
 import 'package:chat_app_firebase/controller/first_time_login_controller.dart';
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -86,7 +89,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
 
@@ -98,10 +101,26 @@ class LoginPage extends StatelessWidget {
                     FireStoreHelper.fireStoreHelper.getCredential(
                       id: int.parse(id),
                     );
-                    Get.offNamed(
-                      "/HomePage",
-                      arguments: int.parse(id),
+
+                    Map<String, dynamic>? data =
+                        await FireStoreHelper.fireStoreHelper.getAllUser(
+                      id: int.parse(id),
                     );
+
+                    String checkPassword = data?['password'];
+                    int checkID = data?['id'];
+                    log(checkPassword);
+                    if (password == checkPassword && int.parse(id) == checkID) {
+                      Get.offNamed(
+                        "/HomePage",
+                        arguments: int.parse(id),
+                      );
+                    } else {
+                      Get.snackbar(
+                        "Password or Id",
+                        "Id or Password Wrong!!",
+                      );
+                    }
                   }
                 },
                 child: const Text("SUBMIT"),
