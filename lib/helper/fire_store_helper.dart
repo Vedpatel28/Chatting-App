@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:chat_app_firebase/modal/fire_store_modal.dart';
+import 'package:chat_app_firebase/modal/get_user_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireStoreHelper {
@@ -40,6 +41,19 @@ class FireStoreHelper {
       "name": fireStoreModal.name,
       "id": fireStoreModal.id,
       "password": fireStoreModal.password,
+      "contacts": [],
+      "recieved": {
+        "contacts": {
+          "msg": [],
+          "time": [],
+        }
+      },
+      "sent": {
+        "contacts": {
+          "msg": [],
+          "time": [],
+        }
+      },
     };
 
     firebaseFireStore
@@ -56,12 +70,24 @@ class FireStoreHelper {
     return allData;
   }
 
+  addContact({
+    required int userId,
+    required int addContactId,
+  }) async {
+    Map<String, dynamic>? allUser = await getAllUser(id: userId);
+
+    log("${allUser}");
+
+    allUser?['contacts'].add(addContactId);
+    log("${allUser?['contacts'].add(addContactId)}");
+    log("After : $allUser");
+  }
+
   sentNewMassage({
     required int sentId,
     required int receiverId,
     required String msg,
   }) async {
-
     Map<String, dynamic>? sender = await getAllUser(id: sentId);
 
     Map<String, dynamic>? receiver = await getAllUser(id: receiverId);
@@ -75,8 +101,14 @@ class FireStoreHelper {
     receiver?['recieved']['$sentId']['msg'].add(msg);
     receiver?['recieved']['$sentId']['time'].add(time);
 
-    firebaseFireStore.collection(collection).doc(sentId.toString()).set(sender!);
-    firebaseFireStore.collection(collection).doc(receiverId.toString()).set(receiver!);
+    firebaseFireStore
+        .collection(collection)
+        .doc(sentId.toString())
+        .set(sender!);
+    firebaseFireStore
+        .collection(collection)
+        .doc(receiverId.toString())
+        .set(receiver!);
   }
 
   getContacts({required int id}) async {
