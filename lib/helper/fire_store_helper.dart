@@ -82,6 +82,27 @@ class FireStoreHelper {
     log("After : $allUser");
   }
 
+  deleteChat({
+    required int sentId,
+    required int receicerId,
+    required int chatIndex,
+  }) async {
+    Map<String, dynamic>? sender = await getAllUser(id: sentId);
+    Map<String, dynamic>? receiver = await getAllUser(id: receicerId);
+
+    log(" S = ${sender?['sent']['$receicerId']['msg']}");
+    log(" R = ${receiver?['recieved']['$sentId']['msg']}");
+
+    sender?['sent']['$receicerId']['msg'].removeAt(chatIndex);
+    sender?['sent']['$receicerId']['time'].removeAt(chatIndex);
+
+    receiver?['recieved']['$sentId']['msg'].removeAt(chatIndex);
+    receiver?['recieved']['$sentId']['time'].removeAt(chatIndex);
+
+    firebaseFireStore.collection(collection).doc('$sentId').set(sender!);
+    firebaseFireStore.collection(collection).doc('$receicerId').set(receiver!);
+  }
+
   sentNewMassage({
     required int sentId,
     required int receiverId,
@@ -92,7 +113,8 @@ class FireStoreHelper {
     Map<String, dynamic>? receiver = await getAllUser(id: receiverId);
 
     DateTime d = DateTime.now();
-    String time = "${d.day}/${d.month}/${d.year}-${d.hour}:${d.minute}:${d.second}";
+    String time =
+        "${d.day}/${d.month}/${d.year}-${d.hour}:${d.minute}:${d.second}";
 
     sender?['sent']['$receiverId']['msg'].add(msg);
     sender?['sent']['$receiverId']['time'].add(time);

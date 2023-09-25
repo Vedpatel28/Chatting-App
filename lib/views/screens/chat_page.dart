@@ -123,16 +123,9 @@ class ChatPage extends StatelessWidget {
                         String recievedFormattedTime =
                             DateFormat.jm().format(dt);
 
-                        log("R time : ${DateFormat.Hms().format(dt)}");
-
                         return recievedFormattedTime;
                       },
                     ).toList();
-
-                    log("Sent chat : $sentChat");
-                    log("SentTime : $sTime");
-                    log("recieved chat : $recievedChat");
-                    log("recievedTime : $rTime");
 
                     return ListView.builder(
                       // Check Length
@@ -146,51 +139,64 @@ class ChatPage extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Container(
-                                  padding: const EdgeInsets.only(
-                                    left: 10,
-                                    right: 10,
-                                    bottom: 5,
-                                    top: 5,
-                                  ),
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.elliptical(15, 12),
-                                      topLeft: Radius.elliptical(20, 12),
-                                      bottomLeft: Radius.elliptical(20, 12),
+                                GestureDetector(
+                                  onDoubleTap: () {
+                                    int chatIndex = sentChat
+                                        .indexOf(sentChat[index]);
+                                    log("${chatIndex}");
+                                    FireStoreHelper.fireStoreHelper
+                                        .deleteChat(
+                                      sentId: userId['sender'],
+                                      receicerId: userId['recieved']['id'],
+                                      chatIndex: chatIndex,
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.only(
+                                      left: 10,
+                                      right: 10,
+                                      bottom: 5,
+                                      top: 5,
                                     ),
-                                    color: Color(0xFF26577C),
-                                  ),
-                                  margin: const EdgeInsets.all(6),
-                                  alignment: Alignment.center,
-                                  child: Column(
-                                    children: [
-                                      // Decoration Sent Chat Box
-                                      Container(
-                                        width: s.width * 0.8,
-                                        alignment: Alignment.topRight,
-                                        // Sent Chat
-                                        child: Text(
-                                          "${sentChat[index]}",
-                                          style: GoogleFonts.changa(
-                                            fontSize: 22,
-                                            color: const Color(0xFFF0F0F0),
-                                            fontWeight: FontWeight.bold,
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.elliptical(15, 12),
+                                        topLeft: Radius.elliptical(20, 12),
+                                        bottomLeft: Radius.elliptical(20, 12),
+                                      ),
+                                      color: Color(0xFF26577C),
+                                    ),
+                                    margin: const EdgeInsets.all(6),
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      children: [
+                                        // Decoration Sent Chat Box
+                                        Container(
+                                          width: s.width * 0.8,
+                                          alignment: Alignment.topRight,
+                                          // Sent Chat
+                                          child: Text(
+                                            "${sentChat[index]}",
+                                            style: GoogleFonts.changa(
+                                              fontSize: 22,
+                                              color: const Color(0xFFF0F0F0),
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Transform.translate(
-                                        offset: const Offset(140, 0),
-                                        child: Text(
-                                          "${sTime[index]}",
-                                          style: GoogleFonts.changa(
-                                            fontSize: 10,
-                                            color: const Color(0xFFF5F5F5),
-                                            fontWeight: FontWeight.bold,
+                                        Transform.translate(
+                                          offset: const Offset(140, 0),
+                                          child: Text(
+                                            "${sTime[index]}",
+                                            style: GoogleFonts.changa(
+                                              fontSize: 10,
+                                              color: const Color(0xFFF5F5F5),
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],

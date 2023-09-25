@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         // User Offline
       }
     }
+
     super.initState();
   }
 
