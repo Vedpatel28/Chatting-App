@@ -6,11 +6,37 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({super.key});
 
-  int argId = Get.arguments;
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
 
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    void didChangeAppLifecycleState(AppLifecycleState state) {
+      super.didChangeAppLifecycleState(state);
+
+      if (state == AppLifecycleState.resumed) {
+        // User online
+      } else if (state == AppLifecycleState.paused) {
+        // User Offline
+      } else {
+        // User Offline
+      }
+    }
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  int argId = Get.arguments;
   late int id;
 
   @override
@@ -45,7 +71,7 @@ class HomePage extends StatelessWidget {
                 PopupMenuItem(
                   value: 'exit',
                   child: Text("Exit"),
-                )
+                ),
               ];
             },
           )
