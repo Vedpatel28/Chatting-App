@@ -92,7 +92,7 @@ class FireStoreHelper {
     Map<String, dynamic>? receiver = await getAllUser(id: receiverId);
 
     DateTime d = DateTime.now();
-    String time = "${d.day}/${d.month}/${d.year}-${d.hour}:${d.minute}";
+    String time = "${d.day}/${d.month}/${d.year}-${d.hour}:${d.minute}:${d.second}";
 
     sender?['sent']['$receiverId']['msg'].add(msg);
     sender?['sent']['$receiverId']['time'].add(time);
