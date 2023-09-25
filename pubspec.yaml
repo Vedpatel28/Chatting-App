@@ -43,6 +43,7 @@ dependencies:
   google_fonts: any
   gap: any
   shared_preferences: any
+  intl: any
   get_storage: any
   cloud_firestore: 4.9.2
 
