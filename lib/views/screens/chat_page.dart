@@ -1,9 +1,12 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:developer';
+
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class ChatPage extends StatelessWidget {
   ChatPage({super.key});
@@ -23,10 +26,10 @@ class ChatPage extends StatelessWidget {
           },
           icon: const Icon(
             Icons.arrow_back_ios_outlined,
-            color: Colors.white,
+            color: const Color(0xFFEEEEEE),
           ),
         ),
-        backgroundColor: const Color(0xFF0D1282),
+        backgroundColor: const Color(0xFF26577C),
         // Receiver Name
         title: StreamBuilder(
           stream: FireStoreHelper.fireStoreHelper.userStream(
@@ -39,7 +42,7 @@ class ChatPage extends StatelessWidget {
                 "${userId['sender']}",
                 style: GoogleFonts.bubblegumSans(
                   fontSize: 22,
-                  color: Colors.white,
+                  color: const Color(0xFFEEEEEE),
                   fontWeight: FontWeight.bold,
                 ),
               );
@@ -83,6 +86,54 @@ class ChatPage extends StatelessWidget {
                     List<dynamic>? recievedTime =
                         data['recieved']['${userId['recieved']['id']}']['time'];
 
+                    List sTime = sentTime!.map(
+                      (e) {
+                        List<String> strData = e.split('-');
+
+                        var date = strData[0].split('/');
+                        var time = strData[1].split(':');
+
+                        DateTime dt = DateTime(
+                          int.parse(date[2]),
+                          int.parse(date[1]),
+                          int.parse(date[0]),
+                          int.parse(time[0]),
+                          int.parse(time[1]),
+                        );
+
+                        String sentFormattedTime = DateFormat.jm().format(dt);
+                        return sentFormattedTime;
+                      },
+                    ).toList();
+
+                    List rTime = recievedTime!.map(
+                      (e) {
+                        List<String> strData = e.split('-');
+
+                        var date = strData[0].split('/');
+                        var time = strData[1].split(':');
+
+                        DateTime dt = DateTime(
+                          int.parse(date[2]),
+                          int.parse(date[1]),
+                          int.parse(date[0]),
+                          int.parse(time[0]),
+                          int.parse(time[1]),
+                        );
+                        String recievedFormattedTime =
+                            DateFormat.jm().format(dt);
+
+                        log("R time : ${DateFormat.Hms().format(dt)}");
+
+                        return recievedFormattedTime;
+                      },
+                    ).toList();
+
+                    log("Sent chat : $sentChat");
+                    log("SentTime : $sTime");
+                    log("recieved chat : $recievedChat");
+                    log("recievedTime : $rTime");
+
                     return ListView.builder(
                       // Check Length
                       itemCount: (sentChat!.length < recievedChat!.length)
@@ -108,7 +159,7 @@ class ChatPage extends StatelessWidget {
                                       topLeft: Radius.elliptical(20, 12),
                                       bottomLeft: Radius.elliptical(20, 12),
                                     ),
-                                    color: Color(0xFF22668D),
+                                    color: Color(0xFF26577C),
                                   ),
                                   margin: const EdgeInsets.all(6),
                                   alignment: Alignment.center,
@@ -123,17 +174,20 @@ class ChatPage extends StatelessWidget {
                                           "${sentChat[index]}",
                                           style: GoogleFonts.changa(
                                             fontSize: 22,
-                                            color: Color(0xFFFFFADD),
+                                            color: const Color(0xFFF0F0F0),
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
-                                      Text(
-                                        "${sentTime?[index]}",
-                                        style: GoogleFonts.changa(
-                                          fontSize: 14,
-                                          // color: const Color(0xFFFFFADD),
-                                          fontWeight: FontWeight.bold,
+                                      Transform.translate(
+                                        offset: const Offset(140, 0),
+                                        child: Text(
+                                          "${sTime[index]}",
+                                          style: GoogleFonts.changa(
+                                            fontSize: 10,
+                                            color: const Color(0xFFF5F5F5),
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -172,19 +226,22 @@ class ChatPage extends StatelessWidget {
                                         child: Text(
                                           "${recievedChat[index]}",
                                           style: GoogleFonts.changa(
-                                            color: Color(0xFFFFF5E0),
+                                            color: const Color(0xFFFAFAFA),
                                             fontSize: 22,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
-                                      Text(
-                                        "${recievedTime?[index]}",
-                                        style: GoogleFonts.changa(
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                          // color: const Color(0xFFFFFADD),
-                                          fontWeight: FontWeight.bold,
+                                      Transform.translate(
+                                        offset: const Offset(-135, 0),
+                                        child: Text(
+                                          "${rTime[index]}",
+                                          style: GoogleFonts.changa(
+                                            fontSize: 10,
+                                            color: Colors.white,
+                                            // color: const Color(0xFFFFFADD),
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ],
