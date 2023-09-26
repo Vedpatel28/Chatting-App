@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
+import 'package:chat_app_firebase/helper/notifications_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -141,32 +142,34 @@ class ChatPage extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onDoubleTap: () {
-                                    int chatIndex = sentChat
-                                        .indexOf(sentChat[index]);
+                                    int chatIndex =
+                                        sentChat.indexOf(sentChat[index]);
                                     log("${chatIndex}");
-                                    FireStoreHelper.fireStoreHelper
-                                        .deleteChat(
+                                    FireStoreHelper.fireStoreHelper.deleteChat(
                                       sentId: userId['sender'],
                                       receicerId: userId['recieved']['id'],
                                       chatIndex: chatIndex,
                                     );
                                   },
                                   onLongPress: () {
-                                    showDialog(context: context, builder: (context) {
-                                      return const AlertDialog(
-                                        content: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            TextField(
-                                              decoration: InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                label: Text("Message"),
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return const AlertDialog(
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              TextField(
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  label: Text("Message"),
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },);
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    );
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.only(
@@ -298,6 +301,11 @@ class ChatPage extends StatelessWidget {
                       sentId: userId['sender'],
                       receiverId: userId['recieved']['id'],
                       msg: sendMassage.text,
+                    );
+                    NotificationsHelper.notificationsHelper.simpleNotifications(
+                      id: userId['sender'],
+                      title: "Message Sent",
+                      subTitle: sendMassage.text,
                     );
                     sendMassage.clear();
                   },
