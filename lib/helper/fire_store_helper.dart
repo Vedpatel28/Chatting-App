@@ -73,13 +73,17 @@ class FireStoreHelper {
     required int userId,
     required String addContactId,
   }) async {
-    log("User ID: ${userId}");
     Map<String, dynamic>? allUser = await getAllUser(id: userId);
-
-    log("Before: ${allUser?['contacts']}");
     allUser?['contacts'].add(addContactId);
-    log("After : ${allUser?['contacts']}");
+    firebaseFireStore.collection(collection).doc('$userId').set(allUser!);
+  }
 
+  removeContact({
+    required int userId,
+    required String addContactId,
+  }) async {
+    Map<String, dynamic>? allUser = await getAllUser(id: userId);
+    allUser?['contacts'].remove(addContactId);
     firebaseFireStore.collection(collection).doc('$userId').set(allUser!);
   }
 

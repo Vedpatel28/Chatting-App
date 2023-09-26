@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         // User Offline
       }
     }
+
     super.initState();
   }
 
@@ -113,6 +114,19 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                         );
                       },
                       leading: Text("${allUser?['contacts'][index]}"),
+                      trailing: GestureDetector(
+                        onTap: () {
+                          FireStoreHelper.fireStoreHelper.removeContact(
+                            userId: argId,
+                            addContactId:
+                                allUser!['contacts'][index].toString(),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                      ),
                     ),
                   );
                 },
