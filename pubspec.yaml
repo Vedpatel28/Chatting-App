@@ -44,8 +44,9 @@ dependencies:
   gap: any
   shared_preferences: any
   intl: any
+  flutter_local_notifications: ^15.1.1
   get_storage: any
-  cloud_firestore: 4.9.2
+  cloud_firestore: ^4.9.2
 
 dev_dependencies:
   flutter_test:
