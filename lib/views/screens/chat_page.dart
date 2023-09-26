@@ -144,7 +144,7 @@ class ChatPage extends StatelessWidget {
                                   onDoubleTap: () {
                                     int chatIndex =
                                         sentChat.indexOf(sentChat[index]);
-                                    log("${chatIndex}");
+                                    log("$chatIndex");
                                     FireStoreHelper.fireStoreHelper.deleteChat(
                                       sentId: userId['sender'],
                                       receicerId: userId['recieved']['id'],
@@ -155,15 +155,19 @@ class ChatPage extends StatelessWidget {
                                     showDialog(
                                       context: context,
                                       builder: (context) {
-                                        return const AlertDialog(
+                                        return AlertDialog(
                                           content: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               TextField(
-                                                decoration: InputDecoration(
+                                                decoration:
+                                                    const InputDecoration(
                                                   border: OutlineInputBorder(),
                                                   label: Text("Message"),
                                                 ),
+                                                onSubmitted: (value) {
+
+                                                },
                                               ),
                                             ],
                                           ),
@@ -180,11 +184,11 @@ class ChatPage extends StatelessWidget {
                                     ),
                                     decoration: const BoxDecoration(
                                       borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.elliptical(15, 12),
-                                        topLeft: Radius.elliptical(20, 12),
-                                        bottomLeft: Radius.elliptical(20, 12),
+                                        bottomRight: Radius.circular(25),
+                                        topLeft: Radius.circular(25),
+                                        bottomLeft: Radius.circular(25),
                                       ),
-                                      color: Color(0xFF26577C),
+                                      // color: Color(0xFFDCF8C6),
                                     ),
                                     margin: const EdgeInsets.all(6),
                                     alignment: Alignment.center,
@@ -197,21 +201,20 @@ class ChatPage extends StatelessWidget {
                                           // Sent Chat
                                           child: Text(
                                             "${sentChat[index]}",
-                                            style: GoogleFonts.changa(
+                                            style: GoogleFonts.bitter(
                                               fontSize: 22,
-                                              color: const Color(0xFFF0F0F0),
-                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500,
                                             ),
                                           ),
                                         ),
                                         Transform.translate(
-                                          offset: const Offset(140, 0),
+                                          offset: const Offset(130, 0),
                                           child: Text(
                                             "${sTime[index]}",
                                             style: GoogleFonts.changa(
-                                              fontSize: 10,
-                                              color: const Color(0xFFF5F5F5),
-                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                              color: Colors.black,
                                             ),
                                           ),
                                         ),
@@ -235,11 +238,11 @@ class ChatPage extends StatelessWidget {
                                   margin: const EdgeInsets.all(6),
                                   decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.elliptical(15, 12),
-                                      topRight: Radius.elliptical(20, 12),
-                                      bottomLeft: Radius.elliptical(20, 12),
+                                      bottomRight: Radius.circular(25),
+                                      topRight: Radius.circular(25),
+                                      bottomLeft: Radius.circular(25),
                                     ),
-                                    color: Color(0xFF141E46),
+                                    // color: Color(0xFFF2F2F0),
                                   ),
                                   alignment: Alignment.center,
                                   child: Column(
@@ -252,21 +255,20 @@ class ChatPage extends StatelessWidget {
                                         child: Text(
                                           "${recievedChat[index]}",
                                           style: GoogleFonts.changa(
-                                            color: const Color(0xFFFAFAFA),
+                                            color: Colors.black,
                                             fontSize: 22,
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                         ),
                                       ),
                                       Transform.translate(
-                                        offset: const Offset(-135, 0),
+                                        offset: const Offset(-140, 0),
                                         child: Text(
                                           "${rTime[index]}",
                                           style: GoogleFonts.changa(
                                             fontSize: 10,
-                                            color: Colors.white,
+                                            color: Colors.black,
                                             // color: const Color(0xFFFFFADD),
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
@@ -302,11 +304,11 @@ class ChatPage extends StatelessWidget {
                       receiverId: userId['recieved']['id'],
                       msg: sendMassage.text,
                     );
-                    NotificationsHelper.notificationsHelper.simpleNotifications(
-                      id: userId['sender'],
-                      title: "Message Sent",
-                      subTitle: sendMassage.text,
-                    );
+                    // NotificationsHelper.notificationsHelper.simpleNotifications(
+                    //   id: userId['sender'],
+                    //   title: "Message Sent",
+                    //   subTitle: sendMassage.text,
+                    // );
                     sendMassage.clear();
                   },
                   icon: const Icon(

@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     Size s = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home"),
+        title: const Text("Contacts"),
         actions: [
           PopupMenuButton(
             onSelected: (value) {
@@ -164,7 +164,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   onPressed: () {
                     FireStoreHelper.fireStoreHelper.addContact(
                       userId: argId,
-                      addContactId: id,
+                      addContactId: id.toString(),
                     );
                     Navigator.of(context).pop();
                   },
