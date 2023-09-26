@@ -1,10 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'dart:developer';
-
 import 'package:chat_app_firebase/controller/first_time_login_controller.dart';
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -72,6 +70,7 @@ class LoginPage extends StatelessWidget {
                   password = newValue!;
                 },
                 decoration: const InputDecoration(
+                  fillColor: Colors.white,
                   border: OutlineInputBorder(),
                   label: Text("Password"),
                 ),

@@ -75,11 +75,28 @@ class FireStoreHelper {
   }) async {
     Map<String, dynamic>? allUser = await getAllUser(id: userId);
 
-    log("${allUser}");
-
     allUser?['contacts'].add(addContactId);
     log("${allUser?['contacts'].add(addContactId)}");
     log("After : $allUser");
+  }
+
+  updateChat ({
+    required int sentId,
+    required int receicerId,
+    required int sentChatIndex,
+    required int receivedChatIndex,
+    required String newChat,
+  }) async {
+
+    Map<String,dynamic>? sender = await getAllUser(id: sentId);
+    Map<String,dynamic>? receiver = await getAllUser(id: receicerId);
+
+    sender?['sent']['$receicerId']['msg'][sentChatIndex] = newChat;
+    receiver?['recieved']['$sentId']['msg'][receivedChatIndex] = newChat;
+
+    firebaseFireStore.collection(collection).doc('$sentId').set(sender!);
+    firebaseFireStore.collection(collection).doc('$receicerId').set(receiver!);
+
   }
 
   deleteChat({

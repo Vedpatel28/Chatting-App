@@ -151,6 +151,23 @@ class ChatPage extends StatelessWidget {
                                       chatIndex: chatIndex,
                                     );
                                   },
+                                  onLongPress: () {
+                                    showDialog(context: context, builder: (context) {
+                                      return const AlertDialog(
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            TextField(
+                                              decoration: InputDecoration(
+                                                border: OutlineInputBorder(),
+                                                label: Text("Message"),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },);
+                                  },
                                   child: Container(
                                     padding: const EdgeInsets.only(
                                       left: 10,

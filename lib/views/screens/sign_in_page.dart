@@ -131,65 +131,6 @@ class SignInPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: s.height * 0.03),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () async {},
-                        child: Column(
-                          children: [
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundColor:
-                                  const Color(0xFF8A99B5).withOpacity(0.6),
-                              child: const Icon(
-                                Icons.g_mobiledata_outlined,
-                                size: 40,
-                                color: Colors.black,
-                              ),
-                            ),
-                            SizedBox(height: s.height * 0.01),
-                            Text(
-                              "Google",
-                              style: GoogleFonts.headlandOne(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: const Color(0xFF8A99B5),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: s.width * 0.1),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Column(
-                          children: [
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundColor:
-                                  const Color(0xFF8A99B5).withOpacity(0.6),
-                              child: const Icon(
-                                Icons.no_accounts,
-                                color: Colors.black,
-                                size: 30,
-                              ),
-                            ),
-                            SizedBox(height: s.height * 0.01),
-                            Text(
-                              "Geste",
-                              style: GoogleFonts.headlandOne(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: const Color(0xFF8A99B5),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
