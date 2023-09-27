@@ -136,6 +136,9 @@ class FireStoreHelper {
     String time =
         "${d.day}/${d.month}/${d.year}-${d.hour}:${d.minute}:${d.second}";
 
+    log("{[====]}");
+    log("${sender?['sent']['$receiverId']['msg'].add(msg)}");
+
     sender?['sent']['$receiverId']['msg'].add(msg);
     sender?['sent']['$receiverId']['time'].add(time);
 
