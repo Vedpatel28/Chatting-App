@@ -102,6 +102,16 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           );
                         },
                         leading: Text("${allUser?['contacts'][index]}"),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () {
+                            FireStoreHelper.fireStoreHelper.removeContact(
+                              userId: argId,
+                              removedContactId:
+                                  allUser!['contacts'][index].toString(),
+                            );
+                          },
+                        ),
                       ),
                     );
                   }
@@ -116,9 +126,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       leading: Text("${allUser?['contacts'][index]}"),
                       trailing: GestureDetector(
                         onTap: () {
+                          log(allUser!['contacts'][index].toString());
                           FireStoreHelper.fireStoreHelper.removeContact(
                             userId: argId,
-                            addContactId:
+                            removedContactId:
                                 allUser!['contacts'][index].toString(),
                           );
                         },
@@ -178,7 +189,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   onPressed: () {
                     FireStoreHelper.fireStoreHelper.addContact(
                       userId: argId,
-                      addContactId: id.toString(),
+                      addContactId: id,
                     );
                     Navigator.of(context).pop();
                   },

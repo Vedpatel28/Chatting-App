@@ -42,23 +42,21 @@ class FireStoreHelper {
       "password": fireStoreModal.password,
       "contacts": [],
       "recieved": {
-        "contacts": {
-          "msg": [],
-          "time": [],
+        "102": {
+          "msg": [""],
+          "time": [""],
         }
       },
       "sent": {
-        "contacts": {
-          "msg": [],
-          "time": [],
+        "102": {
+          "msg": [""],
+          "time": [""],
         }
       },
     };
 
     firebaseFireStore
-        .collection(collection)
-        .doc("${fireStoreModal.id}")
-        .set(data);
+        .collection(collection).doc("${fireStoreModal.id}").set(data);
   }
 
   Stream<dynamic> userStream({required int recievedId}) {
@@ -71,7 +69,7 @@ class FireStoreHelper {
 
   addContact({
     required int userId,
-    required String addContactId,
+    required int addContactId,
   }) async {
     Map<String, dynamic>? allUser = await getAllUser(id: userId);
     allUser?['contacts'].add(addContactId);
@@ -80,10 +78,10 @@ class FireStoreHelper {
 
   removeContact({
     required int userId,
-    required String addContactId,
+    required String removedContactId,
   }) async {
     Map<String, dynamic>? allUser = await getAllUser(id: userId);
-    allUser?['contacts'].remove(addContactId);
+    allUser?['contacts'].remove(removedContactId);
     firebaseFireStore.collection(collection).doc('$userId').set(allUser!);
   }
 
