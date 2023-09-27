@@ -165,9 +165,7 @@ class ChatPage extends StatelessWidget {
                                                   border: OutlineInputBorder(),
                                                   label: Text("Message"),
                                                 ),
-                                                onSubmitted: (value) {
-
-                                                },
+                                                onSubmitted: (value) {},
                                               ),
                                             ],
                                           ),
