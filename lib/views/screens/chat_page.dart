@@ -70,14 +70,12 @@ class ChatPage extends StatelessWidget {
                       snapshot.data as Map<String, dynamic>?;
                   // All Fire Base Data Facing
                   if (snapshot.hasData) {
-
                     log("a;; Data : ${data}");
                     // All Sent Chat
                     List<dynamic>? sentChat =
                         data!['sent']['${userId['recieved']['id']}']['msg'];
 
                     log("Sent Data : ${sentChat}");
-
 
                     // All Received Chat
                     List<dynamic>? recievedChat =
@@ -156,6 +154,9 @@ class ChatPage extends StatelessWidget {
                     allChat.forEach((element) {
                       log(" T :: ${element.chat}");
                     });
+
+                    log("Length : ${allChat.length}");
+
                     return ListView.builder(
                       // Check Length
                       itemCount: allChat.length,
@@ -163,97 +164,95 @@ class ChatPage extends StatelessWidget {
                         return Column(
                           children: [
                             // Sent Chat
-                            SizedBox(
-                              width: 1200,
-                              child: Row(
-                                mainAxisAlignment: allChat[index].type == "sent"
-                                    ? MainAxisAlignment.start
-                                    : MainAxisAlignment.end,
-                                children: [
-                                  GestureDetector(
-                                    onDoubleTap: () {
-                                      int chatIndex =
-                                          sentChat.indexOf(sentChat[index]);
-                                      log("{[ $chatIndex");
-                                      FireStoreHelper.fireStoreHelper
-                                          .deleteChat(
-                                        sentId: userId['sender'],
-                                        receicerId: userId['recieved']['id'],
-                                        chatIndex: chatIndex,
-                                      );
-                                    },
-                                    onLongPress: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            content: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                TextField(
-                                                  decoration:
-                                                      const InputDecoration(
-                                                    border:
-                                                        OutlineInputBorder(),
-                                                    label: Text("Message"),
-                                                  ),
-                                                  onSubmitted: (value) {},
+                            Row(
+                              mainAxisAlignment: allChat[index].type == "sent"
+                                  ? MainAxisAlignment.start
+                                  : MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  onDoubleTap: () {
+                                    int chatIndex =
+                                        sentChat.indexOf(sentChat[index]);
+                                    log("{[ $chatIndex");
+                                    FireStoreHelper.fireStoreHelper.deleteChat(
+                                      sentId: userId['sender'],
+                                      receicerId: userId['recieved']['id'],
+                                      chatIndex: chatIndex,
+                                    );
+                                  },
+                                  onLongPress: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              TextField(
+                                                decoration:
+                                                    const InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  label: Text("Message"),
                                                 ),
-                                              ],
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.only(
-                                        left: 10,
-                                        right: 10,
-                                        bottom: 5,
-                                        top: 5,
-                                      ),
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(25),
-                                          topLeft: Radius.circular(25),
-                                          bottomLeft: Radius.circular(25),
-                                        ),
-                                        // color: Color(0xFFDCF8C6),
-                                      ),
-                                      margin: const EdgeInsets.all(6),
-                                      alignment: Alignment.center,
-                                      child: Column(
-                                        children: [
-                                          // Decoration Sent Chat Box
-                                          Container(
-                                            width: s.width * 0.8,
-                                            alignment: Alignment.topRight,
-                                            // Sent Chat
-                                            child: Text(
-                                              allChat[index].chat,
-                                              style: GoogleFonts.bitter(
-                                                fontSize: 22,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w500,
+                                                onSubmitted: (value) {},
                                               ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.only(
+                                      left: 10,
+                                      right: 10,
+                                      bottom: 5,
+                                      top: 5,
+                                    ),
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(25),
+                                        topLeft: Radius.circular(25),
+                                        bottomLeft: Radius.circular(25),
+                                      ),
+                                      // color: Color(0xFFDCF8C6),
+                                    ),
+                                    margin: const EdgeInsets.all(6),
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      children: [
+                                        // Decoration Sent Chat Box
+                                        Container(
+                                          width: s.width * 0.8,
+                                          alignment:
+                                              allChat[index].type == "sent"
+                                                  ? Alignment.topLeft
+                                                  : Alignment.topRight,
+                                          // Sent Chat
+                                          child: Text(
+                                            allChat[index].chat,
+                                            style: GoogleFonts.bitter(
+                                              fontSize: 22,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500,
                                             ),
                                           ),
-                                          // Transform.translate(
-                                          //   offset: const Offset(130, 0),
-                                          //   child: Text(
-                                          //     "${allChat[index].time}",
-                                          //     style: GoogleFonts.changa(
-                                          //       fontSize: 12,
-                                          //       color: Colors.black,
-                                          //     ),
-                                          //   ),
-                                          // ),
-                                        ],
-                                      ),
+                                        ),
+                                        // Transform.translate(
+                                        //   offset: const Offset(130, 0),
+                                        //   child: Text(
+                                        //     "${allChat[index].time}",
+                                        //     style: GoogleFonts.changa(
+                                        //       fontSize: 12,
+                                        //       color: Colors.black,
+                                        //     ),
+                                        //   ),
+                                        // ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                             // // Received Chat
                             // Row(
@@ -330,39 +329,15 @@ class ChatPage extends StatelessWidget {
                   receiverId: userId['recieved']['id'],
                   msg: sendMassage.text,
                 );
-                // NotificationsHelper.notificationsHelper.simpleNotifications(
-                //   id: userId['sender'],
-                //   title: "Message Sent",
-                //   subTitle: sendMassage.text,
-                // );
                 sendMassage.clear();
               },
               controller: sendMassage,
-              textInputAction: TextInputAction.newline,
+              textInputAction: TextInputAction.send,
               cursorHeight: 30,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: const Color(0xFF0D1282).withOpacity(0.2),
                 hintText: "Message",
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    // FireStoreHelper.fireStoreHelper.sentNewMassage(
-                    //   sentId: userId['sender'],
-                    //   receiverId: userId['recieved']['id'],
-                    //   msg: sendMassage.text,
-                    // );
-                    // NotificationsHelper.notificationsHelper.simpleNotifications(
-                    //   id: userId['sender'],
-                    //   title: "Message Sent",
-                    //   subTitle: sendMassage.text,
-                    // );
-                    sendMassage.clear();
-                  },
-                  icon: const Icon(
-                    Icons.send,
-                    color: Colors.black,
-                  ),
-                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
