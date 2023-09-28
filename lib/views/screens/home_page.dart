@@ -2,7 +2,6 @@
 
 import 'dart:developer';
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +16,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
+
     void didChangeAppLifecycleState(AppLifecycleState state) {
       super.didChangeAppLifecycleState(state);
 
@@ -28,7 +28,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         // User Offline
       }
     }
-
     super.initState();
   }
 
@@ -42,7 +41,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    Size s = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Contacts"),
@@ -130,7 +128,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           FireStoreHelper.fireStoreHelper.removeContact(
                             userId: argId,
                             removedContactId:
-                                allUser!['contacts'][index].toString(),
+                                allUser['contacts'][index].toString(),
                           );
                         },
                         child: const Icon(
@@ -153,6 +151,17 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               );
             }
           },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          FireStoreHelper.fireStoreHelper.addContact(
+            userId: argId,
+            addContactId: id,
+          );
+        },
+        child: const Icon(
+          Icons.add,
         ),
       ),
     );

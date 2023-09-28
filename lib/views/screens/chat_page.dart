@@ -18,7 +18,6 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size s = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -70,12 +69,9 @@ class ChatPage extends StatelessWidget {
                       snapshot.data as Map<String, dynamic>?;
                   // All Fire Base Data Facing
                   if (snapshot.hasData) {
-                    log("a;; Data : ${data}");
                     // All Sent Chat
                     List<dynamic>? sentChat =
                         data!['sent']['${userId['recieved']['id']}']['msg'];
-
-                    log("Sent Data : ${sentChat}");
 
                     // All Received Chat
                     List<dynamic>? recievedChat =
@@ -152,10 +148,8 @@ class ChatPage extends StatelessWidget {
                     );
                     allChat.sort((a, b) => a.time.isAfter(b.time) ? 1 : 0);
                     allChat.forEach((element) {
-                      log(" T :: ${element.chat}");
+                      log("=> [${element.time}] {${element.type}} ${element.chat}");
                     });
-
-                    log("Length : ${allChat.length}");
 
                     return ListView.builder(
                       // Check Length
@@ -180,28 +174,28 @@ class ChatPage extends StatelessWidget {
                                       chatIndex: chatIndex,
                                     );
                                   },
-                                  onLongPress: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          content: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              TextField(
-                                                decoration:
-                                                    const InputDecoration(
-                                                  border: OutlineInputBorder(),
-                                                  label: Text("Message"),
-                                                ),
-                                                onSubmitted: (value) {},
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
+                                  // onLongPress: () {
+                                  //   showDialog(
+                                  //     context: context,
+                                  //     builder: (context) {
+                                  //       return AlertDialog(
+                                  //         content: Column(
+                                  //           mainAxisSize: MainAxisSize.min,
+                                  //           children: [
+                                  //             TextField(
+                                  //               decoration:
+                                  //                   const InputDecoration(
+                                  //                 border: OutlineInputBorder(),
+                                  //                 label: Text("Message"),
+                                  //               ),
+                                  //               onSubmitted: (value) {},
+                                  //             ),
+                                  //           ],
+                                  //         ),
+                                  //       );
+                                  //     },
+                                  //   );
+                                  // },
                                   child: Container(
                                     padding: const EdgeInsets.only(
                                       left: 10,
@@ -217,99 +211,73 @@ class ChatPage extends StatelessWidget {
                                       ),
                                       // color: Color(0xFFDCF8C6),
                                     ),
-                                    margin: const EdgeInsets.all(6),
                                     alignment: Alignment.center,
                                     child: Column(
                                       children: [
                                         // Decoration Sent Chat Box
                                         Container(
-                                          width: s.width * 0.8,
+                                          padding: const EdgeInsets.all(12),
+                                          decoration: BoxDecoration(
+                                            color: allChat[index].type ==
+                                                    "received"
+                                                ? const Color(0xFFEBE4D1)
+                                                : const Color(0xFFB0D9B1),
+                                            borderRadius: allChat[index].type ==
+                                                    "received"
+                                                ? const BorderRadius.only(
+                                                    bottomRight:
+                                                        Radius.circular(20),
+                                                    topLeft:
+                                                        Radius.circular(20),
+                                                    bottomLeft:
+                                                        Radius.circular(5),
+                                                    topRight:
+                                                        Radius.circular(5),
+                                                  )
+                                                : const BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(20),
+                                                    topRight:
+                                                        Radius.circular(20),
+                                                    topLeft: Radius.circular(5),
+                                                    bottomRight:
+                                                        Radius.circular(5),
+                                                  ),
+                                          ),
                                           alignment:
-                                              allChat[index].type == "sent"
-                                                  ? Alignment.topLeft
+                                              allChat[index].type == "received"
+                                                  ? Alignment.bottomLeft
                                                   : Alignment.topRight,
                                           // Sent Chat
-                                          child: Text(
-                                            allChat[index].chat,
-                                            style: GoogleFonts.bitter(
-                                              fontSize: 22,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w500,
+                                          child: Text.rich(
+                                            TextSpan(
+                                              children: [
+                                                TextSpan(
+
+                                                  text:
+                                                      "${allChat[index].time.hour} : ${allChat[index].time.minute}",
+                                                  style: GoogleFonts.bitter(
+                                                    fontSize: 6,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ],
+                                              text: " ${allChat[index].chat} \n",
+                                              style: GoogleFonts.bitter(
+                                                fontSize: 14,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                        // Transform.translate(
-                                        //   offset: const Offset(130, 0),
-                                        //   child: Text(
-                                        //     "${allChat[index].time}",
-                                        //     style: GoogleFonts.changa(
-                                        //       fontSize: 12,
-                                        //       color: Colors.black,
-                                        //     ),
-                                        //   ),
-                                        // ),
                                       ],
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            // // Received Chat
-                            // Row(
-                            //   mainAxisAlignment:
-                            //       allChat[index].type == "received"
-                            //           ? MainAxisAlignment.start
-                            //           : MainAxisAlignment.end,
-                            //   children: [
-                            //     Container(
-                            //       padding: const EdgeInsets.only(
-                            //         left: 10,
-                            //         right: 10,
-                            //         bottom: 5,
-                            //         top: 5,
-                            //       ),
-                            //       margin: const EdgeInsets.all(6),
-                            //       decoration: const BoxDecoration(
-                            //         borderRadius: BorderRadius.only(
-                            //           bottomRight: Radius.circular(25),
-                            //           topRight: Radius.circular(25),
-                            //           bottomLeft: Radius.circular(25),
-                            //         ),
-                            //         // color: Color(0xFFF2F2F0),
-                            //       ),
-                            //       alignment: Alignment.center,
-                            //       child: Column(
-                            //         children: [
-                            //           // Decoration Received Chat Box
-                            //           Container(
-                            //             width: s.width * 0.8,
-                            //             alignment: Alignment.topLeft,
-                            //             // Received Chat Box
-                            //             child: Text(
-                            //                "${allChat[index]}",
-                            //               style: GoogleFonts.changa(
-                            //                 color: Colors.black,
-                            //                 fontSize: 22,
-                            //                 fontWeight: FontWeight.w500,
-                            //               ),
-                            //             ),
-                            //           ),
-                            //           // Transform.translate(
-                            //           //   offset: const Offset(-140, 0),
-                            //           //   child: Text(
-                            //           //     "${rTime[index]}",
-                            //           //     style: GoogleFonts.changa(
-                            //           //       fontSize: 10,
-                            //           //       color: Colors.black,
-                            //           //       // color: const Color(0xFFFFFADD),
-                            //           //     ),
-                            //           //   ),
-                            //           // ),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
                           ],
                         );
                       },

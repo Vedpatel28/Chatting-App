@@ -40,15 +40,17 @@ class FireStoreHelper {
       "name": fireStoreModal.name,
       "id": fireStoreModal.id,
       "password": fireStoreModal.password,
-      "contacts": [],
+      "contacts": [
+        000,
+      ],
       "recieved": {
-        "102": {
-          "msg": [""],
-          "time": [""],
+        "000": {
+          "msg": ["HI User"],
+          "time": ["28/09/23-10:10:10"],
         }
       },
       "sent": {
-        "102": {
+        "000": {
           "msg": [""],
           "time": [""],
         }
@@ -56,7 +58,9 @@ class FireStoreHelper {
     };
 
     firebaseFireStore
-        .collection(collection).doc("${fireStoreModal.id}").set(data);
+        .collection(collection)
+        .doc("${fireStoreModal.id}")
+        .set(data);
   }
 
   Stream<dynamic> userStream({required int recievedId}) {
@@ -71,9 +75,45 @@ class FireStoreHelper {
     required int userId,
     required int addContactId,
   }) async {
-    Map<String, dynamic>? allUser = await getAllUser(id: userId);
-    allUser?['contacts'].add(addContactId);
-    firebaseFireStore.collection(collection).doc('$userId').set(allUser!);
+
+    Map<String, dynamic>? newAllUser = await getAllUser(id: userId);
+    Map<String, dynamic>? oldAllUser = await getAllUser(id: addContactId);
+
+    log('NewAllUser $newAllUser');
+    log('OldAllUser $oldAllUser');
+    log('Old $userId 105');
+    log('New $addContactId 104');
+
+    Map<String,dynamic> oldInContact = {
+      '$addContactId': {
+        "msg": [""],
+        "time": [""],
+      }
+    };
+
+    Map<String,dynamic> newInContact = {
+      '$userId': {
+        "msg": [""],
+        "time": [""],
+      }
+    };
+
+    log("{'New ${newAllUser?['recieved']}");
+    newAllUser?['recieved'].addAll(oldInContact);
+    newAllUser?['sent'].addAll(oldInContact);
+
+    log("{'Old  ${oldAllUser?['recieved']}");
+    oldAllUser?['recieved'].addAll(newInContact);
+    oldAllUser?['sent'].addAll(newInContact);
+
+    log("{'; ${newAllUser?['contacts']}");
+
+    newAllUser?['contacts'].add(addContactId);
+    oldAllUser?['contacts'].add(userId);
+
+    firebaseFireStore.collection(collection).doc('$userId').set(newAllUser!);
+    firebaseFireStore.collection(collection).doc('$userId').set(oldAllUser!);
+
   }
 
   removeContact({
@@ -128,12 +168,12 @@ class FireStoreHelper {
     required int receiverId,
     required String msg,
   }) async {
-
     Map<String, dynamic>? sender = await getAllUser(id: sentId);
     Map<String, dynamic>? receiver = await getAllUser(id: receiverId);
 
     DateTime d = DateTime.now();
-    String time = "${d.day}/${d.month}/${d.year}-${d.hour}:${d.minute}:${d.second}";
+    String time =
+        "${d.day}/${d.month}/${d.year}-${d.hour}:${d.minute}:${d.second}";
 
     sender?['sent']['$receiverId']['msg'].add(msg);
     sender?['sent']['$receiverId']['time'].add(time);
