@@ -26,7 +26,7 @@ class SignInPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: s.height * 0.02),
+                  SizedBox(height: s.height * 0.1),
                   Text(
                     "Sign in",
                     style: GoogleFonts.headlandOne(
@@ -35,7 +35,7 @@ class SignInPage extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: s.height * 0.14),
+                  SizedBox(height: s.height * 0.1),
                   // Id
                   TextField(
                     onSubmitted: (value) {

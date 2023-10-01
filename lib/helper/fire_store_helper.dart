@@ -18,6 +18,15 @@ class FireStoreHelper {
     return doc.data() as Map<String, dynamic>;
   }
 
+  getUserNameUsingContact({required int con}) async {
+    Map<String, dynamic>? user = await getUser(id: con);
+
+    log('{[ ${user['name']}');
+
+    // Use This Method in Home Page
+    return user['name'];
+  }
+
   Future<Map<String, dynamic>?> getAllUser({required int id}) async {
     DocumentSnapshot<Map<String, dynamic>> data =
         await firebaseFireStore.collection(collection).doc("$id").get();
@@ -75,7 +84,6 @@ class FireStoreHelper {
     required int userId,
     required int addContactId,
   }) async {
-
     Map<String, dynamic>? newAllUser = await getAllUser(id: userId);
     Map<String, dynamic>? oldAllUser = await getAllUser(id: addContactId);
 
@@ -84,14 +92,14 @@ class FireStoreHelper {
     log('Old $userId 105');
     log('New $addContactId 104');
 
-    Map<String,dynamic> oldInContact = {
+    Map<String, dynamic> oldInContact = {
       '$addContactId': {
         "msg": [""],
         "time": [""],
       }
     };
 
-    Map<String,dynamic> newInContact = {
+    Map<String, dynamic> newInContact = {
       '$userId': {
         "msg": [""],
         "time": [""],
@@ -113,7 +121,6 @@ class FireStoreHelper {
 
     firebaseFireStore.collection(collection).doc('$userId').set(newAllUser!);
     firebaseFireStore.collection(collection).doc('$userId').set(oldAllUser!);
-
   }
 
   removeContact({

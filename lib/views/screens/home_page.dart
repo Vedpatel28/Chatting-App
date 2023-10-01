@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         // User Offline
       }
     }
+
     super.initState();
   }
 
@@ -53,8 +54,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               if (value == 'sign out') {
                 Get.offNamed("/");
               }
-              if (value == 'delete') {
-                Get.offNamed("/");
+              if (value == 'Crate New') {
+                Get.offNamed("/SignInPage");
               }
             },
             itemBuilder: (BuildContext bc) {
@@ -64,8 +65,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   child: Text("Sign Out"),
                 ),
                 PopupMenuItem(
-                  value: 'delete',
-                  child: Text("Delete Account"),
+                  value: 'Crate New',
+                  child: Text("Create Account"),
                 ),
                 PopupMenuItem(
                   value: 'exit',
@@ -85,13 +86,25 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               return ListView.builder(
                 itemCount: snapshot.data?['contacts']?.length,
                 itemBuilder: (context, index) {
+                  // Get User
                   Map<String, dynamic>? allUser = snapshot.data;
+                  // Get User Name Using Contacts List
+                  Future<dynamic> name = FireStoreHelper.fireStoreHelper.getUserNameUsingContact(
+                      con: allUser?['contacts'][index]);
                   Map data = {
                     'sender': allUser?['contacts'][index],
                     'recieved': allUser,
                   };
                   if (snapshot.data?['contacts'].length > 0) {
-                    return Card(
+                    return Container(
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.blue.shade700,
+                        borderRadius: const BorderRadius.horizontal(
+                          right: Radius.elliptical(60, 60),
+                          left: Radius.elliptical(30, 30),
+                        ),
+                      ),
                       child: ListTile(
                         onTap: () {
                           Get.toNamed(
@@ -99,10 +112,31 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                             arguments: data,
                           );
                         },
-                        leading: Text("${allUser?['contacts'][index]}"),
+                        title: Text(
+                          "$argId",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                        subtitle: Text(
+                          "${name}",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
                         trailing: IconButton(
-                          icon: const Icon(Icons.delete),
+                          icon: const Icon(
+                            Icons.navigate_next_outlined,
+                            color: Colors.white,
+                            size: 40,
+                          ),
                           onPressed: () {
+                            Get.toNamed(
+                              "/ChatPage",
+                              arguments: data,
+                            );
                             FireStoreHelper.fireStoreHelper.removeContact(
                               userId: argId,
                               removedContactId:

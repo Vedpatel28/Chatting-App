@@ -25,110 +25,114 @@ class LoginPage extends StatelessWidget {
         child: Form(
           key: formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                "Login",
-                style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.blue,
-                ),
-              ),
-              const Gap(80),
-              TextFormField(
-                initialValue: id,
-                textInputAction: TextInputAction.next,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Enter User ID";
-                  } else {
-                    return null;
-                  }
-                },
-                onSaved: (newValue) {
-                  id = newValue!;
-                },
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  label: Text("ID"),
-                ),
-              ),
-              const Gap(20),
-              TextFormField(
-                initialValue: password,
-                textInputAction: TextInputAction.next,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Enter Password";
-                  } else {
-                    return null;
-                  }
-                },
-                onSaved: (newValue) {
-                  password = newValue!;
-                },
-                decoration: const InputDecoration(
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(),
-                  label: Text("Password"),
-                ),
-              ),
-              const Gap(20),
-              TextButton(
-                onPressed: () {
-                  Get.offNamed("/SignInPage");
-                },
-                child: const Text(
-                  "crate new user",
-                  style: TextStyle(
-                    fontSize: 20,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Gap(40),
+                Container(
+                  height: 280,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/Images/login.gif"),
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  if (formKey.currentState!.validate()) {
-                    formKey.currentState!.save();
-
-                    FireStoreHelper.fireStoreHelper.validateUser(
-                      id: int.parse(id),
-                      password: password,
-                    );
-                    firstTimeCheck.setOne();
-                    FireStoreHelper.fireStoreHelper.getCredential(
-                      id: int.parse(id),
-                    );
-
-                    Map<String, dynamic>? data =
-                        await FireStoreHelper.fireStoreHelper.getAllUser(
-                      id: int.parse(id),
-                    );
-
-                    String checkPassword = data?['password'];
-                    int checkID = data?['id'];
-                    log(checkPassword);
-                    if (password == checkPassword && int.parse(id) == checkID) {
-                      Get.offNamed(
-                        "/HomePage",
-                        arguments: int.parse(id),
-                      );
+                const Gap(50),
+                TextFormField(
+                  initialValue: id,
+                  textInputAction: TextInputAction.next,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Enter User ID";
                     } else {
-                      Get.snackbar(
-                        "Password or Id",
-                        "Id or Password Wrong!!",
-                      );
+                      return null;
                     }
-                  }
-                },
-                child: const Text("SUBMIT"),
-              ),
-            ],
+                  },
+                  onSaved: (newValue) {
+                    id = newValue!;
+                  },
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    label: Text("ID"),
+                  ),
+                ),
+                const Gap(20),
+                TextFormField(
+                  initialValue: password,
+                  textInputAction: TextInputAction.next,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Enter Password";
+                    } else {
+                      return null;
+                    }
+                  },
+                  onSaved: (newValue) {
+                    password = newValue!;
+                  },
+                  decoration: const InputDecoration(
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(),
+                    label: Text("Password"),
+                  ),
+                ),
+                const Gap(20),
+                TextButton(
+                  onPressed: () {
+                    Get.offNamed("/SignInPage");
+                  },
+                  child: const Text(
+                    "crate new user",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      formKey.currentState!.save();
+
+                      FireStoreHelper.fireStoreHelper.validateUser(
+                        id: int.parse(id),
+                        password: password,
+                      );
+                      firstTimeCheck.setOne();
+                      FireStoreHelper.fireStoreHelper.getCredential(
+                        id: int.parse(id),
+                      );
+
+                      Map<String, dynamic>? data =
+                          await FireStoreHelper.fireStoreHelper.getAllUser(
+                        id: int.parse(id),
+                      );
+
+                      String checkPassword = data?['password'];
+                      int checkID = data?['id'];
+                      log(checkPassword);
+                      if (password == checkPassword && int.parse(id) == checkID) {
+                        Get.offNamed(
+                          "/HomePage",
+                          arguments: int.parse(id),
+                        );
+                      } else {
+                        Get.snackbar(
+                          "Password or Id",
+                          "Id or Password Wrong!!",
+                        );
+                      }
+                    }
+                  },
+                  child: const Text("SUBMIT"),
+                ),
+              ],
+            ),
           ),
         ),
       ),
-      backgroundColor: const Color(0xFFDDE2E5),
+      backgroundColor: Colors.white,
     );
   }
 }
