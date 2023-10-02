@@ -38,8 +38,11 @@ class ChatPage extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               // Receiver Name
+
+              var name = snapshot.data;
+
               return Text(
-                "${userId['sender']}",
+                "${name['name']}",
                 style: GoogleFonts.bubblegumSans(
                   fontSize: 22,
                   color: const Color(0xFFEEEEEE),
@@ -147,9 +150,6 @@ class ChatPage extends StatelessWidget {
                       ),
                     );
                     allChat.sort((a, b) => a.time.isAfter(b.time) ? 1 : 0);
-                    allChat.forEach((element) {
-                      log("=> [${element.time}] {${element.type}} ${element.chat}");
-                    });
 
                     return ListView.builder(
                       // Check Length
@@ -253,7 +253,6 @@ class ChatPage extends StatelessWidget {
                                             TextSpan(
                                               children: [
                                                 TextSpan(
-
                                                   text:
                                                       "${allChat[index].time.hour} : ${allChat[index].time.minute}",
                                                   style: GoogleFonts.bitter(
@@ -263,7 +262,8 @@ class ChatPage extends StatelessWidget {
                                                   ),
                                                 ),
                                               ],
-                                              text: " ${allChat[index].chat} \n",
+                                              text:
+                                                  " ${allChat[index].chat} \n",
                                               style: GoogleFonts.bitter(
                                                 fontSize: 14,
                                                 color: Colors.black,

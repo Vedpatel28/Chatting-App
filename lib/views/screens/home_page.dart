@@ -93,6 +93,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     'sender': allUser?['contacts'][index],
                     'recieved': allUser,
                   };
+
+                  Stream name = FireStoreHelper.fireStoreHelper
+                      .userStream(recievedId: argId);
+
                   if (snapshot.data?['contacts'].length > 0) {
                     return Container(
                       margin: const EdgeInsets.all(8),
@@ -110,7 +114,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                             arguments: data,
                           );
                         },
-                        title: Text(
+                        // title: Text("${name}"),
+                        subtitle: Text(
                           "${allUser?['contacts'][index]}",
                           style: const TextStyle(
                             color: Colors.white,
@@ -147,6 +152,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                         );
                       },
                       leading: Text("${allUser?['contacts'][index]}"),
+                      subtitle: Text("${name}"),
                       trailing: GestureDetector(
                         onTap: () {
                           log(allUser!['contacts'][index].toString());
