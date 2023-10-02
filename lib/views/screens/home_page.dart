@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -88,9 +88,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 itemBuilder: (context, index) {
                   // Get User
                   Map<String, dynamic>? allUser = snapshot.data;
-                  // Get User Name Using Contacts List
-                  Future<dynamic> name = FireStoreHelper.fireStoreHelper.getUserNameUsingContact(
-                      con: allUser?['contacts'][index]);
+
                   Map data = {
                     'sender': allUser?['contacts'][index],
                     'recieved': allUser,
@@ -113,14 +111,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           );
                         },
                         title: Text(
-                          "$argId",
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),
-                        ),
-                        subtitle: Text(
-                          "${name}",
+                          "${allUser?['contacts'][index]}",
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 18,
