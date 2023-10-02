@@ -23,8 +23,7 @@ class FireStoreHelper {
 
     log('{[ ${user['name']}');
 
-    // Use This Method in Home Page
-    return user['name'];
+    return user;
   }
 
   Future<Map<String, dynamic>?> getAllUser({required int id}) async {
@@ -196,12 +195,6 @@ class FireStoreHelper {
         .collection(collection)
         .doc(receiverId.toString())
         .set(receiver!);
-  }
-
-  getContacts({required int id}) async {
-    Map<String, dynamic> user = await getUser(id: id);
-
-    return user['contacts'];
   }
 
   validateUser({required int id, required String password}) async {
