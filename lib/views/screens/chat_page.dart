@@ -212,6 +212,7 @@ class ChatPage extends StatelessWidget {
                                       // color: Color(0xFFDCF8C6),
                                     ),
                                     alignment: Alignment.center,
+                                    width: 230,
                                     child: Column(
                                       children: [
                                         // Decoration Sent Chat Box
