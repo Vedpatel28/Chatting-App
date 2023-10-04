@@ -45,6 +45,7 @@ dependencies:
   shared_preferences: any
   intl: any
   flutter_local_notifications: ^15.1.1
+  time_zone_list: any
   get_storage: any
   cloud_firestore: ^4.9.2
 

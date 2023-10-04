@@ -725,6 +725,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.0"
+  time_zone_list:
+    dependency: "direct main"
+    description:
+      name: time_zone_list
+      sha256: "11e8d22ecab54aa2f6ec9411ba7e80f5b839bd4bebde339d8e6b19b62ebf7bbe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   timezone:
     dependency: transitive
     description:
