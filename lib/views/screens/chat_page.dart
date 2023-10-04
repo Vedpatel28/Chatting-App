@@ -26,7 +26,7 @@ class ChatPage extends StatelessWidget {
           },
           icon: const Icon(
             Icons.arrow_back_ios_outlined,
-            color: const Color(0xFFEEEEEE),
+            color: Color(0xFFEEEEEE),
           ),
         ),
         backgroundColor: const Color(0xFF26577C),

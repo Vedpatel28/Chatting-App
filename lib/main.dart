@@ -1,4 +1,5 @@
 import 'package:chat_app_firebase/controller/first_time_login_controller.dart';
+import 'package:chat_app_firebase/views/screens/add_contact_page.dart';
 import 'package:chat_app_firebase/views/screens/chat_page.dart';
 import 'package:chat_app_firebase/views/screens/home_page.dart';
 import 'package:chat_app_firebase/views/screens/login_page.dart';
@@ -46,6 +47,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/ChatPage",
           page: () => ChatPage(),
+        ),
+        GetPage(
+          name: "/AddContacts",
+          page: () => const AddContactsPage(),
         ),
       ],
     );

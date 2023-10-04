@@ -34,6 +34,14 @@ class FireStoreHelper {
     return allData;
   }
 
+  allUserId() {
+    Future<DocumentSnapshot<Map<String, dynamic>>> allId = firebaseFireStore.collection(collection).doc().get();
+
+    log("ID `` $allId");
+
+    return allId;
+  }
+
   Stream<dynamic> getAllUserStream({required int id}) {
     Stream<DocumentSnapshot<Map<String, dynamic>>> data =
         firebaseFireStore.collection(collection).doc("$id").snapshots();

@@ -186,10 +186,11 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          FireStoreHelper.fireStoreHelper.addContact(
-            userId: argId,
-            addContactId: id,
-          );
+          // FireStoreHelper.fireStoreHelper.addContact(
+          //   userId: argId,
+          //   addContactId: id,
+          // );
+          Get.offNamed("/AddContacts");
         },
         child: const Icon(
           Icons.add,
