@@ -88,7 +88,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 itemBuilder: (context, index) {
                   // Get User
                   Map<String, dynamic>? allUser = snapshot.data;
-
                   Map data = {
                     'sender': allUser?['contacts'][index],
                     'recieved': allUser,
@@ -190,7 +189,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           //   userId: argId,
           //   addContactId: id,
           // );
-          Get.offNamed("/AddContacts");
+          Get.toNamed("/AddContacts");
         },
         child: const Icon(
           Icons.add,
