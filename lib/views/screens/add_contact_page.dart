@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddContactsPage extends StatelessWidget {
@@ -11,10 +12,19 @@ class AddContactsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+        ),
         title: Text(
           "Friend",
           style: GoogleFonts.bubblegumSans(
-            fontSize: 22,
+            fontSize: 28,
             color: const Color(0xFFEEEEEE),
             fontWeight: FontWeight.bold,
           ),
@@ -23,15 +33,28 @@ class AddContactsPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(12),
-        child: FutureBuilder(
-          future: FireStoreHelper.fireStoreHelper.allUserId(),
+        child: StreamBuilder(
+          stream: FireStoreHelper.fireStoreHelper.allUserId(),
           builder: (context, snap) {
             if (snap.hasData) {
-              return Container();
+              return ListView.builder(
+                itemCount: snap.data.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text("${snap.data[index]['id']}",),
+                      trailing: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.add),
+                      ),
+                    ),
+                  );
+                },
+              );
             } else if (snap.hasError) {
-              log("${snap.error}");
+              log("E : ${snap.error}");
               return Center(
-                child: Text("${snap.data}"),
+                child: Text("${snap.error}"),
               );
             } else {
               return const Center(
