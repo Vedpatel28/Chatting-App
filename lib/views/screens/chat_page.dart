@@ -168,11 +168,11 @@ class ChatPage extends StatelessWidget {
                                     int chatIndex =
                                         sentChat.indexOf(sentChat[index]);
                                     log("{[ $chatIndex");
-                                    FireStoreHelper.fireStoreHelper.deleteChat(
-                                      sentId: userId['sender'],
-                                      receicerId: userId['recieved']['id'],
-                                      chatIndex: chatIndex,
-                                    );
+                                    // FireStoreHelper.fireStoreHelper.deleteChat(
+                                    //   sentId: userId['sender'],
+                                    //   receicerId: userId['recieved']['id'],
+                                    //   chatIndex: chatIndex,
+                                    // );
                                   },
                                   // onLongPress: () {
                                   //   showDialog(
@@ -223,32 +223,12 @@ class ChatPage extends StatelessWidget {
                                                     "received"
                                                 ? const Color(0xFFEBE4D1)
                                                 : const Color(0xFFB0D9B1),
-                                            borderRadius: allChat[index].type ==
-                                                    "received"
-                                                ? const BorderRadius.only(
-                                                    bottomRight:
-                                                        Radius.circular(20),
-                                                    topLeft:
-                                                        Radius.circular(20),
-                                                    bottomLeft:
-                                                        Radius.circular(5),
-                                                    topRight:
-                                                        Radius.circular(5),
-                                                  )
-                                                : const BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(20),
-                                                    topRight:
-                                                        Radius.circular(20),
-                                                    topLeft: Radius.circular(5),
-                                                    bottomRight:
-                                                        Radius.circular(5),
-                                                  ),
                                           ),
                                           alignment:
                                               allChat[index].type == "received"
-                                                  ? Alignment.bottomLeft
-                                                  : Alignment.topRight,
+                                                  ? Alignment.topRight
+                                                  : Alignment.topLeft,
+
                                           // Sent Chat
                                           child: Text.rich(
                                             TextSpan(
