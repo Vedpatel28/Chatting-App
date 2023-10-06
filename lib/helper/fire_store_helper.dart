@@ -149,11 +149,18 @@ class FireStoreHelper {
     Map<String, dynamic>? sender = await getAllUser(id: sentId);
     Map<String, dynamic>? receiver = await getAllUser(id: receicerId);
 
+    log(" S = ${sender?['sent']['$receicerId']['msg'][sentChatIndex]}");
+    log(" R = ${receiver?['recieved']['$sentId']['msg'][receivedChatIndex]}");
+
     sender?['sent']['$receicerId']['msg'][sentChatIndex] = newChat;
     receiver?['recieved']['$sentId']['msg'][receivedChatIndex] = newChat;
 
+    log(" S = ${sender?['sent']['$receicerId']['msg'][sentChatIndex]}");
+    log(" R = ${receiver?['recieved']['$sentId']['msg'][receivedChatIndex]}");
+
     firebaseFireStore.collection(collection).doc('$sentId').set(sender!);
     firebaseFireStore.collection(collection).doc('$receicerId').set(receiver!);
+
   }
 
   deleteChat({
@@ -167,14 +174,14 @@ class FireStoreHelper {
     log(" S = ${sender?['sent']['$receicerId']['msg']}");
     log(" R = ${receiver?['recieved']['$sentId']['msg']}");
 
-    // sender?['sent']['$receicerId']['msg'].removeAt(chatIndex);
-    // sender?['sent']['$receicerId']['time'].removeAt(chatIndex);
-    //
-    // receiver?['recieved']['$sentId']['msg'].removeAt(chatIndex);
-    // receiver?['recieved']['$sentId']['time'].removeAt(chatIndex);
-    //
-    // firebaseFireStore.collection(collection).doc('$sentId').set(sender!);
-    // firebaseFireStore.collection(collection).doc('$receicerId').set(receiver!);
+    sender?['sent']['$receicerId']['msg'].removeAt(chatIndex);
+    sender?['sent']['$receicerId']['time'].removeAt(chatIndex);
+
+    receiver?['recieved']['$sentId']['msg'].removeAt(chatIndex);
+    receiver?['recieved']['$sentId']['time'].removeAt(chatIndex);
+
+    firebaseFireStore.collection(collection).doc('$sentId').set(sender!);
+    firebaseFireStore.collection(collection).doc('$receicerId').set(receiver!);
   }
 
   sentNewMassage({
@@ -195,14 +202,8 @@ class FireStoreHelper {
     receiver?['recieved']['$sentId']['msg'].add(msg);
     receiver?['recieved']['$sentId']['time'].add(time);
 
-    firebaseFireStore
-        .collection(collection)
-        .doc(sentId.toString())
-        .set(sender!);
-    firebaseFireStore
-        .collection(collection)
-        .doc(receiverId.toString())
-        .set(receiver!);
+    firebaseFireStore.collection(collection).doc(sentId.toString()).set(sender!);
+    firebaseFireStore.collection(collection).doc(receiverId.toString()).set(receiver!);
   }
 
   validateUser({required int id, required String password}) async {

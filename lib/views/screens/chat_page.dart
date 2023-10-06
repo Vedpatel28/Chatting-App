@@ -15,7 +15,8 @@ class ChatPage extends StatelessWidget {
 
   Map userId = Get.arguments;
 
-  TextEditingController sendMassage = TextEditingController();
+  TextEditingController sendMessage = TextEditingController();
+  TextEditingController updateMessage = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -176,22 +177,126 @@ class ChatPage extends StatelessWidget {
                                   : MainAxisAlignment.end,
                               children: [
                                 GestureDetector(
-                                  onDoubleTap: () {
-                                    log("${sentChat[index]}");
-                                    int chatIndex =
-                                        sentChat.indexOf(sentChat[index]);
-                                    log("{[ $chatIndex");
-                                    FireStoreHelper.fireStoreHelper.deleteChat(
-                                      sentId: userId['sender'],
-                                      receicerId: userId['recieved']['id'],
-                                      chatIndex: chatIndex,
-                                    );
-                                  },
                                   onLongPress: () {
+                                    updateMessage.text = allChat[index].chat;
                                     showDialog(
                                       context: context,
                                       builder: (context) {
-                                        return const CupertinoAlertDialog();
+                                        return allChat[index].type == "sent"
+                                            ? CupertinoAlertDialog(
+                                                title: const Text(
+                                                  "Message",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 18,
+                                                    shadows: [
+                                                      BoxShadow(
+                                                        offset:
+                                                            Offset(1.4, 0.9),
+                                                        color: Colors.black26,
+                                                      ),
+                                                    ],
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                content: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    CupertinoTextField(
+                                                      onSubmitted: (value) {
+                                                        updateMessage.text =
+                                                            value;
+                                                      },
+                                                      controller: updateMessage,
+                                                    ),
+                                                  ],
+                                                ),
+                                                actions: [
+                                                  CupertinoButton(
+                                                    onPressed: () {
+                                                      log("message : ${updateMessage.text}");
+
+                                                      FireStoreHelper
+                                                          .fireStoreHelper
+                                                          .updateChat(
+                                                        sentId:
+                                                            userId['sender'],
+                                                        receicerId:
+                                                            userId['recieved']
+                                                                ['id'],
+                                                        sentChatIndex: sentChat
+                                                            .indexOf(sentChat[
+                                                                index]),
+                                                        receivedChatIndex:
+                                                            recievedChat.indexOf(
+                                                                recievedChat[
+                                                                    index]),
+                                                        newChat:
+                                                            updateMessage.text,
+                                                      );
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: const Icon(
+                                                      Icons.edit_outlined,
+                                                      color: Colors.black,
+                                                      shadows: [
+                                                        BoxShadow(
+                                                          offset:
+                                                              Offset(1.4, 0.9),
+                                                          color: Colors.black26,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  CupertinoButton(
+                                                    onPressed: () {
+                                                      log(")_( ${sentChat[index]}");
+                                                      int chatIndex =
+                                                          sentChat.indexOf(
+                                                        sentChat[index],
+                                                      );
+                                                      log("{[ $chatIndex");
+                                                      FireStoreHelper
+                                                          .fireStoreHelper
+                                                          .deleteChat(
+                                                        sentId:
+                                                            userId['sender'],
+                                                        receicerId:
+                                                            userId['recieved']
+                                                                ['id'],
+                                                        chatIndex: chatIndex,
+                                                      );
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: Icon(
+                                                      Icons
+                                                          .delete_outline_sharp,
+                                                      color:
+                                                          Colors.red.shade300,
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            : const Center(
+                                                child: Text(
+                                                  "Can't Edit",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 18,
+                                                    shadows: [
+                                                      BoxShadow(
+                                                        offset:
+                                                            Offset(1.4, 0.9),
+                                                        color: Colors.black26,
+                                                      ),
+                                                    ],
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              );
                                       },
                                     );
                                   },
@@ -292,11 +397,11 @@ class ChatPage extends StatelessWidget {
                 FireStoreHelper.fireStoreHelper.sentNewMassage(
                   sentId: userId['sender'],
                   receiverId: userId['recieved']['id'],
-                  msg: sendMassage.text,
+                  msg: sendMessage.text,
                 );
-                sendMassage.clear();
+                sendMessage.clear();
               },
-              controller: sendMassage,
+              controller: sendMessage,
               textInputAction: TextInputAction.send,
               cursorHeight: 30,
               decoration: InputDecoration(
