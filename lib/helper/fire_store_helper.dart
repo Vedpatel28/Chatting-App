@@ -96,20 +96,20 @@ class FireStoreHelper {
 
     log('NewAllUser $newAllUser');
     log('OldAllUser $oldAllUser');
-    log('Old $userId 105');
-    log('New $addContactId 104');
+    log('Old $userId ');
+    log('New $addContactId');
 
     Map<String, dynamic> oldInContact = {
       '$addContactId': {
-        "msg": [""],
-        "time": [""],
+        "msg": ["Hi"],
+        "time": ["0/00/0000-00:00:00"],
       }
     };
 
     Map<String, dynamic> newInContact = {
       '$userId': {
-        "msg": [""],
-        "time": [""],
+        "msg": ["Hello"],
+        "time": ["0/00/0000-00:00:00"],
       }
     };
 
@@ -127,7 +127,8 @@ class FireStoreHelper {
     oldAllUser?['contacts'].add(userId);
 
     firebaseFireStore.collection(collection).doc('$userId').set(newAllUser!);
-    firebaseFireStore.collection(collection).doc('$userId').set(oldAllUser!);
+    firebaseFireStore.collection(collection).doc('$addContactId').set(oldAllUser!);
+
   }
 
   removeContact({
@@ -149,8 +150,8 @@ class FireStoreHelper {
     Map<String, dynamic>? sender = await getAllUser(id: sentId);
     Map<String, dynamic>? receiver = await getAllUser(id: receicerId);
 
-    log(" S = ${sender?['sent']['$receicerId']['msg'][sentChatIndex]}");
-    log(" R = ${receiver?['recieved']['$sentId']['msg'][receivedChatIndex]}");
+    // log(" S = ${sender?['sent']['$receicerId']['msg'][sentChatIndex]}");
+    // log(" R = ${receiver?['recieved']['$sentId']['msg'][receivedChatIndex]}");
 
     sender?['sent']['$receicerId']['msg'][sentChatIndex] = newChat;
     receiver?['recieved']['$sentId']['msg'][receivedChatIndex] = newChat;

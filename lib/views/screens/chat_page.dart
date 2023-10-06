@@ -203,18 +203,36 @@ class ChatPage extends StatelessWidget {
                                                   mainAxisSize:
                                                       MainAxisSize.min,
                                                   children: [
-                                                    CupertinoTextField(
-                                                      onSubmitted: (value) {
-                                                        updateMessage.text =
-                                                            value;
-                                                      },
-                                                      controller: updateMessage,
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: CupertinoTextField(
+                                                        onSubmitted: (value) {
+                                                          updateMessage.text =
+                                                              value;
+                                                        },
+                                                        controller:
+                                                            updateMessage,
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
                                                 actions: [
                                                   CupertinoButton(
                                                     onPressed: () {
+                                                      log("In _0 ${sentChat.indexOf(
+                                                        sentChat.length,
+                                                      )}");
+                                                      int sendChatIndex =
+                                                          sentChat.indexOf(
+                                                        sentChat[index],
+                                                      );
+
+                                                      int receivedChatIndex =
+                                                          recievedChat.indexOf(
+                                                        recievedChat[index],
+                                                      );
                                                       log("message : ${updateMessage.text}");
 
                                                       FireStoreHelper
@@ -225,13 +243,10 @@ class ChatPage extends StatelessWidget {
                                                         receicerId:
                                                             userId['recieved']
                                                                 ['id'],
-                                                        sentChatIndex: sentChat
-                                                            .indexOf(sentChat[
-                                                                index]),
+                                                        sentChatIndex:
+                                                            sendChatIndex,
                                                         receivedChatIndex:
-                                                            recievedChat.indexOf(
-                                                                recievedChat[
-                                                                    index]),
+                                                            receivedChatIndex,
                                                         newChat:
                                                             updateMessage.text,
                                                       );
@@ -252,12 +267,12 @@ class ChatPage extends StatelessWidget {
                                                   ),
                                                   CupertinoButton(
                                                     onPressed: () {
-                                                      log(")_( ${sentChat[index]}");
+                                                      // log(")_( ${sentChat[index]}");
                                                       int chatIndex =
                                                           sentChat.indexOf(
                                                         sentChat[index],
                                                       );
-                                                      log("{[ $chatIndex");
+                                                      // log("{[ $chatIndex");
                                                       FireStoreHelper
                                                           .fireStoreHelper
                                                           .deleteChat(

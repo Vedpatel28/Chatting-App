@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -44,18 +45,20 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Contacts",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 22,
-            shadows: [
-              BoxShadow(
-                offset: Offset(1.4, 0.9),
-                color: Colors.black26,
-              ),
-            ],
-            fontWeight: FontWeight.bold,
+        title: Text(
+          "Friend",
+          style: GoogleFonts.bubblegumSans(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontSize: 26,
+              shadows: [
+                BoxShadow(
+                  offset: Offset(1.4, 0.9),
+                  color: Colors.black26,
+                ),
+              ],
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         actions: [
@@ -171,6 +174,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       ),
                     );
                   }
+                  return null;
                 },
               );
             } else if (snapshot.hasError) {
@@ -188,7 +192,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.toNamed("/AddContacts");
+          Get.toNamed("/AddContacts",arguments: argId);
         },
         child: const Icon(
           Icons.add,

@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: "/AddContacts",
-          page: () => const AddContactsPage(),
+          page: () => AddContactsPage(),
         ),
       ],
     );
