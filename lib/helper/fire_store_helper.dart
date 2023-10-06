@@ -167,14 +167,14 @@ class FireStoreHelper {
     log(" S = ${sender?['sent']['$receicerId']['msg']}");
     log(" R = ${receiver?['recieved']['$sentId']['msg']}");
 
-    sender?['sent']['$receicerId']['msg'].removeAt(chatIndex);
-    sender?['sent']['$receicerId']['time'].removeAt(chatIndex);
-
-    receiver?['recieved']['$sentId']['msg'].removeAt(chatIndex);
-    receiver?['recieved']['$sentId']['time'].removeAt(chatIndex);
-
-    firebaseFireStore.collection(collection).doc('$sentId').set(sender!);
-    firebaseFireStore.collection(collection).doc('$receicerId').set(receiver!);
+    // sender?['sent']['$receicerId']['msg'].removeAt(chatIndex);
+    // sender?['sent']['$receicerId']['time'].removeAt(chatIndex);
+    //
+    // receiver?['recieved']['$sentId']['msg'].removeAt(chatIndex);
+    // receiver?['recieved']['$sentId']['time'].removeAt(chatIndex);
+    //
+    // firebaseFireStore.collection(collection).doc('$sentId').set(sender!);
+    // firebaseFireStore.collection(collection).doc('$receicerId').set(receiver!);
   }
 
   sentNewMassage({
