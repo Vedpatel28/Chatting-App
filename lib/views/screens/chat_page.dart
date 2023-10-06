@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:chat_app_firebase/modal/chat_modal.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,10 +27,16 @@ class ChatPage extends StatelessWidget {
           },
           icon: const Icon(
             Icons.arrow_back_ios_outlined,
-            color: Color(0xFFEEEEEE),
+            color: Colors.black,
+            shadows: [
+              BoxShadow(
+                offset: Offset(1.4, 0.9),
+                color: Colors.black26,
+              ),
+            ],
           ),
         ),
-        backgroundColor: const Color(0xFF26577C),
+        backgroundColor: Colors.grey.shade50,
         // Receiver Name
         title: StreamBuilder(
           stream: FireStoreHelper.fireStoreHelper.userStream(
@@ -43,9 +50,15 @@ class ChatPage extends StatelessWidget {
 
               return Text(
                 "${name['name']}",
-                style: GoogleFonts.bubblegumSans(
+                style: const TextStyle(
+                  color: Colors.black,
                   fontSize: 22,
-                  color: const Color(0xFFEEEEEE),
+                  shadows: [
+                    BoxShadow(
+                      offset: Offset(1.4, 0.9),
+                      color: Colors.black26,
+                    ),
+                  ],
                   fontWeight: FontWeight.bold,
                 ),
               );
@@ -123,7 +136,6 @@ class ChatPage extends StatelessWidget {
                         );
                         String recievedFormattedTime =
                             DateFormat.jm().format(dt);
-
                         return dt;
                       },
                     ).toList();
@@ -165,54 +177,33 @@ class ChatPage extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onDoubleTap: () {
+                                    log("${sentChat[index]}");
                                     int chatIndex =
                                         sentChat.indexOf(sentChat[index]);
                                     log("{[ $chatIndex");
-                                    // FireStoreHelper.fireStoreHelper.deleteChat(
-                                    //   sentId: userId['sender'],
-                                    //   receicerId: userId['recieved']['id'],
-                                    //   chatIndex: chatIndex,
-                                    // );
+                                    FireStoreHelper.fireStoreHelper.deleteChat(
+                                      sentId: userId['sender'],
+                                      receicerId: userId['recieved']['id'],
+                                      chatIndex: chatIndex,
+                                    );
                                   },
-                                  // onLongPress: () {
-                                  //   showDialog(
-                                  //     context: context,
-                                  //     builder: (context) {
-                                  //       return AlertDialog(
-                                  //         content: Column(
-                                  //           mainAxisSize: MainAxisSize.min,
-                                  //           children: [
-                                  //             TextField(
-                                  //               decoration:
-                                  //                   const InputDecoration(
-                                  //                 border: OutlineInputBorder(),
-                                  //                 label: Text("Message"),
-                                  //               ),
-                                  //               onSubmitted: (value) {},
-                                  //             ),
-                                  //           ],
-                                  //         ),
-                                  //       );
-                                  //     },
-                                  //   );
-                                  // },
+                                  onLongPress: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return const CupertinoAlertDialog();
+                                      },
+                                    );
+                                  },
                                   child: Container(
+                                    width: 300,
                                     padding: const EdgeInsets.only(
                                       left: 10,
                                       right: 10,
                                       bottom: 5,
                                       top: 5,
                                     ),
-                                    decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.circular(25),
-                                        topLeft: Radius.circular(25),
-                                        bottomLeft: Radius.circular(25),
-                                      ),
-                                      // color: Color(0xFFDCF8C6),
-                                    ),
                                     alignment: Alignment.center,
-                                    width: 230,
                                     child: Column(
                                       children: [
                                         // Decoration Sent Chat Box
@@ -223,34 +214,59 @@ class ChatPage extends StatelessWidget {
                                                     "received"
                                                 ? const Color(0xFFEBE4D1)
                                                 : const Color(0xFFB0D9B1),
+                                            borderRadius:
+                                                BorderRadius.horizontal(
+                                              left: allChat[index].type ==
+                                                      "received"
+                                                  ? const Radius.circular(20)
+                                                  : const Radius.circular(0),
+                                              right: allChat[index].type ==
+                                                      "sent"
+                                                  ? const Radius.circular(20)
+                                                  : const Radius.circular(0),
+                                            ),
                                           ),
                                           alignment:
                                               allChat[index].type == "received"
                                                   ? Alignment.topRight
                                                   : Alignment.topLeft,
-
                                           // Sent Chat
-                                          child: Text.rich(
-                                            TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text:
-                                                      "${allChat[index].time.hour} : ${allChat[index].time.minute}",
-                                                  style: GoogleFonts.bitter(
-                                                    fontSize: 6,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                allChat[index].type ==
+                                                        "received"
+                                                    ? CrossAxisAlignment.end
+                                                    : CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "${allChat[index].chat}",
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18,
+                                                  shadows: [
+                                                    BoxShadow(
+                                                      offset: Offset(1.4, 0.9),
+                                                      color: Colors.black26,
+                                                    ),
+                                                  ],
+                                                  fontWeight: FontWeight.bold,
                                                 ),
-                                              ],
-                                              text:
-                                                  " ${allChat[index].chat} \n",
-                                              style: GoogleFonts.bitter(
-                                                fontSize: 14,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w500,
                                               ),
-                                            ),
+                                              Text(
+                                                "${allChat[index].time.hour}:${allChat[index].time.minute}",
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 10,
+                                                  shadows: [
+                                                    BoxShadow(
+                                                      offset: Offset(1.4, 0.9),
+                                                      color: Colors.black26,
+                                                    ),
+                                                  ],
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -295,6 +311,7 @@ class ChatPage extends StatelessWidget {
           ],
         ),
       ),
+      backgroundColor: Colors.blueGrey.shade50,
     );
   }
 }

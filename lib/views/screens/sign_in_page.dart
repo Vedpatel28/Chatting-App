@@ -93,19 +93,6 @@ class SignInPage extends StatelessWidget {
                         id,
                         name,
                         password,
-                        // contacts,
-                        // {
-                        //   "$contacts": {
-                        //     "msg": [""],
-                        //     "time": [""],
-                        //   }
-                        // },
-                        // {
-                        //   "$contacts": {
-                        //     "msg": [""],
-                        //     "time": [""],
-                        //   }
-                        // },
                       );
                       FireStoreHelper.fireStoreHelper
                           .addUser(fireStoreModal: fireStoreModal);
