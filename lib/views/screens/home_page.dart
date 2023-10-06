@@ -44,7 +44,20 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Contacts"),
+        title: const Text(
+          "Contacts",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 22,
+            shadows: [
+              BoxShadow(
+                offset: Offset(1.4, 0.9),
+                color: Colors.black26,
+              ),
+            ],
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           PopupMenuButton(
             onSelected: (value) {
@@ -76,6 +89,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             },
           )
         ],
+        backgroundColor: Colors.grey.shade50,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -99,12 +113,14 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   if (snapshot.data?['contacts'].length > 0) {
                     return Container(
                       margin: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.blue.shade700,
-                        borderRadius: const BorderRadius.horizontal(
-                          right: Radius.elliptical(60, 60),
-                          left: Radius.elliptical(30, 30),
-                        ),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(1.6, 1.1),
+                            color: Colors.black26,
+                          ),
+                        ],
                       ),
                       child: ListTile(
                         onTap: () {
@@ -114,17 +130,30 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           );
                         },
                         // title: Text("${name}"),
-                        subtitle: Text(
+                        title: Text(
                           "${allUser?['contacts'][index]}",
                           style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
+                            color: Colors.black,
+                            fontSize: 22,
+                            shadows: [
+                              BoxShadow(
+                                offset: Offset(1.4, 0.9),
+                                color: Colors.black26,
+                              ),
+                            ],
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         trailing: IconButton(
                           icon: const Icon(
                             Icons.navigate_next_outlined,
-                            color: Colors.white,
+                            color: Colors.black,
+                            shadows: [
+                              BoxShadow(
+                                offset: Offset(1.4, 0.9),
+                                color: Colors.black26,
+                              ),
+                            ],
                             size: 40,
                           ),
                           onPressed: () {
@@ -142,32 +171,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       ),
                     );
                   }
-                  return Card(
-                    child: ListTile(
-                      onTap: () {
-                        Get.toNamed(
-                          "/ChatPage",
-                          arguments: data,
-                        );
-                      },
-                      leading: Text("${allUser?['contacts'][index]}"),
-                      subtitle: Text("${name}"),
-                      trailing: GestureDetector(
-                        onTap: () {
-                          log(allUser!['contacts'][index].toString());
-                          FireStoreHelper.fireStoreHelper.removeContact(
-                            userId: argId,
-                            removedContactId:
-                                allUser['contacts'][index].toString(),
-                          );
-                        },
-                        child: const Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
-                  );
                 },
               );
             } else if (snapshot.hasError) {
@@ -185,16 +188,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // FireStoreHelper.fireStoreHelper.addContact(
-          //   userId: argId,
-          //   addContactId: id,
-          // );
           Get.toNamed("/AddContacts");
         },
         child: const Icon(
           Icons.add,
         ),
       ),
+      backgroundColor: Colors.blueGrey.shade50,
     );
   }
 }
