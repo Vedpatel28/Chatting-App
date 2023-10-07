@@ -1,8 +1,10 @@
 import 'package:chat_app_firebase/controller/first_time_login_controller.dart';
+import 'package:chat_app_firebase/controller/profile_controller.dart';
 import 'package:chat_app_firebase/views/screens/add_contact_page.dart';
 import 'package:chat_app_firebase/views/screens/chat_page.dart';
 import 'package:chat_app_firebase/views/screens/home_page.dart';
 import 'package:chat_app_firebase/views/screens/login_page.dart';
+import 'package:chat_app_firebase/views/screens/profile_page.dart';
 import 'package:chat_app_firebase/views/screens/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,6 +28,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     FirstTimeCheck firstTimeCheck = Get.put(FirstTimeCheck());
 
+    ProfileController profileController = Get.put(ProfileController());
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -41,6 +45,10 @@ class MyApp extends StatelessWidget {
           page: () => HomePage(),
         ),
         GetPage(
+          name: "/LoginPage",
+          page: () => LoginPage(),
+        ),
+        GetPage(
           name: "/SignInPage",
           page: () => SignInPage(),
         ),
@@ -51,6 +59,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/AddContacts",
           page: () => AddContactsPage(),
+        ),
+        GetPage(
+          name: "/ProfilePage",
+          page: () => ProfilePage(),
         ),
       ],
     );

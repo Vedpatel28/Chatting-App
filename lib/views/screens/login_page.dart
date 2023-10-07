@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 import 'package:chat_app_firebase/controller/first_time_login_controller.dart';
+import 'package:chat_app_firebase/controller/profile_controller.dart';
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -14,6 +15,8 @@ class LoginPage extends StatelessWidget {
   String password = "";
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  ProfileController profileController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -59,23 +62,32 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 const Gap(20),
-                TextFormField(
-                  initialValue: password,
-                  textInputAction: TextInputAction.next,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Enter Password";
-                    } else {
-                      return null;
-                    }
-                  },
-                  onSaved: (newValue) {
-                    password = newValue!;
-                  },
-                  decoration: const InputDecoration(
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(),
-                    label: Text("Password"),
+                Obx(
+                  () => TextFormField(
+                    initialValue: password,
+                    textInputAction: TextInputAction.next,
+                    obscureText: profileController.showPassword.value,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Enter Password";
+                      } else {
+                        return null;
+                      }
+                    },
+                    onSaved: (newValue) {
+                      password = newValue!;
+                    },
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      border: const OutlineInputBorder(),
+                      label: const Text("Password"),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          profileController.changeShow();
+                        },
+                        icon: const Icon(Icons.remove_red_eye_outlined),
+                      ),
+                    ),
                   ),
                 ),
                 const Gap(20),
@@ -112,7 +124,8 @@ class LoginPage extends StatelessWidget {
                       String checkPassword = data?['password'];
                       int checkID = data?['id'];
                       log(checkPassword);
-                      if (password == checkPassword && int.parse(id) == checkID) {
+                      if (password == checkPassword &&
+                          int.parse(id) == checkID) {
                         Get.offNamed(
                           "/HomePage",
                           arguments: int.parse(id),

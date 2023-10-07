@@ -30,6 +30,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       }
     }
 
+    FireStoreHelper.fireStoreHelper.getAllUser(id: argId);
+
     super.initState();
   }
 
@@ -70,6 +72,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               if (value == 'sign out') {
                 Get.offNamed("/");
               }
+              if (value == 'Add Friend') {
+                Get.toNamed("/AddContacts", arguments: argId);
+              }
               if (value == 'Crate New') {
                 Get.offNamed("/SignInPage");
               }
@@ -79,6 +84,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 PopupMenuItem(
                   value: 'sign out',
                   child: Text("Sign Out"),
+                ),
+                PopupMenuItem(
+                  value: 'Add Friend',
+                  child: Text("FriendShip"),
                 ),
                 PopupMenuItem(
                   value: 'Crate New',
@@ -109,10 +118,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     'sender': allUser?['contacts'][index],
                     'recieved': allUser,
                   };
-
-                  Stream name = FireStoreHelper.fireStoreHelper
-                      .userStream(recievedId: argId);
-
                   if (snapshot.data?['contacts'].length > 0) {
                     return Container(
                       margin: const EdgeInsets.all(8),
@@ -133,18 +138,48 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           );
                         },
                         // title: Text("${name}"),
-                        title: Text(
+                        title: StreamBuilder(
+                          stream: FireStoreHelper.fireStoreHelper.userStream(
+                            recievedId: data['sender'],
+                          ),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              // Receiver Name
+
+                              var name = snapshot.data;
+                              log("Name ${name['name']}");
+                              return Text(
+                                "${name['name']}",
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 22,
+                                  shadows: [
+                                    BoxShadow(
+                                      offset: Offset(1.4, 0.9),
+                                      color: Colors.black26,
+                                    ),
+                                  ],
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              );
+                            } else {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          },
+                        ),
+                        subtitle: Text(
                           "${allUser?['contacts'][index]}",
                           style: const TextStyle(
                             color: Colors.black,
-                            fontSize: 22,
+                            fontSize: 14,
                             shadows: [
                               BoxShadow(
-                                offset: Offset(1.4, 0.9),
-                                color: Colors.black26,
+                                offset: Offset(1, 0.6),
+                                color: Colors.black12,
                               ),
                             ],
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         trailing: IconButton(
@@ -192,10 +227,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.toNamed("/AddContacts",arguments: argId);
+          Get.toNamed(
+            "/ProfilePage",
+            arguments: argId,
+          );
         },
         child: const Icon(
-          Icons.add,
+          Icons.perm_identity_sharp,
         ),
       ),
       backgroundColor: Colors.blueGrey.shade50,

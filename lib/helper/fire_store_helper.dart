@@ -34,8 +34,9 @@ class FireStoreHelper {
     return allData;
   }
 
-  Stream allUserId()  {
-    Stream<QuerySnapshot<Map<String, dynamic>>> data = firebaseFireStore.collection(collection).snapshots();
+  Stream allUserId() {
+    Stream<QuerySnapshot<Map<String, dynamic>>> data =
+        firebaseFireStore.collection(collection).snapshots();
 
     Stream<dynamic> allData = data.map((event) => event.docs);
 
@@ -57,18 +58,18 @@ class FireStoreHelper {
       "id": fireStoreModal.id,
       "password": fireStoreModal.password,
       "contacts": [
-        000,
+        001,
       ],
       "recieved": {
-        "000": {
+        "001": {
           "msg": ["HI User"],
           "time": ["28/09/23-10:10:10"],
         }
       },
       "sent": {
-        "000": {
-          "msg": [""],
-          "time": [""],
+        "001": {
+          "msg": ["Hello AI"],
+          "time": ["28/09/23-10:10:11"],
         }
       },
     };
@@ -127,8 +128,10 @@ class FireStoreHelper {
     oldAllUser?['contacts'].add(userId);
 
     firebaseFireStore.collection(collection).doc('$userId').set(newAllUser!);
-    firebaseFireStore.collection(collection).doc('$addContactId').set(oldAllUser!);
-
+    firebaseFireStore
+        .collection(collection)
+        .doc('$addContactId')
+        .set(oldAllUser!);
   }
 
   removeContact({
@@ -161,7 +164,6 @@ class FireStoreHelper {
 
     firebaseFireStore.collection(collection).doc('$sentId').set(sender!);
     firebaseFireStore.collection(collection).doc('$receicerId').set(receiver!);
-
   }
 
   deleteChat({
@@ -203,8 +205,14 @@ class FireStoreHelper {
     receiver?['recieved']['$sentId']['msg'].add(msg);
     receiver?['recieved']['$sentId']['time'].add(time);
 
-    firebaseFireStore.collection(collection).doc(sentId.toString()).set(sender!);
-    firebaseFireStore.collection(collection).doc(receiverId.toString()).set(receiver!);
+    firebaseFireStore
+        .collection(collection)
+        .doc(sentId.toString())
+        .set(sender!);
+    firebaseFireStore
+        .collection(collection)
+        .doc(receiverId.toString())
+        .set(receiver!);
   }
 
   validateUser({required int id, required String password}) async {
@@ -229,5 +237,14 @@ class FireStoreHelper {
     Map<dynamic, dynamic> data = snapshot.data() as Map;
 
     return data["password"];
+  }
+
+  getAllContacts({required int id}) async {
+    DocumentSnapshot snapshot =
+        await firebaseFireStore.collection(collection).doc(id.toString()).get();
+
+    Map<dynamic, dynamic> data = snapshot.data() as Map;
+
+    return data["contacts"];
   }
 }

@@ -1,3 +1,4 @@
+import 'package:chat_app_firebase/controller/profile_controller.dart';
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:chat_app_firebase/modal/fire_store_modal.dart';
 import 'package:chat_app_firebase/utils/image_utils.dart';
@@ -13,6 +14,8 @@ class SignInPage extends StatelessWidget {
   late String password;
   List contacts = [];
 
+  ProfileController profileController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     Size s = MediaQuery.of(context).size;
@@ -26,7 +29,7 @@ class SignInPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: s.height * 0.1),
+                  SizedBox(height: s.height * 0.05),
                   Text(
                     "Sign in",
                     style: GoogleFonts.headlandOne(
@@ -71,22 +74,46 @@ class SignInPage extends StatelessWidget {
                   ),
                   SizedBox(height: s.height * 0.04),
                   // Password
-                  TextField(
-                    onSubmitted: (value) {
-                      password = value;
-                    },
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.blueGrey.shade50,
-                      hintText: "Enter Password",
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(15),
+                  Obx(
+                    () => TextField(
+                      onSubmitted: (value) {
+                        password = value;
+                      },
+                      obscureText: profileController.showPassword.value,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.blueGrey.shade50,
+                        hintText: "Enter Password",
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            profileController.changeShow();
+                          },
+                          icon: const Icon(
+                            Icons.remove_red_eye_outlined,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: s.height * 0.06),
+                  SizedBox(height: s.height * 0.02),
+                  TextButton(
+                    onPressed: () {
+                      Get.offNamed("/LoginPage");
+                    },
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: s.height * 0.02),
                   GestureDetector(
                     onTap: () async {
                       FireStoreModal fireStoreModal = FireStoreModal(

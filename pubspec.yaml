@@ -37,7 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: 2.16.0
   firebase_auth: 4.10.0
-  get: any
   google_sign_in: any
   flutter_login: any
   google_fonts: any
@@ -48,6 +47,10 @@ dependencies:
   time_zone_list: any
   get_storage: any
   cloud_firestore: ^4.9.2
+  image_picker: ^1.0.4
+  path_provider: ^2.1.1
+  provider: ^6.0.5
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:

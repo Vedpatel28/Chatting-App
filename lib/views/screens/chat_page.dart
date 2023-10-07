@@ -7,7 +7,6 @@ import 'package:chat_app_firebase/modal/chat_modal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class ChatPage extends StatelessWidget {
@@ -48,6 +47,8 @@ class ChatPage extends StatelessWidget {
               // Receiver Name
 
               var name = snapshot.data;
+
+              log("NAME :: ${name['name']}");
 
               return Text(
                 "${name['name']}",
@@ -230,28 +231,17 @@ class ChatPage extends StatelessWidget {
                                                       );
 
                                                       int receivedChatIndex =
-                                                          recievedChat.indexOf(
-                                                        recievedChat[index],
-                                                      );
+                                                          recievedChat.indexOf(recievedChat[index],);
                                                       log("message : ${updateMessage.text}");
 
-                                                      FireStoreHelper
-                                                          .fireStoreHelper
-                                                          .updateChat(
-                                                        sentId:
-                                                            userId['sender'],
-                                                        receicerId:
-                                                            userId['recieved']
-                                                                ['id'],
-                                                        sentChatIndex:
-                                                            sendChatIndex,
-                                                        receivedChatIndex:
-                                                            receivedChatIndex,
-                                                        newChat:
-                                                            updateMessage.text,
+                                                      FireStoreHelper.fireStoreHelper.updateChat(
+                                                        sentId: userId['sender'],
+                                                        receicerId: userId['recieved']['id'],
+                                                        sentChatIndex: sendChatIndex,
+                                                        receivedChatIndex: receivedChatIndex,
+                                                        newChat: updateMessage.text,
                                                       );
-                                                      Navigator.of(context)
-                                                          .pop();
+                                                      Navigator.of(context).pop();
                                                     },
                                                     child: const Icon(
                                                       Icons.edit_outlined,
