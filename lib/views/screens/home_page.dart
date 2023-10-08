@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -123,7 +123,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     'recieved': allUser,
                   };
                   if (snapshot.data?['contacts'].length > 0) {
-                    log("LID ${allUser}");
 
                     return Container(
                       margin: const EdgeInsets.all(8),

@@ -105,10 +105,10 @@ class AddContactsPage extends StatelessWidget {
                                   duration: const Duration(milliseconds: 300),
                                 );
 
-                                Get.toNamed(
+                                Navigator.of(context).pushNamed(
                                   "/HomePage",
+                                  arguments: argId,
                                 );
-                                // Navigator.of(context).pop();
                               },
                               icon: const Icon(
                                 Icons.add,

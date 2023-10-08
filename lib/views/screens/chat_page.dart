@@ -48,8 +48,6 @@ class ChatPage extends StatelessWidget {
 
               var name = snapshot.data;
 
-              log("NAME :: ${name['name']}");
-
               return Text(
                 "${name['name']}",
                 style: const TextStyle(
@@ -75,12 +73,16 @@ class ChatPage extends StatelessWidget {
           PopupMenuButton(
             onSelected: (value) {
               if (value == 'sign out') {
-                Get.offNamed("/");
+                Get.offNamed("/HomePage", arguments: userId['recieved']['id']);
               }
               if (value == 'Add Friend') {
                 Get.toNamed("/AddContacts", arguments: userId['sender']);
               }
               if (value == 'Remove Contact') {
+                FireStoreHelper.fireStoreHelper.removeContact(
+                  userId: userId['recieved']['id'],
+                  removeContact: userId['sender'],
+                );
                 Get.offNamed("/HomePage", arguments: userId['recieved']['id']);
               }
             },
@@ -122,8 +124,14 @@ class ChatPage extends StatelessWidget {
                     List<dynamic>? sentChat =
                         data!['sent']['${userId['recieved']['id']}']['msg'];
 
+                    List<dynamic>? upSentChat =
+                        data['sent']['${userId['recieved']['id']}']['msg'];
+
                     // All Received Chat
                     List<dynamic>? recievedChat =
+                        data['recieved']['${userId['recieved']['id']}']['msg'];
+
+                    List<dynamic>? upRecievedChat =
                         data['recieved']['${userId['recieved']['id']}']['msg'];
 
                     // All Sent Time
@@ -253,16 +261,17 @@ class ChatPage extends StatelessWidget {
                                                 actions: [
                                                   CupertinoButton(
                                                     onPressed: () {
-                                                      log("In _0 ${sentChat.indexOf(
-                                                        sentChat.length,
-                                                      )}");
-                                                      int sendChatIndex =
-                                                          sentChat.indexOf(
+                                                      // log("In (): ${sentChat.indexOf(sentChat[index])}");
+                                                      // log("In (): ${recievedChat[index]}");
+
+                                                      int sendChatIndex = sentChat.indexOf(
                                                         sentChat[index],
                                                       );
 
-                                                      int receivedChatIndex =
-                                                          recievedChat.indexOf(recievedChat[index],);
+                                                      int receivedChatIndex = recievedChat.indexOf(
+                                                        recievedChat[index],
+                                                      );
+
                                                       log("message : ${updateMessage.text}");
 
                                                       FireStoreHelper.fireStoreHelper.updateChat(
@@ -272,7 +281,8 @@ class ChatPage extends StatelessWidget {
                                                         receivedChatIndex: receivedChatIndex,
                                                         newChat: updateMessage.text,
                                                       );
-                                                      Navigator.of(context).pop();
+                                                      Navigator.of(context)
+                                                          .pop();
                                                     },
                                                     child: const Icon(
                                                       Icons.edit_outlined,
@@ -288,20 +298,15 @@ class ChatPage extends StatelessWidget {
                                                   ),
                                                   CupertinoButton(
                                                     onPressed: () {
-                                                      // log(")_( ${sentChat[index]}");
                                                       int chatIndex =
                                                           sentChat.indexOf(
                                                         sentChat[index],
                                                       );
-                                                      // log("{[ $chatIndex");
                                                       FireStoreHelper
                                                           .fireStoreHelper
                                                           .deleteChat(
-                                                        sentId:
-                                                            userId['sender'],
-                                                        receicerId:
-                                                            userId['recieved']
-                                                                ['id'],
+                                                        sentId: userId['sender'],
+                                                        receicerId: userId['recieved']['id'],
                                                         chatIndex: chatIndex,
                                                       );
                                                       Navigator.of(context)

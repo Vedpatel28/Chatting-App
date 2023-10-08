@@ -133,48 +133,18 @@ class FireStoreHelper {
     Map<String, dynamic>? newAllUser = await getAllUser(id: userId);
     Map<String, dynamic>? oldAllUser = await getAllUser(id: removeContact);
 
-    log("New ${newAllUser}");
-    log("Old ${oldAllUser}");
+    log("CU ID : $userId");
+    log("RE ID : $removeContact");
 
+    log("ALL CUR ${newAllUser?['contacts']}");
+    log("ALL REM ${oldAllUser?['contacts']}");
+
+    oldAllUser?['contacts'].remove(userId);
+    newAllUser?['contacts'].remove(removeContact);
 
     firebaseFireStore.collection(collection).doc('$userId').set(newAllUser!);
     firebaseFireStore.collection(collection).doc('$removeContact').set(oldAllUser!);
-    // Map<String, dynamic> oldInContact = {
-    //   '$removeContact': {
-    //     "msg": ["Hi"],
-    //     "time": ["0/00/0000-00:00:00"],
-    //   }
-    // };
-    //
-    // Map<String, dynamic> newInContact = {
-    //   '$userId': {
-    //     "msg": ["Hello"],
-    //     "time": ["0/00/0000-00:00:00"],
-    //   }
-    // };
-    //
-    // log("{'New ${newAllUser?['recieved']}");
-    // newAllUser?['recieved'].addAll(oldInContact);
-    // newAllUser?['sent'].addAll(oldInContact);
-    //
-    // log("{'Old  ${oldAllUser?['recieved']}");
-    // oldAllUser?['recieved'].addAll(newInContact);
-    // oldAllUser?['sent'].addAll(newInContact);
-    //
-    // log("{'; ${newAllUser?['contacts']}");
-    //
-    // newAllUser?['contacts'].remove(removeContact);
-    // oldAllUser?['contacts'].remove(userId);
   }
-
-  // removeContact({
-  //   required int userId,
-  //   required String removedContactId,
-  // }) async {
-  //   Map<String, dynamic>? allUser = await getAllUser(id: userId);
-  //   allUser?['contacts'].remove(removedContactId);
-  //   firebaseFireStore.collection(collection).doc('$userId').set(allUser!);
-  // }
 
   updateChat({
     required int sentId,
@@ -186,14 +156,14 @@ class FireStoreHelper {
     Map<String, dynamic>? sender = await getAllUser(id: sentId);
     Map<String, dynamic>? receiver = await getAllUser(id: receicerId);
 
-    // log(" S = ${sender?['sent']['$receicerId']['msg'][sentChatIndex]}");
-    // log(" R = ${receiver?['recieved']['$sentId']['msg'][receivedChatIndex]}");
+    log("O S = ${sender?['sent']['$receicerId']['msg'][sentChatIndex]}");
+    log("O R = ${receiver?['recieved']['$sentId']['msg'][receivedChatIndex]}");
 
     sender?['sent']['$receicerId']['msg'][sentChatIndex] = newChat;
     receiver?['recieved']['$sentId']['msg'][receivedChatIndex] = newChat;
 
-    log(" S = ${sender?['sent']['$receicerId']['msg'][sentChatIndex]}");
-    log(" R = ${receiver?['recieved']['$sentId']['msg'][receivedChatIndex]}");
+    log("N S = ${sender?['sent']['$receicerId']['msg'][sentChatIndex]}");
+    log("N R = ${receiver?['recieved']['$sentId']['msg'][receivedChatIndex]}");
 
     firebaseFireStore.collection(collection).doc('$sentId').set(sender!);
     firebaseFireStore.collection(collection).doc('$receicerId').set(receiver!);
