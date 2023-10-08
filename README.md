@@ -2,8 +2,9 @@
 
 ### 👉 Authentication Pages. 
 
-<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/54c10c70-d416-47d9-98eb-10a29c4e7df0" height = "350"></img> 
-<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/4194870d-5d26-4feb-8d3e-4183cc1d3872" height = "350"></img>
+<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/2da54c7e-77cb-4541-903a-188a5fed6a41" height = "350"></img> 
+<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/8a3ce819-8c36-4a90-9956-e0ec4037db81" height = "350"></img>
+<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/c34eabdc-e19d-49a0-b894-f46538df6d69" height = "350"></img>
 
 ## Project Description:
 "Firebase Miner (Chat App)" is an innovative and secure mobile application developed using
