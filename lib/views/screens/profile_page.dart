@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:chat_app_firebase/controller/profile_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
@@ -65,19 +66,18 @@ class ProfilePage extends StatelessWidget {
               stream:
                   FireStoreHelper.fireStoreHelper.getAllUserStream(id: argId),
               builder: (context, snapshot) {
-                Map allData = snapshot.data;
-
-                String userName = allData['name'];
-                int userId = allData['id'];
-                String password = allData['password'];
-
-                TextEditingController textPassword =
-                    TextEditingController(text: password);
-                TextEditingController textName =
-                    TextEditingController(text: userName);
-                log("userName : ${userName} \n userId : ${userId} \n userPassword : ${textPassword.text} ");
-
                 if (snapshot.hasData) {
+                  Map allData = snapshot.data;
+
+                  String userName = allData['name'];
+                  int userId = allData['id'];
+                  String password = allData['password'];
+
+                  TextEditingController textPassword =
+                      TextEditingController(text: password);
+                  TextEditingController textName =
+                      TextEditingController(text: userName);
+                  log("userName : $userName  userId : $userId  userPassword : ${textPassword.text} ");
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -87,7 +87,7 @@ class ProfilePage extends StatelessWidget {
                           "$userId",
                           style: const TextStyle(
                             color: Colors.black,
-                            fontSize: 28,
+                            fontSize: 30,
                             shadows: [
                               BoxShadow(
                                 offset: Offset(1.4, 0.9),
@@ -107,6 +107,14 @@ class ProfilePage extends StatelessWidget {
                           label: const Text("Name"),
                         ),
                         controller: textName,
+                        onSubmitted: (value) {
+                          textName.text = value;
+                          FireStoreHelper.fireStoreHelper.updateProfile(
+                            id: userId,
+                            name: textName.text,
+                            password: textPassword.text,
+                          );
+                        },
                       ),
                       const Gap(20),
                       Obx(
@@ -123,8 +131,33 @@ class ProfilePage extends StatelessWidget {
                               icon: const Icon(Icons.remove_red_eye_outlined),
                             ),
                           ),
+                          onSubmitted: (value) {
+                            textPassword.text = value;
+                            FireStoreHelper.fireStoreHelper.updateProfile(
+                              id: userId,
+                              name: textName.text,
+                              password: textPassword.text,
+                            );
+                          },
                           obscureText: profileController.showPassword.value,
                           controller: textPassword,
+                        ),
+                      ),
+                      const Gap(40),
+                      CupertinoButton.filled(
+                        onPressed: () {
+                          FireStoreHelper.fireStoreHelper.updateProfile(
+                            id: userId,
+                            name: textName.text,
+                            password: textPassword.text,
+                          );
+                        },
+                        child: const Text(
+                          "Change",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],

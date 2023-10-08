@@ -47,6 +47,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: const Icon(
+          Icons.arrow_back_ios_new_rounded,
+          color: Colors.transparent,
+        ),
         title: Text(
           "Friend",
           style: GoogleFonts.bubblegumSans(
@@ -67,10 +71,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           PopupMenuButton(
             onSelected: (value) {
               if (value == 'exit') {
-                Get.offNamed("/");
+                Get.offNamed("/LoginPage");
               }
               if (value == 'sign out') {
-                Get.offNamed("/");
+                Get.offNamed("/LoginPage");
               }
               if (value == 'Add Friend') {
                 Get.toNamed("/AddContacts", arguments: argId);
@@ -119,6 +123,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     'recieved': allUser,
                   };
                   if (snapshot.data?['contacts'].length > 0) {
+                    log("LID ${allUser}");
+
                     return Container(
                       margin: const EdgeInsets.all(8),
                       decoration: const BoxDecoration(
@@ -145,9 +151,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               // Receiver Name
-
                               var name = snapshot.data;
-                              log("Name ${name['name']}");
                               return Text(
                                 "${name['name']}",
                                 style: const TextStyle(
@@ -198,11 +202,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                             Get.toNamed(
                               "/ChatPage",
                               arguments: data,
-                            );
-                            FireStoreHelper.fireStoreHelper.removeContact(
-                              userId: argId,
-                              removedContactId:
-                                  allUser!['contacts'][index].toString(),
                             );
                           },
                         ),

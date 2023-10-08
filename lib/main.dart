@@ -6,6 +6,7 @@ import 'package:chat_app_firebase/views/screens/home_page.dart';
 import 'package:chat_app_firebase/views/screens/login_page.dart';
 import 'package:chat_app_firebase/views/screens/profile_page.dart';
 import 'package:chat_app_firebase/views/screens/sign_in_page.dart';
+import 'package:chat_app_firebase/views/screens/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
@@ -38,11 +39,11 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(
           name: "/",
-          page: () => firstTimeCheck.isOne ? HomePage() : LoginPage(),
+          page: () => firstTimeCheck.isOne ? LoginPage() : SplashPage(),
         ),
         GetPage(
           name: "/HomePage",
-          page: () => HomePage(),
+          page: () => const HomePage(),
         ),
         GetPage(
           name: "/LoginPage",

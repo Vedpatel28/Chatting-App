@@ -7,6 +7,7 @@ import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -20,6 +21,9 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    Size s = MediaQuery.of(context).size;
+
     FirstTimeCheck firstTimeCheck = Get.put(FirstTimeCheck());
 
     return Scaffold(
@@ -56,8 +60,14 @@ class LoginPage extends StatelessWidget {
                   onSaved: (newValue) {
                     id = newValue!;
                   },
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.blueGrey.shade50,
+                    border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
                     label: Text("ID"),
                   ),
                 ),
@@ -78,8 +88,13 @@ class LoginPage extends StatelessWidget {
                       password = newValue!;
                     },
                     decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      border: const OutlineInputBorder(),
+                      filled: true,
+                      fillColor: Colors.blueGrey.shade50,
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
                       label: const Text("Password"),
                       suffixIcon: IconButton(
                         onPressed: () {
@@ -102,8 +117,47 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () async {
+                // ElevatedButton(
+                //   onPressed: () async {
+                //     if (formKey.currentState!.validate()) {
+                //       formKey.currentState!.save();
+                //
+                //       FireStoreHelper.fireStoreHelper.validateUser(
+                //         id: int.parse(id),
+                //         password: password,
+                //       );
+                //       firstTimeCheck.setOne();
+                //       FireStoreHelper.fireStoreHelper.getCredential(
+                //         id: int.parse(id),
+                //       );
+                //
+                //       Map<String, dynamic>? data =
+                //           await FireStoreHelper.fireStoreHelper.getAllUser(
+                //         id: int.parse(id),
+                //       );
+                //
+                //       String checkPassword = data?['password'];
+                //       int checkID = data?['id'];
+                //       log(checkPassword);
+                //       if (password == checkPassword &&
+                //           int.parse(id) == checkID) {
+                //         Get.offNamed(
+                //           "/HomePage",
+                //           arguments: int.parse(id),
+                //         );
+                //       } else {
+                //         Get.snackbar(
+                //           "Password or Id",
+                //           "Id or Password Wrong!!",
+                //         );
+                //       }
+                //     }
+                //   },
+                //   child: const Text("SUBMIT"),
+                // ),
+                GestureDetector(
+                  onTap: () async {
+
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
 
@@ -117,7 +171,7 @@ class LoginPage extends StatelessWidget {
                       );
 
                       Map<String, dynamic>? data =
-                          await FireStoreHelper.fireStoreHelper.getAllUser(
+                      await FireStoreHelper.fireStoreHelper.getAllUser(
                         id: int.parse(id),
                       );
 
@@ -136,9 +190,29 @@ class LoginPage extends StatelessWidget {
                           "Id or Password Wrong!!",
                         );
                       }
+                    } else {
+                      Get.snackbar("Failed", "User Can't Axis..");
                     }
                   },
-                  child: const Text("SUBMIT"),
+                  child: Container(
+                    height: s.height * 0.06,
+                    width: s.width * 0.4,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF27447C),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Submit",
+                      style: GoogleFonts.headlandOne(
+                        fontSize: 22,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

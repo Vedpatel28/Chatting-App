@@ -71,6 +71,37 @@ class ChatPage extends StatelessWidget {
             }
           },
         ),
+        actions: [
+          PopupMenuButton(
+            onSelected: (value) {
+              if (value == 'sign out') {
+                Get.offNamed("/");
+              }
+              if (value == 'Add Friend') {
+                Get.toNamed("/AddContacts", arguments: userId['sender']);
+              }
+              if (value == 'Remove Contact') {
+                Get.offNamed("/HomePage", arguments: userId['recieved']['id']);
+              }
+            },
+            itemBuilder: (BuildContext bc) {
+              return const [
+                PopupMenuItem(
+                  value: 'sign out',
+                  child: Text("Go Back"),
+                ),
+                PopupMenuItem(
+                  value: 'Add Friend',
+                  child: Text("FriendShip"),
+                ),
+                PopupMenuItem(
+                  value: 'Remove Contact',
+                  child: Text("Remove"),
+                ),
+              ];
+            },
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),

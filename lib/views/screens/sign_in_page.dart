@@ -46,8 +46,8 @@ class SignInPage extends StatelessWidget {
                     },
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Colors.blueGrey.shade50,
                       hintText: "Enter Id",
+                      fillColor: Colors.blueGrey.shade50,
                       border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(15),

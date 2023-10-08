@@ -56,9 +56,8 @@ class AddContactsPage extends StatelessWidget {
               return StreamBuilder(
                 stream: FireStoreHelper.fireStoreHelper.allUserId(),
                 builder: (context, snapshot) {
-                  List allId = snapshot.data;
-
                   if (snapshot.hasData) {
+                    List allId = snapshot.data;
                     return ListView.builder(
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {
@@ -90,13 +89,11 @@ class AddContactsPage extends StatelessWidget {
                             ),
                             trailing: IconButton(
                               onPressed: () async {
+                                log("Se : ${allId[index]['id']}");
                                 Map data = {
-                                  'sender': snap.data?['contacts'][index],
+                                  'sender': snap.data?['contacts'],
                                   'recieved': snap.data,
                                 };
-
-                                log("Fi : ${snap.data['contacts'][index]}");
-                                log("Se : ${allId[index]['id']}");
 
                                 FireStoreHelper.fireStoreHelper.addContact(
                                   userId: argId,
@@ -109,8 +106,7 @@ class AddContactsPage extends StatelessWidget {
                                 );
 
                                 Get.toNamed(
-                                  "/ChatPage",
-                                  arguments: data,
+                                  "/HomePage",
                                 );
                                 // Navigator.of(context).pop();
                               },
