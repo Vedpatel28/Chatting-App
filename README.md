@@ -1,4 +1,5 @@
 # Chat App (Firebase Miner)
+
 ## Project Description:
 "Firebase Miner (Chat App)" is an innovative and secure mobile application developed using
 Flutter, aiming to provide users with a seamless two-way communication platform. The app
@@ -32,9 +33,6 @@ choose their preferred authentication method to access the app securely and conv
 <img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/dbc5e89b-89d9-4889-896a-7cdd0277b103" height = "350"></img>
 <img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/67753b51-0a99-4417-b089-9d34390e0301" height = "350"></img>
 <img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/cb40b5c2-c7a5-4446-a03e-b95d9c416e86" height = "350"></img>
-<img src = "" height = "350"></img>
-<img src = "" height = "350"></img>
-<img src = "" height = "350"></img>
 
 ## Light & Dark Themes:
 
