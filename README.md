@@ -1,7 +1,4 @@
-# Project Definition: Chat App (Firebase Miner)
-
-
-
+# Chat App (Firebase Miner)
 ## Project Description:
 "Firebase Miner (Chat App)" is an innovative and secure mobile application developed using
 Flutter, aiming to provide users with a seamless two-way communication platform. The app
