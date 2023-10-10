@@ -1,10 +1,4 @@
-# Project Definition: Chat App (Firebase Miner)
-
-### 👉 Authentication Pages. 
-
-<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/2da54c7e-77cb-4541-903a-188a5fed6a41" height = "350"></img> 
-<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/8a3ce819-8c36-4a90-9956-e0ec4037db81" height = "350"></img>
-<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/c34eabdc-e19d-49a0-b894-f46538df6d69" height = "350"></img>
+# Chat App (Firebase Miner)
 
 ## Project Description:
 "Firebase Miner (Chat App)" is an innovative and secure mobile application developed using
@@ -24,6 +18,23 @@ experience for users. Whether connecting with friends, family, or colleagues, "F
 Firebase Authentication: "Firebase Miner (Chat App)" offers multiple sign-in options,
 including Google Sign-in, Guest Sign-in, and Email/Password Sign-up & Sign-in. Users can
 choose their preferred authentication method to access the app securely and conveniently.
+
+### 👉 Authentication Pages. 
+
+<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/2da54c7e-77cb-4541-903a-188a5fed6a41" height = "350"></img> 
+<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/8a3ce819-8c36-4a90-9956-e0ec4037db81" height = "350"></img>
+<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/c34eabdc-e19d-49a0-b894-f46538df6d69" height = "350"></img>
+
+https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/579d3258-4c04-4f4e-8502-b01641aac9d5
+
+### 👉 Screens.
+
+<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/9c1b025a-5eca-4491-a4c1-1780f4f02489" height = "350"></img>
+<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/f9ac12b4-b1d5-4141-9af6-e2e414972671" height = "350"></img>
+<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/74ebdbe9-566e-411d-9ad1-fb383504b04a" height = "350"></img>
+<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/dbc5e89b-89d9-4889-896a-7cdd0277b103" height = "350"></img>
+<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/67753b51-0a99-4417-b089-9d34390e0301" height = "350"></img>
+<img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/cb40b5c2-c7a5-4446-a03e-b95d9c416e86" height = "350"></img>
 
 ## Light & Dark Themes:
 
