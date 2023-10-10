@@ -327,13 +327,6 @@ class ChatPage extends StatelessWidget {
                                                   style: TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 18,
-                                                    shadows: [
-                                                      BoxShadow(
-                                                        offset:
-                                                            Offset(1.4, 0.9),
-                                                        color: Colors.black26,
-                                                      ),
-                                                    ],
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
@@ -380,7 +373,7 @@ class ChatPage extends StatelessWidget {
                                           child: Column(
                                             crossAxisAlignment:
                                                 allChat[index].type ==
-                                                        "received"
+                                                        "send"
                                                     ? CrossAxisAlignment.end
                                                     : CrossAxisAlignment.start,
                                             children: [
@@ -389,12 +382,6 @@ class ChatPage extends StatelessWidget {
                                                 style: const TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 18,
-                                                  shadows: [
-                                                    BoxShadow(
-                                                      offset: Offset(1.4, 0.9),
-                                                      color: Colors.black26,
-                                                    ),
-                                                  ],
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -403,12 +390,6 @@ class ChatPage extends StatelessWidget {
                                                 style: const TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 10,
-                                                  shadows: [
-                                                    BoxShadow(
-                                                      offset: Offset(1.4, 0.9),
-                                                      color: Colors.black26,
-                                                    ),
-                                                  ],
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),

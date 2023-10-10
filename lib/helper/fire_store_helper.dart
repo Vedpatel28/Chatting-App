@@ -87,20 +87,15 @@ class FireStoreHelper {
     return allData;
   }
 
-  addContact({
-    required int userId,
-    required int addContactId,
-  }) async {
+  addContact({required int userId, required int addContactId,}) async {
     Map<String, dynamic>? newAllUser = await getAllUser(id: userId);
     Map<String, dynamic>? oldAllUser = await getAllUser(id: addContactId);
-
     Map<String, dynamic> oldInContact = {
       '$addContactId': {
         "msg": ["Hi"],
         "time": ["0/00/0000-00:00:00"],
       }
     };
-
     Map<String, dynamic> newInContact = {
       '$userId': {
         "msg": ["Hello"],
@@ -108,15 +103,12 @@ class FireStoreHelper {
       }
     };
 
-    log("{'New ${newAllUser?['recieved']}");
     newAllUser?['recieved'].addAll(oldInContact);
     newAllUser?['sent'].addAll(oldInContact);
 
-    log("{'Old  ${oldAllUser?['recieved']}");
     oldAllUser?['recieved'].addAll(newInContact);
     oldAllUser?['sent'].addAll(newInContact);
 
-    log("{'; ${newAllUser?['contacts']}");
 
     newAllUser?['contacts'].add(addContactId);
     oldAllUser?['contacts'].add(userId);

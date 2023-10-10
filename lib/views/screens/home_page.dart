@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           color: Colors.transparent,
         ),
         title: Text(
-          "Friend",
+          "Friends",
           style: GoogleFonts.bubblegumSans(
             textStyle: const TextStyle(
               color: Colors.black,

@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
-  RxBool showPassword = true.obs;
+  RxBool showPassword = false.obs;
 
   changeShow() {
     showPassword(!showPassword.value);
