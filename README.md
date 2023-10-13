@@ -19,13 +19,13 @@ Firebase Authentication: "Firebase Miner (Chat App)" offers multiple sign-in opt
 including Google Sign-in, Guest Sign-in, and Email/Password Sign-up & Sign-in. Users can
 choose their preferred authentication method to access the app securely and conveniently.
 
+https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/579d3258-4c04-4f4e-8502-b01641aac9d5
+
 ### 👉 Authentication Pages. 
 
 <img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/2da54c7e-77cb-4541-903a-188a5fed6a41" height = "350"></img> 
 <img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/8a3ce819-8c36-4a90-9956-e0ec4037db81" height = "350"></img>
 <img src = "https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/c34eabdc-e19d-49a0-b894-f46538df6d69" height = "350"></img>
-
-https://github.com/Vedpatel28/chat_app_firebase/assets/130833918/579d3258-4c04-4f4e-8502-b01641aac9d5
 
 ### 👉 Screens.
 
