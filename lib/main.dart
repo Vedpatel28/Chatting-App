@@ -1,5 +1,6 @@
 import 'package:chat_app_firebase/controller/first_time_login_controller.dart';
 import 'package:chat_app_firebase/controller/profile_controller.dart';
+import 'package:chat_app_firebase/controller/setting_controller.dart';
 import 'package:chat_app_firebase/views/screens/add_contact_page.dart';
 import 'package:chat_app_firebase/views/screens/chat_page.dart';
 import 'package:chat_app_firebase/views/screens/home_page.dart';
@@ -30,11 +31,15 @@ class MyApp extends StatelessWidget {
     FirstTimeCheck firstTimeCheck = Get.put(FirstTimeCheck());
 
     ProfileController profileController = Get.put(ProfileController());
+    final settingController controller = Get.put(settingController());
 
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
+        brightness: controller.models.theme.value
+            ? Brightness.light
+            : Brightness.dark,
       ),
       getPages: [
         GetPage(

@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison, must_be_immutable
 
 import 'dart:developer';
+import 'package:chat_app_firebase/controller/setting_controller.dart';
 import 'package:chat_app_firebase/helper/fire_store_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       }
     }
 
+
     FireStoreHelper.fireStoreHelper.getAllUser(id: argId);
 
     super.initState();
@@ -40,6 +42,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     super.dispose();
   }
 
+  final settingController controller = Get.find();
   int argId = Get.arguments;
   late int id;
 
@@ -73,6 +76,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               if (value == 'exit') {
                 Get.offNamed("/LoginPage");
               }
+              if (value == 'Change Themes') {
+                controller.changeTheme();
+              }
               if (value == 'sign out') {
                 Get.offNamed("/LoginPage");
               }
@@ -88,6 +94,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 PopupMenuItem(
                   value: 'sign out',
                   child: Text("Sign Out"),
+                ),
+                PopupMenuItem(
+                  value: 'Change Themes',
+                  child: Text("Theme"),
                 ),
                 PopupMenuItem(
                   value: 'Add Friend',
