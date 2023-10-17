@@ -71,6 +71,8 @@ android {
 
     buildTypes {
         release {
+            minifyEnabled true
+            shrinkResources true
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.release
@@ -83,5 +85,5 @@ flutter {
 }
 
 dependencies {
-    classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:2.6.8'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.6'
 }
