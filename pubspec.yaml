@@ -51,9 +51,27 @@ dependencies:
   path_provider: ^2.1.1
   provider: ^6.0.5
   get: ^4.6.6
-  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.13.1"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/Images/chat.gif"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/Images/chat.gif"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/Images/chat.gif"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/Images/chat.gif"
   flutter_test:
     sdk: flutter
 
