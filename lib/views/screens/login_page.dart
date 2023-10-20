@@ -117,44 +117,6 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                // ElevatedButton(
-                //   onPressed: () async {
-                //     if (formKey.currentState!.validate()) {
-                //       formKey.currentState!.save();
-                //
-                //       FireStoreHelper.fireStoreHelper.validateUser(
-                //         id: int.parse(id),
-                //         password: password,
-                //       );
-                //       firstTimeCheck.setOne();
-                //       FireStoreHelper.fireStoreHelper.getCredential(
-                //         id: int.parse(id),
-                //       );
-                //
-                //       Map<String, dynamic>? data =
-                //           await FireStoreHelper.fireStoreHelper.getAllUser(
-                //         id: int.parse(id),
-                //       );
-                //
-                //       String checkPassword = data?['password'];
-                //       int checkID = data?['id'];
-                //       log(checkPassword);
-                //       if (password == checkPassword &&
-                //           int.parse(id) == checkID) {
-                //         Get.offNamed(
-                //           "/HomePage",
-                //           arguments: int.parse(id),
-                //         );
-                //       } else {
-                //         Get.snackbar(
-                //           "Password or Id",
-                //           "Id or Password Wrong!!",
-                //         );
-                //       }
-                //     }
-                //   },
-                //   child: const Text("SUBMIT"),
-                // ),
                 GestureDetector(
                   onTap: () async {
 
