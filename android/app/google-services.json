@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:542880054649:android:fe865b02fd62d1bbe3c3a8",
         "android_client_info": {
-          "package_name": "com.ved.chat_app_firebase"
+          "package_name": "com.example.chat_app_firebase"
         }
       },
       "oauth_client": [
