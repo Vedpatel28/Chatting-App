@@ -1,4 +1,4 @@
-# Chat App (Firebase Miner)
+# Chat App ( Firebase )
 
 ## Project Description:
 "Firebase Miner (Chat App)" is an innovative and secure mobile application developed using
